@@ -4,10 +4,9 @@ dtrace:::BEGIN
 }
 
 fbt:kernel::entry
-/strstr(probefunc, "usb") != 0/
+/probeprov == "fbt" && strstr(probefunc, "usb") != 0/
 {
-	
-	printf("%s\t %s\t %d\t %d\n", probefunc, execname, pid, ppid);
+	printf("%s\t %d\t %d\t %s\n", execname, pid, ppid, probefunc);
 }
 
 dtrace:::END
