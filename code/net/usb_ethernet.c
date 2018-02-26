@@ -60,8 +60,8 @@ __FBSDID("$FreeBSD: releng/11.1/sys/dev/usb/net/usb_ethernet.c 302054 2016-06-21
 
 #include <sys/sdt.h>
 
-SDT_PROVIDER_DEFINE(tpw);
-SDT_PROBE_DEFINE2(tpw, kernel, usb_ethernet, entry, "int", "int");
+SDT_PROVIDER_DECLARE(tpw);
+SDT_PROBE_DECLARE(tpw, kernel, usb_ethernet, entry);
 
 static SYSCTL_NODE(_net, OID_AUTO, ue, CTLFLAG_RD, 0,
     "USB Ethernet parameters");
