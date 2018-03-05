@@ -1,0 +1,6 @@
+CPU FUNCTION                                 
+  0  -> usbd_transfer_enqueue                 fd: -2199007246128
+  0   | usbd_transfer_enqueue:entry           tid: 100027
+  0   | usbd_transfer_enqueue:return          tid: 100027
+  0  <- usbd_transfer_enqueue                 tid: 100027
+

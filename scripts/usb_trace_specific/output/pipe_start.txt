@@ -1,0 +1,7 @@
+CPU FUNCTION                                 
+  0  -> usbd_pipe_start                       fd: -8795519022080
+  0   | usbd_pipe_start:entry                 tid: 100027
+  0    -> usbpf_xfertap                       tid: 100027
+  0     | usbpf_xfertap:return                tid: 100027
+  0    <- usbpf_xfertap                       tid: 100027
+
