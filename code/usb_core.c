@@ -66,6 +66,12 @@ const struct usb_string_lang usb_string_lang_en = {
 SDT_PROVIDER_DEFINE(tpw);
 SDT_PROBE_DEFINE2(tpw, kernel, usb_ethernet, entry, "int", "int");
 SDT_PROBE_DEFINE2(tpw, kernel, usb_ethernet, return, "int", "int");
+SDT_PROBE_DEFINE2(tpw, kernel, if_smsc, entry, "int", "int");
+SDT_PROBE_DEFINE2(tpw, kernel, if_smsc, return, "int", "int");
+SDT_PROBE_DEFINE2(tpw, kernel, if_cdce, entry, "int", "int");
+SDT_PROBE_DEFINE2(tpw, kernel, if_cdce, return, "int", "int");
+SDT_PROBE_DEFINE2(tpw, kernel, if_urndis, entry, "int", "int");
+SDT_PROBE_DEFINE2(tpw, kernel, if_urndis, return, "int", "int");
 
 MALLOC_DEFINE(M_USB, "USB", "USB");
 MALLOC_DEFINE(M_USBDEV, "USBdev", "USB device");
