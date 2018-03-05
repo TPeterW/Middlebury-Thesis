@@ -62,6 +62,7 @@ __FBSDID("$FreeBSD: releng/11.1/sys/dev/usb/net/usb_ethernet.c 302054 2016-06-21
 
 SDT_PROVIDER_DECLARE(tpw);
 SDT_PROBE_DECLARE(tpw, kernel, usb_ethernet, entry);
+SDT_PROBE_DECLARE(tpw, kernel, usb_ethernet, return);
 
 static SYSCTL_NODE(_net, OID_AUTO, ue, CTLFLAG_RD, 0,
     "USB Ethernet parameters");
@@ -592,6 +593,7 @@ uether_rxmbuf(struct usb_ether *ue, struct mbuf *m,
 	/* enqueue for later when the lock can be released */
 	SDT_PROBE2(tpw, kernel, usb_ethernet, entry, 0, 0);
 	_IF_ENQUEUE(&ue->ue_rxq, m);
+	SDT_PROBE2(tpw, kernel, usb_ethernet, return, 0, 0);	
 	return (0);
 }
 
@@ -623,6 +625,7 @@ uether_rxbuf(struct usb_ether *ue, struct usb_page_cache *pc,
 	/* enqueue for later when the lock can be released */
 	SDT_PROBE2(tpw, kernel, usb_ethernet, entry, 0, 0);
 	_IF_ENQUEUE(&ue->ue_rxq, m);
+	SDT_PROBE2(tpw, kernel, usb_ethernet, return, 0, 0);
 	return (0);
 }
 

@@ -3,7 +3,7 @@ dtrace:::BEGIN
 	trace("Begin listening...\n");
 }
 
-tpw:::entry
+tpw:kernel::entry
 {
 	trace("Found it! Found it!!!\n");
 }

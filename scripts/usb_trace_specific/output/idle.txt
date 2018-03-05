@@ -1,0 +1,8 @@
+CPU FUNCTION                                 
+  0  -> usb_power_wdog                        fd: -2199007247320
+  0   | usb_power_wdog:entry                  tid: 100004
+  0    -> callout_reset_sbt_on                tid: 100004
+  0      -> callout_when                      tid: 100004
+  0       | callout_when:return               tid: 100004
+  0      <- callout_when                      tid: 100004
+
