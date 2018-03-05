@@ -7,6 +7,7 @@ fbt:kernel::entry
 	printf("fd: %d", arg0);
 }
 
+tpw:kernel::
 fbt:kernel::
 /self->traceme/
 {
