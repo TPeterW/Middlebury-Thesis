@@ -1,13 +1,13 @@
 #pragma D option flowindent
 
 fbt:kernel::entry
-/strstr(probefunc, "usb") != 0 && guard++ == 0/
+/probefunc == "usbd_get_port_status" && guard++ == 0/
 {
 	self->traceme = 1;
 	printf("fd: %d", arg0);
 }
 
-tpw:kernel::
+tpw:kernel::,
 fbt:kernel::
 /self->traceme/
 {
