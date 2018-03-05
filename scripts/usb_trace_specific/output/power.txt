@@ -1,0 +1,7 @@
+CPU FUNCTION                                 
+  0  -> usb_bus_powerd                        fd: -2199007247320
+  0   | usb_bus_powerd:entry                  tid: 100028
+  0    -> xhci_set_hw_power                   tid: 100028
+  0     | xhci_set_hw_power:return            tid: 100028
+  0    <- xhci_set_hw_power                   tid: 100028
+

@@ -1,0 +1,8 @@
+CPU FUNCTION                                 
+  0  -> usb_pc_cpu_flush                      fd: -2198991629024
+  0   | usb_pc_cpu_flush:entry                tid: 100027
+  0    -> _bus_dmamap_sync                    tid: 100027
+  0      -> bounce_bus_dmamap_sync            tid: 100027
+  0       | bounce_bus_dmamap_sync:return     tid: 100027
+  0      <- bounce_bus_dmamap_sync            tid: 100027
+

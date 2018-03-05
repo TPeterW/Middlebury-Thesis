@@ -1,7 +1,7 @@
 #pragma D option flowindent
 
 fbt:kernel::entry
-/probefunc == "usdb_power_wdog" && guard++ == 0/
+/probefunc == "usb_pc_cpu_flush" && guard++ == 0/
 {
 	self->traceme = 1;
 	printf("fd: %d", arg0);

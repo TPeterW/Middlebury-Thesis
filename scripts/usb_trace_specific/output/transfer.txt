@@ -1,0 +1,11 @@
+CPU FUNCTION                                 
+  0  -> usbd_transfer_start                   fd: -2198991637288
+  0   | usbd_transfer_start:entry             tid: 100088
+  0    -> usb_proc_msignal                    tid: 100088
+  0      -> cv_signal                         tid: 100088
+  0        -> sleepq_lock                     tid: 100088
+  0          -> spinlock_enter                tid: 100088
+  0            -> critical_enter              tid: 100088
+  0             | critical_enter:return       tid: 100088
+  0            <- critical_enter              tid: 100088
+
