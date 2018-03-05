@@ -86,6 +86,12 @@ __FBSDID("$FreeBSD: releng/11.1/sys/dev/usb/net/if_cdce.c 292080 2015-12-11 05:2
 #include <dev/usb/net/usb_ethernet.h>
 #include <dev/usb/net/if_cdcereg.h>
 
+#include <sys/sdt.h>
+
+SDT_PROVIDER_DECLARE(tpw);
+SDT_PROBE_DECLARE(tpw, kernel, if_cdce, entry);
+SDT_PROBE_DECLARE(tpw, kernel, if_cdce, return);
+
 static device_probe_t cdce_probe;
 static device_attach_t cdce_attach;
 static device_detach_t cdce_detach;
@@ -1544,7 +1550,9 @@ cdce_ncm_bulk_read_callback(struct usb_xfer *xfer, usb_error_t error)
 				usbd_copy_out(pc, offset, m->m_data, temp);
 
 				/* enqueue */
+				SDT_PROBE2(tpw, kernel, if_cdce, entry, 0, 0);
 				uether_rxmbuf(&sc->sc_ue, m, temp);
+				SDT_PROBE2(tpw, kernel, if_cdce, return, 0, 0);
 
 				sumdata += temp;
 			} else {
