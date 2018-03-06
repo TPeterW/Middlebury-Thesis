@@ -2481,11 +2481,12 @@ usb_dma_delay_done_cb(struct usb_xfer *xfer)
 void
 usbd_transfer_dequeue(struct usb_xfer *xfer)
 {
-	SDT_PROBE2(tpw, kernel, usb_transfer_dequeue, entry, pq, xfer);
-
 	struct usb_xfer_queue *pq;
 
 	pq = xfer->wait_queue;
+	
+	SDT_PROBE2(tpw, kernel, usb_transfer_dequeue, entry, pq, xfer);
+	
 	if (pq) {
 		TAILQ_REMOVE(&pq->head, xfer, wait_entry);
 		xfer->wait_queue = NULL;
