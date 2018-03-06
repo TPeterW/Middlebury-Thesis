@@ -66,6 +66,14 @@
 #include <dev/usb/usb_pf.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
+#include <sys/sdt.h>
+
+SDT_PROVIDER_DECLARE(tpw);
+SDT_PROBE_DECLARE(tpw, kernel, usb_transfer_enqueue, entry);
+SDT_PROBE_DECLARE(tpw, kernel, usb_transfer_enqueue, return);
+SDT_PROBE_DECLARE(tpw, kernel, usb_transfer_dequeue, entry);
+SDT_PROBE_DECLARE(tpw, kernel, usb_transfer_dequeue, return);
+
 struct usb_std_packet_size {
 	struct {
 		uint16_t min;		/* inclusive */
@@ -2477,8 +2485,10 @@ usbd_transfer_dequeue(struct usb_xfer *xfer)
 
 	pq = xfer->wait_queue;
 	if (pq) {
+		SDT_PROBE2(tpw, kernel, usb_transfer_dequeue, entry, pq, xfer);
 		TAILQ_REMOVE(&pq->head, xfer, wait_entry);
 		xfer->wait_queue = NULL;
+		SDT_PROBE2(tpw, kernel, usb_transfer_dequeue, return, pq, xfer);
 	}
 }
 
@@ -2498,8 +2508,10 @@ usbd_transfer_enqueue(struct usb_xfer_queue *pq, struct usb_xfer *xfer)
 	 * already on a USB transfer queue:
 	 */
 	if (xfer->wait_queue == NULL) {
+		SDT_PROBE2(tpw, kernel, usb_transfer_enqueue, entry, pq, xfer);
 		xfer->wait_queue = pq;
 		TAILQ_INSERT_TAIL(&pq->head, xfer, wait_entry);
+		SDT_PROBE2(tpw, kernel, usb_transfer_enqueue, return, pq, xfer);
 	}
 }
 

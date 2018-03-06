@@ -72,6 +72,10 @@ SDT_PROBE_DEFINE2(tpw, kernel, if_cdce, entry, "int", "int");
 SDT_PROBE_DEFINE2(tpw, kernel, if_cdce, return, "int", "int");
 SDT_PROBE_DEFINE2(tpw, kernel, if_urndis, entry, "int", "int");
 SDT_PROBE_DEFINE2(tpw, kernel, if_urndis, return, "int", "int");
+SDT_PROBE_DEFINE2(tpw, kernel, usb_transfer_enqueue, entry, "int", "int");
+SDT_PROBE_DEFINE2(tpw, kernel, usb_transfer_enqueue, return, "int", "int");
+SDT_PROBE_DEFINE2(tpw, kernel, usb_transfer_dequeue, entry, "int", "int");
+SDT_PROBE_DEFINE2(tpw, kernel, usb_transfer_dequeue, return, "int", "int");
 
 MALLOC_DEFINE(M_USB, "USB", "USB");
 MALLOC_DEFINE(M_USBDEV, "USBdev", "USB device");
