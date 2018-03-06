@@ -3,10 +3,11 @@ dtrace:::BEGIN
 	trace("Begin listening...\n");
 }
 
+tpw:kernel::entry,
 fbt:kernel::entry
-/probeprov == "fbt" && strstr(probefunc, "usb") != 0/
+/strstr(probefunc, "usb") != 0/
 {
-	printf("%s\t %d\t %d\t %s\n", execname, pid, ppid, probefunc);
+	printf("%s\t %d\t %d\t %s\t %d\t %d\n", execname, pid, ppid, probefunc, arg0, arg1);
 }
 
 dtrace:::END
