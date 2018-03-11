@@ -55,27 +55,14 @@
 #include <dev/usb/usb.h>
 #include <dev/usb/usbdi.h>
 
-#include <sys/sdt.h>
+// #include <dev/usb/usb_tpw_probe.h>
+
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 const struct usb_string_lang usb_string_lang_en = {
 	sizeof(usb_string_lang_en), UDESC_STRING,
 	{ 0x09, 0x04 } /* American English */
 };
-
-SDT_PROVIDER_DEFINE(tpw);
-SDT_PROBE_DEFINE2(tpw, kernel, usb_ethernet, entry, "int", "int");
-SDT_PROBE_DEFINE2(tpw, kernel, usb_ethernet, return, "int", "int");
-SDT_PROBE_DEFINE2(tpw, kernel, if_smsc, entry, "int", "int");
-SDT_PROBE_DEFINE2(tpw, kernel, if_smsc, return, "int", "int");
-SDT_PROBE_DEFINE2(tpw, kernel, if_cdce, entry, "int", "int");
-SDT_PROBE_DEFINE2(tpw, kernel, if_cdce, return, "int", "int");
-SDT_PROBE_DEFINE2(tpw, kernel, if_urndis, entry, "int", "int");
-SDT_PROBE_DEFINE2(tpw, kernel, if_urndis, return, "int", "int");
-SDT_PROBE_DEFINE2(tpw, kernel, usb_transfer_enqueue, entry, "int", "int");
-SDT_PROBE_DEFINE2(tpw, kernel, usb_transfer_enqueue, return, "int", "int");
-SDT_PROBE_DEFINE2(tpw, kernel, usb_transfer_dequeue, entry, "int", "int");
-SDT_PROBE_DEFINE2(tpw, kernel, usb_transfer_dequeue, return, "int", "int");
 
 MALLOC_DEFINE(M_USB, "USB", "USB");
 MALLOC_DEFINE(M_USBDEV, "USBdev", "USB device");

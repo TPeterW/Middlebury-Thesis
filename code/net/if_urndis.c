@@ -62,12 +62,6 @@ __FBSDID("$FreeBSD: releng/11.1/sys/dev/usb/net/if_urndis.c 307490 2016-10-17 07
 
 #include <dev/usb/usb_cdc.h>
 
-#include <sys/sdt.h>
-
-SDT_PROVIDER_DECLARE(tpw);
-SDT_PROBE_DECLARE(tpw, kernel, if_urndis, entry);
-SDT_PROBE_DECLARE(tpw, kernel, if_urndis, return);
-
 static device_probe_t urndis_probe;
 static device_attach_t urndis_attach;
 static device_detach_t urndis_detach;
@@ -914,9 +908,7 @@ urndis_bulk_read_callback(struct usb_xfer *xfer, usb_error_t error)
 				    rm_dataoffset), m->m_data, msg.rm_datalen);
 
 				/* enqueue */
-				SDT_PROBE2(tpw, kernel, if_urndis, entry, 0, 0);
 				uether_rxmbuf(&sc->sc_ue, m, msg.rm_datalen);
-				SDT_PROBE2(tpw, kernel, if_urndis, return, 0, 0);
 			} else {
 				if_inc_counter(ifp, IFCOUNTER_IERRORS, 1);
 			}

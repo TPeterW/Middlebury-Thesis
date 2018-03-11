@@ -110,12 +110,6 @@ __FBSDID("$FreeBSD: releng/11.1/sys/dev/usb/net/if_smsc.c 309254 2016-11-28 17:2
 
 #include <dev/usb/net/if_smscreg.h>
 
-#include <sys/sdt.h>
-
-SDT_PROVIDER_DECLARE(tpw);
-SDT_PROBE_DECLARE(tpw, kernel, if_smsc, entry);
-SDT_PROBE_DECLARE(tpw, kernel, if_smsc, return);
-
 #ifdef USB_DEBUG
 static int smsc_debug = 0;
 
@@ -1094,9 +1088,7 @@ smsc_bulk_read_callback(struct usb_xfer *xfer, usb_error_t error)
 					m_freem(m);
 					goto tr_setup;
 				}
-				SDT_PROBE2(tpw, kernel, if_smsc, entry, 0, 0);
 				uether_rxmbuf(ue, m, pktlen - 4);
-				SDT_PROBE2(tpw, kernel, if_smsc, return, 0, 0);
 			}
 
 			/* Update the offset to move to the next potential packet */
