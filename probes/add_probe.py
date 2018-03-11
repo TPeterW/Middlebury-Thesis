@@ -5,7 +5,7 @@ import os
 import sys
 import clang.cindex
 
-types = ['void', 'int', '_t']
+types = ['void', 'int', '_t', ' *']
 
 def main():
 	if len(sys.argv) < 3:
@@ -44,10 +44,12 @@ def main():
 			name_on_next_line = False
 			levels_down = 0
 			return_void = False
+			line_num = 0
 
 			new_cfile.append('#include <dev/usb/usb_tpw_probe_declare.h>\n')
 
 			for row in cfile:
+				line_num += 1
 				old_cfile.append(row)
 
 				if row.strip().endswith('{'):
@@ -99,6 +101,8 @@ def main():
 						if row.endswith(t + '\n'):
 							if t == 'int' and len(row.split(' ')[-1]) > 4:
 								continue
+							if t == ' *' and len(row.strip()) == 1:
+								continue
 							if t == 'void':
 								return_void = True
 							func_begin = True
@@ -108,9 +112,9 @@ def main():
 		
 		
 		new_cfile = ''.join(new_cfile)
-		# os.rename(source_file, source_file + '.orig')
-		# with open(os.path.join(path, source_file), 'w') as out_cfile:
-		# 	out_cfile.write(new_cfile)
+		os.rename(os.path.join(path, source_file), os.path.join(path, source_file + '.orig'))
+		with open(os.path.join(path, source_file), 'w') as out_cfile:
+			out_cfile.write(new_cfile)
 
 		with open(os.path.join(path, 'usb_tpw_probe_declare.h'), 'w') as declare_file:
 			declare_file.write('#include <sys/sdt.h>\n')
@@ -123,12 +127,6 @@ def main():
 			define_file.write(''.join(defined_probes))
 			define_file.write('#define USB_TPW_PROBE\n')
 			define_file.write('#endif\n')
-
-
-		# Temp
-		with open('output.c', 'w') as out_cfile:
-			out_cfile.write(new_cfile)
-		break
 	
 if __name__ == '__main__':
 	main()
