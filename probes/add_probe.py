@@ -123,6 +123,7 @@ def main():
 		with open(os.path.join(path, 'usb_tpw_probe.h'), 'w') as define_file:
 			define_file.write('#include <sys/sdt.h>\n')
 			define_file.write('#ifndef USB_TPW_PROBE\n')
+			declare_file.write('SDT_PROVIDER_DEFINE(tpw);\n')
 			define_file.write(''.join(defined_probes))
 			define_file.write('#define USB_TPW_PROBE\n')
 			define_file.write('#endif\n')
