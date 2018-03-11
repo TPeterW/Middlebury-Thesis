@@ -45,6 +45,8 @@ def main():
 			levels_down = 0
 			return_void = False
 
+			new_cfile.append('#include <dev/usb/usb_tpw_probe_declare.h>\n')
+
 			for row in cfile:
 				old_cfile.append(row)
 
@@ -103,13 +105,25 @@ def main():
 							in_function = True
 							name_on_next_line = True
 							break
-
-		# another condition to set in_function to False
+		
 		
 		new_cfile = ''.join(new_cfile)
 		# os.rename(source_file, source_file + '.orig')
 		# with open(os.path.join(path, source_file), 'w') as out_cfile:
 		# 	out_cfile.write(new_cfile)
+
+		with open(os.path.join(path, 'usb_tpw_probe_declare.h'), 'w') as declare_file:
+			declare_file.write('#include <sys/sdt.h>\n')
+			declare_file.write('SDT_PROVIDER_DECLARE(tpw);\n')
+			declare_file.write(''.join(list(declared_probes)))
+
+		with open(os.path.join(path, 'usb_tpw_probe.h'), 'w') as define_file:
+			define_file.write('#include <sys/sdt.h>\n')
+			define_file.write('#ifndef USB_TPW_PROBE\n')
+			define_file.write(''.join(defined_probes))
+			define_file.write('#define USB_TPW_PROBE\n')
+			define_file.write('#endif\n')
+
 
 		# Temp
 		with open('output.c', 'w') as out_cfile:
