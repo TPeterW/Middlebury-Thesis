@@ -5,7 +5,7 @@ dtrace:::BEGIN
 
 tpw:kernel::
 {
-	printf("%s\t%d\t%d\t%s\t%d\t", execname, pid, ppid, probefunc, timestamp);
+	printf("%s\t%d\t%d\t%s\t%p\t%p\t", execname, pid, ppid, probefunc, arg0, arg1);
 }
 
 dtrace:::END
