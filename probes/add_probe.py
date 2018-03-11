@@ -3,7 +3,6 @@
 
 import os
 import sys
-import clang.cindex
 
 types = ['void', 'int', '_t', ' *']
 
