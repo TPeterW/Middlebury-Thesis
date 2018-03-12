@@ -43,8 +43,9 @@ def main():
 			for row in cfile:
 				inter_cfile.append(row)
 				if wait_one_line:
-					inter_cfile.append('}\n')
-					wait_one_line = False
+					if row.strip().endswith(';'):
+						inter_cfile.append('}\n')
+						wait_one_line = False
 				if (row.strip().startswith('if ') or row.strip().startswith('else ') or row.strip().startswith('} else ')) and row.strip().endswith(')'):
 					inter_cfile.append('{\n')
 					wait_one_line = True
