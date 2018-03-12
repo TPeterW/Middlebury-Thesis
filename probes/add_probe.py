@@ -45,7 +45,7 @@ def main():
 				if wait_one_line:
 					inter_cfile.append('}\n')
 					wait_one_line = False
-				if (row.strip().startswith('if ') or row.strip().startswith('else ') or row.strip().startswith('} else ')) and '{' not in row:
+				if (row.strip().startswith('if ') or row.strip().startswith('else ') or row.strip().startswith('} else ')) and row.strip().endswith(')'):
 					inter_cfile.append('{\n')
 					wait_one_line = True
 
