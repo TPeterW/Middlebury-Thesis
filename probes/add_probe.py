@@ -36,18 +36,28 @@ def main():
 	for source_file in source_files:
 		new_cfile = []
 		old_cfile = []			# backup of the original file
+
+		wait_one_line = False
 		with open(os.path.join(path, source_file), 'r') as cfile:
+			inter_cfile = []
+			for row in cfile:
+				inter_cfile.append(row)
+				if wait_one_line:
+					inter_cfile.append('}\n')
+					wait_one_line = False
+				if (row.strip().startswith('if ') or row.strip().startswith('else ') or row.strip().startswith('} else ')) and '{' not in row:
+					inter_cfile.append('{\n')
+					wait_one_line = True
+
 			func_name = None
 			in_function = False
 			func_begin = True
 			name_on_next_line = False
 			levels_down = 0
 			return_void = False
-			if_no_bracket = False
-			need_close_bracket = False
 			line_num = 0
 
-			for row in cfile:
+			for row in inter_cfile:
 				line_num += 1
 				old_cfile.append(row)
 
@@ -71,36 +81,14 @@ def main():
 						new_cfile.append(row)
 						continue
 
-				if in_function and need_close_bracket:
-					if row.strip().endswith(';'):
-						new_cfile.append(row)
-						new_cfile.append('}\n')
-						need_close_bracket = False
-						continue
-
 				# Return probes
 				if in_function and row.strip().startswith('return'):
-					if if_no_bracket:
-						new_cfile.append('{\n')
 					probe_use = '\tSDT_PROBE0(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
 					probe_declare = '\tSDT_PROBE_DECLARE(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
 					probe_defined = '\tSDT_PROBE_DEFINE0(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
 					new_cfile.append(probe_use)
 					declared_probes.add(probe_declare)
 					defined_probes.add(probe_defined)
-
-					if if_no_bracket:
-						new_cfile.append(row)
-						if row.strip().endswith(';'):
-							new_cfile.append('}\n')
-						else:
-							need_close_bracket = True
-						if_no_bracket = False
-						continue
-					
-				# And if statement with no {}
-				if (row.strip().startswith('if') or row.strip().startswith('else')) and not row.strip().endswith('{'):
-					if_no_bracket = True
 
 				# Return probe has to be added before return statement
 				new_cfile.append(row)
