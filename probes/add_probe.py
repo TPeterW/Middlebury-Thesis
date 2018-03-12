@@ -49,7 +49,7 @@ def main():
 				line_num += 1
 				old_cfile.append(row)
 
-				if '#endif' in row:
+				if '#endif' in row and 'USB_GLOBAL_INCLUDE_FILE' in row:
 					new_cfile.append('#include <dev/usb/usb_tpw_probe_declare.h>\n')
 
 				if row.strip().endswith('{'):
@@ -101,7 +101,7 @@ def main():
 						if row.endswith(t + '\n'):
 							if t == 'int' and len(row.split(' ')[-1]) > 4:
 								continue
-							if t == ' *' and len(row.strip()) == 1:
+							if t == ' *' and (len(row.strip()) == 1 or row.strip().startswith('*')):
 								continue
 							if t == 'void':
 								return_void = True
