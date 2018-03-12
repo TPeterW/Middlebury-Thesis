@@ -43,6 +43,7 @@ def main():
 			name_on_next_line = False
 			levels_down = 0
 			return_void = False
+			if_no_bracket = False
 			line_num = 0
 
 			for row in cfile:
@@ -71,13 +72,25 @@ def main():
 
 				# Return probes
 				if in_function and row.strip().startswith('return'):
+					if if_no_bracket:
+						new_cfile.append('{\n')
 					probe_use = '\tSDT_PROBE0(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
 					probe_declare = '\tSDT_PROBE_DECLARE(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
 					probe_defined = '\tSDT_PROBE_DEFINE0(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
 					new_cfile.append(probe_use)
 					declared_probes.add(probe_declare)
 					defined_probes.add(probe_defined)
+
+					if if_no_bracket:
+						new_cfile.append(row)
+						new_cfile.append('}\n')
+						if_no_bracket = False
+						continue
 					
+				# And if statement with no {}
+				if (row.strip().startswith('if') or row.strip().startswith('else')) and not row.strip().endswith('{'):
+					if_no_bracket = True
+
 				# Return probe has to be added before return statement
 				new_cfile.append(row)
 
