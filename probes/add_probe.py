@@ -44,6 +44,7 @@ def main():
 			levels_down = 0
 			return_void = False
 			if_no_bracket = False
+			need_close_bracket = False
 			line_num = 0
 
 			for row in cfile:
@@ -70,6 +71,13 @@ def main():
 						new_cfile.append(row)
 						continue
 
+				if in_function and need_close_bracket:
+					if row.strip().endswith(';'):
+						new_cfile.append(row)
+						new_cfile.append('}\n')
+						need_close_bracket = False
+						continue
+
 				# Return probes
 				if in_function and row.strip().startswith('return'):
 					if if_no_bracket:
@@ -83,7 +91,10 @@ def main():
 
 					if if_no_bracket:
 						new_cfile.append(row)
-						new_cfile.append('}\n')
+						if row.strip().endswith(';'):
+							new_cfile.append('}\n')
+						else:
+							need_close_bracket = True
 						if_no_bracket = False
 						continue
 					
