@@ -45,11 +45,12 @@ def main():
 			return_void = False
 			line_num = 0
 
-			new_cfile.append('#include <dev/usb/usb_tpw_probe_declare.h>\n')
-
 			for row in cfile:
 				line_num += 1
 				old_cfile.append(row)
+
+				if '#endif' in row:
+					new_cfile.append('#include <dev/usb/usb_tpw_probe_declare.h>\n')
 
 				if row.strip().endswith('{'):
 					levels_down += 1
