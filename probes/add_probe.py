@@ -58,9 +58,9 @@ def main():
 					levels_down -= 1
 					if levels_down == 0:
 						if return_void:
-							probe_use = '\tSDT_PROBE(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
-							probe_declare = '\tSDT_PROBE_DECLARE(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
-							probe_defined = '\tSDT_PROBE_DEFINE(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
+							probe_use = '\tSDT_PROBE0(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
+							probe_declare = '\tSDT_PROBE_DECLARE0(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
+							probe_defined = '\tSDT_PROBE_DEFINE0(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
 							new_cfile.append(probe_use)
 							declared_probes.add(probe_declare)
 							defined_probes.add(probe_defined)
@@ -71,9 +71,9 @@ def main():
 
 				# Return probes
 				if in_function and row.strip().startswith('return'):
-					probe_use = '\tSDT_PROBE(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
-					probe_declare = '\tSDT_PROBE_DECLARE(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
-					probe_defined = '\tSDT_PROBE_DEFINE(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
+					probe_use = '\tSDT_PROBE0(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
+					probe_declare = '\tSDT_PROBE_DECLARE0(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
+					probe_defined = '\tSDT_PROBE_DEFINE0(tpw, kernel, %s, return);\n' % (source_file[:-2] + '_' + func_name)
 					new_cfile.append(probe_use)
 					declared_probes.add(probe_declare)
 					defined_probes.add(probe_defined)
@@ -87,9 +87,9 @@ def main():
 
 				# Entry probes
 				if func_begin and row == '{\n':
-					probe_use = '\tSDT_PROBE(tpw, kernel, %s, entry);\n' % (source_file[:-2] + '_' + func_name)
-					probe_declare = '\tSDT_PROBE_DECLARE(tpw, kernel, %s, entry);\n' % (source_file[:-2] + '_' + func_name)
-					probe_defined = '\tSDT_PROBE_DEFINE(tpw, kernel, %s, entry);\n' % (source_file[:-2] + '_' + func_name)
+					probe_use = '\tSDT_PROBE0(tpw, kernel, %s, entry);\n' % (source_file[:-2] + '_' + func_name)
+					probe_declare = '\tSDT_PROBE_DECLARE0(tpw, kernel, %s, entry);\n' % (source_file[:-2] + '_' + func_name)
+					probe_defined = '\tSDT_PROBE_DEFINE0(tpw, kernel, %s, entry);\n' % (source_file[:-2] + '_' + func_name)
 					new_cfile.append(probe_use)
 					declared_probes.add(probe_declare)
 					defined_probes.add(probe_defined)
