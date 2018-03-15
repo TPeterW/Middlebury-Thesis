@@ -50,6 +50,8 @@
 #include <dev/usb/usbdi.h>
 #include <dev/usb/usb_dev.h>
 #include <dev/usb/usb_mbuf.h>
+#include <dev/usb/usb_tpw_probe_declare.h>
+#include <dev/usb/usb_tpw_probe_declare.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 /*------------------------------------------------------------------------*
@@ -63,6 +65,8 @@ void   *
 usb_alloc_mbufs(struct malloc_type *type, struct usb_ifqueue *ifq,
     usb_size_t block_size, uint16_t nblocks)
 {
+	SDT_PROBE0(tpw, kernel, usb_mbuf_usb_alloc_mbufs, entry);
+	SDT_PROBE0(tpw, kernel, usb_mbuf_usb_alloc_mbufs, entry);
 	struct usb_mbuf *m_ptr;
 	uint8_t *data_ptr;
 	void *free_ptr = NULL;
@@ -98,5 +102,7 @@ usb_alloc_mbufs(struct malloc_type *type, struct usb_ifqueue *ifq,
 		}
 	}
 done:
+	SDT_PROBE0(tpw, kernel, usb_mbuf_usb_alloc_mbufs, return);
+	SDT_PROBE0(tpw, kernel, usb_mbuf_usb_alloc_mbufs, return);
 	return (free_ptr);
 }
