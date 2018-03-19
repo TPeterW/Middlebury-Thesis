@@ -23,7 +23,6 @@ def main():
 		return
 
 	# Find all the C source files
-	header_file = sys.argv[1]
 	all_source_files = os.listdir(sys.argv[2])
 	source_files = []
 	for original_source_file in all_source_files:
