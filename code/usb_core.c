@@ -54,6 +54,7 @@
 
 #include <dev/usb/usb.h>
 #include <dev/usb/usbdi.h>
+#include <dev/usb/usb_tpw_probe.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 const struct usb_string_lang usb_string_lang_en = {

@@ -58,7 +58,6 @@
 
 #include <ddb/ddb.h>
 #include <ddb/db_sym.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 /*
@@ -118,15 +117,12 @@ SYSCTL_PROC(_hw_usb_timings, OID_AUTO, extra_power_up_time, CTLTYPE_UINT | CTLFL
 void
 usb_dump_iface(struct usb_interface *iface)
 {
-	SDT_PROBE0(tpw, kernel, usb_debug_usb_dump_iface, entry);
 	printf("usb_dump_iface: iface=%p\n", iface);
 	if (iface == NULL) {
-	SDT_PROBE0(tpw, kernel, usb_debug_usb_dump_iface, return);
 		return;
 	}
 	printf(" iface=%p idesc=%p altindex=%d\n",
 	    iface, iface->idesc, iface->alt_index);
-	SDT_PROBE0(tpw, kernel, usb_debug_usb_dump_iface, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -137,10 +133,8 @@ usb_dump_iface(struct usb_interface *iface)
 void
 usb_dump_device(struct usb_device *udev)
 {
-	SDT_PROBE0(tpw, kernel, usb_debug_usb_dump_device, entry);
 	printf("usb_dump_device: dev=%p\n", udev);
 	if (udev == NULL) {
-	SDT_PROBE0(tpw, kernel, usb_debug_usb_dump_device, return);
 		return;
 	}
 	printf(" bus=%p \n"
@@ -149,7 +143,6 @@ usb_dump_device(struct usb_device *udev)
 	    udev->bus,
 	    udev->address, udev->curr_config_no, udev->depth, udev->speed,
 	    udev->flags.self_powered, udev->power, udev->langid);
-	SDT_PROBE0(tpw, kernel, usb_debug_usb_dump_device, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -160,7 +153,6 @@ usb_dump_device(struct usb_device *udev)
 void
 usb_dump_queue(struct usb_endpoint *ep)
 {
-	SDT_PROBE0(tpw, kernel, usb_debug_usb_dump_queue, entry);
 	struct usb_xfer *xfer;
 	usb_stream_t x;
 
@@ -170,7 +162,6 @@ usb_dump_queue(struct usb_endpoint *ep)
 			printf(" %p", xfer);
 	}
 	printf("\n");
-	SDT_PROBE0(tpw, kernel, usb_debug_usb_dump_queue, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -181,7 +172,6 @@ usb_dump_queue(struct usb_endpoint *ep)
 void
 usb_dump_endpoint(struct usb_endpoint *ep)
 {
-	SDT_PROBE0(tpw, kernel, usb_debug_usb_dump_endpoint, entry);
 	if (ep) {
 		printf("usb_dump_endpoint: endpoint=%p", ep);
 
@@ -197,7 +187,6 @@ usb_dump_endpoint(struct usb_endpoint *ep)
 	} else {
 		printf("usb_dump_endpoint: endpoint=NULL\n");
 	}
-	SDT_PROBE0(tpw, kernel, usb_debug_usb_dump_endpoint, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -208,17 +197,14 @@ usb_dump_endpoint(struct usb_endpoint *ep)
 void
 usb_dump_xfer(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_debug_usb_dump_xfer, entry);
 	struct usb_device *udev;
 	printf("usb_dump_xfer: xfer=%p\n", xfer);
 	if (xfer == NULL) {
-	SDT_PROBE0(tpw, kernel, usb_debug_usb_dump_xfer, return);
 		return;
 	}
 	if (xfer->endpoint == NULL) {
 		printf("xfer %p: endpoint=NULL\n",
 		    xfer);
-	SDT_PROBE0(tpw, kernel, usb_debug_usb_dump_xfer, return);
 		return;
 	}
 	udev = xfer->xroot->udev;
@@ -230,7 +216,6 @@ usb_dump_xfer(struct usb_xfer *xfer)
 	    udev->address, xfer->endpoint,
 	    xfer->endpoint->edesc->bEndpointAddress,
 	    xfer->endpoint->edesc->bmAttributes);
-	SDT_PROBE0(tpw, kernel, usb_debug_usb_dump_xfer, return);
 }
 
 #ifdef USB_DEBUG
@@ -259,27 +244,19 @@ static int usb_timings_sysctl_handler(SYSCTL_HANDLER_ARGS)
 	 * Attempt to get a coherent snapshot by making a copy of the data.
 	 */
 	if (arg1)
-{
 		val = *(unsigned int *)arg1;
-}
 	else
 		val = arg2;
 	error = SYSCTL_OUT(req, &val, sizeof(int));
 	if (error || !req->newptr)
-{
 		return (error);
-}
 
 	if (!arg1)
-{
 		return EPERM;
-}
 
 	error = SYSCTL_IN(req, &val, sizeof(unsigned int));
 	if (error)
-{
 		return (error);
-}
 
 	/*
 	 * Now make sure the values are decent, and certainly no lower than
@@ -288,54 +265,34 @@ static int usb_timings_sysctl_handler(SYSCTL_HANDLER_ARGS)
 	unsigned int *p = (unsigned int *)arg1;
 	if (p == &usb_port_reset_delay) {
 		if (val < USB_PORT_RESET_DELAY_SPEC)
-{
 			return (EINVAL);
-}
 	} else if (p == &usb_port_root_reset_delay) {
 		if (val < USB_PORT_ROOT_RESET_DELAY_SPEC)
-{
 			return (EINVAL);
-}
 	} else if (p == &usb_port_reset_recovery) {
 		if (val < USB_PORT_RESET_RECOVERY_SPEC)
-{
 			return (EINVAL);
-}
 	} else if (p == &usb_port_powerup_delay) {
 		if (val < USB_PORT_POWERUP_DELAY_SPEC)
-{
 			return (EINVAL);
-}
 	} else if (p == &usb_port_resume_delay) {
 		if (val < USB_PORT_RESUME_DELAY_SPEC)
-{
 			return (EINVAL);
-}
 	} else if (p == &usb_set_address_settle) {
 		if (val < USB_SET_ADDRESS_SETTLE_SPEC)
-{
 			return (EINVAL);
-}
 	} else if (p == &usb_resume_delay) {
 		if (val < USB_RESUME_DELAY_SPEC)
-{
 			return (EINVAL);
-}
 	} else if (p == &usb_resume_wait) {
 		if (val < USB_RESUME_WAIT_SPEC)
-{
 			return (EINVAL);
-}
 	} else if (p == &usb_resume_recovery) {
 		if (val < USB_RESUME_RECOVERY_SPEC)
-{
 			return (EINVAL);
-}
 	} else if (p == &usb_extra_power_up_time) {
 		if (val < USB_EXTRA_POWER_UP_TIME_SPEC)
-{
 			return (EINVAL);
-}
 	} else {
 		/* noop */
 	}

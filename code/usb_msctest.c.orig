@@ -69,7 +69,6 @@
 #include <dev/usb/usb_request.h>
 #include <dev/usb/usb_util.h>
 #include <dev/usb/quirk/usb_quirk.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 enum {
@@ -269,28 +268,23 @@ static const struct usb_config bbb_raw_config[1] = {
 static void
 bbb_done(struct bbb_transfer *sc, int error)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_done, entry);
 	sc->error = error;
 	sc->state = ST_COMMAND;
 	sc->status_try = 1;
 	cv_signal(&sc->cv);
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_done, return);
 }
 
 static void
 bbb_transfer_start(struct bbb_transfer *sc, uint8_t xfer_index)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_transfer_start, entry);
 	sc->state = xfer_index;
 	usbd_transfer_start(sc->xfer[xfer_index]);
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_transfer_start, return);
 }
 
 static void
 bbb_data_clear_stall_callback(struct usb_xfer *xfer,
     uint8_t next_xfer, uint8_t stall_xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_data_clear_stall_callback, entry);
 	struct bbb_transfer *sc = usbd_xfer_softc(xfer);
 
 	if (usbd_clear_stall_callback(xfer, sc->xfer[stall_xfer])) {
@@ -304,13 +298,11 @@ bbb_data_clear_stall_callback(struct usb_xfer *xfer,
 			break;
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_data_clear_stall_callback, return);
 }
 
 static void
 bbb_command_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_command_callback, entry);
 	struct bbb_transfer *sc = usbd_xfer_softc(xfer);
 	uint32_t tag;
 
@@ -344,13 +336,11 @@ bbb_command_callback(struct usb_xfer *xfer, usb_error_t error)
 		bbb_done(sc, error);
 		break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_command_callback, return);
 }
 
 static void
 bbb_data_read_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_data_read_callback, entry);
 	struct bbb_transfer *sc = usbd_xfer_softc(xfer);
 	usb_frlength_t max_bulk = usbd_xfer_max_len(xfer);
 	int actlen, sumlen;
@@ -391,22 +381,18 @@ bbb_data_read_callback(struct usb_xfer *xfer, usb_error_t error)
 		}
 		break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_data_read_callback, return);
 }
 
 static void
 bbb_data_rd_cs_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_data_rd_cs_callback, entry);
 	bbb_data_clear_stall_callback(xfer, ST_STATUS,
 	    ST_DATA_RD);
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_data_rd_cs_callback, return);
 }
 
 static void
 bbb_data_write_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_data_write_callback, entry);
 	struct bbb_transfer *sc = usbd_xfer_softc(xfer);
 	usb_frlength_t max_bulk = usbd_xfer_max_len(xfer);
 	int actlen, sumlen;
@@ -447,22 +433,18 @@ bbb_data_write_callback(struct usb_xfer *xfer, usb_error_t error)
 		}
 		break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_data_write_callback, return);
 }
 
 static void
 bbb_data_wr_cs_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_data_wr_cs_callback, entry);
 	bbb_data_clear_stall_callback(xfer, ST_STATUS,
 	    ST_DATA_WR);
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_data_wr_cs_callback, return);
 }
 
 static void
 bbb_status_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_status_callback, entry);
 	struct bbb_transfer *sc = usbd_xfer_softc(xfer);
 	int actlen;
 	int sumlen;
@@ -501,13 +483,11 @@ bbb_status_callback(struct usb_xfer *xfer, usb_error_t error)
 		}
 		break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_status_callback, return);
 }
 
 static void
 bbb_raw_write_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_raw_write_callback, entry);
 	struct bbb_transfer *sc = usbd_xfer_softc(xfer);
 	usb_frlength_t max_bulk = usbd_xfer_max_len(xfer);
 	int actlen, sumlen;
@@ -544,7 +524,6 @@ bbb_raw_write_callback(struct usb_xfer *xfer, usb_error_t error)
 		bbb_done(sc, error);
 		break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_raw_write_callback, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -559,7 +538,6 @@ bbb_command_start(struct bbb_transfer *sc, uint8_t dir, uint8_t lun,
     void *data_ptr, size_t data_len, void *cmd_ptr, size_t cmd_len,
     usb_timeout_t data_timeout)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_command_start, entry);
 	sc->lun = lun;
 	sc->dir = data_len ? dir : DIR_NONE;
 	sc->data_ptr = data_ptr;
@@ -580,7 +558,6 @@ bbb_command_start(struct bbb_transfer *sc, uint8_t dir, uint8_t lun,
 		cv_wait(&sc->cv, &sc->mtx);
 	}
 	mtx_unlock(&sc->mtx);
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_command_start, return);
 	return (sc->error);
 }
 
@@ -595,7 +572,6 @@ static int
 bbb_raw_write(struct bbb_transfer *sc, const void *data_ptr, size_t data_len,
     usb_timeout_t data_timeout)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_raw_write, entry);
 	sc->data_ptr = __DECONST(void *, data_ptr);
 	sc->data_len = data_len;
 	sc->data_rem = data_len;
@@ -611,7 +587,6 @@ bbb_raw_write(struct bbb_transfer *sc, const void *data_ptr, size_t data_len,
 	while (usbd_transfer_pending(sc->xfer[0]))
 		cv_wait(&sc->cv, &sc->mtx);
 	mtx_unlock(&sc->mtx);
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_raw_write, return);
 	return (sc->error);
 }
 
@@ -619,7 +594,6 @@ static struct bbb_transfer *
 bbb_attach(struct usb_device *udev, uint8_t iface_index,
     uint8_t bInterfaceClass)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_attach, entry);
 	struct usb_interface *iface;
 	struct usb_interface_descriptor *id;
 	const struct usb_config *pconfig;
@@ -640,24 +614,16 @@ bbb_attach(struct usb_device *udev, uint8_t iface_index,
 	usb_detach_device(udev, iface_index, 0);
 
 	if (do_unlock)
-{
 		usbd_enum_unlock(udev);
-}
 #endif
 
 	iface = usbd_get_iface(udev, iface_index);
 	if (iface == NULL)
-{
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_attach, return);
 		return (NULL);
-}
 
 	id = iface->idesc;
 	if (id == NULL || id->bInterfaceClass != bInterfaceClass)
-{
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_attach, return);
 		return (NULL);
-}
 
 	switch (id->bInterfaceClass) {
 	case UICLASS_MASS:
@@ -668,7 +634,6 @@ bbb_attach(struct usb_device *udev, uint8_t iface_index,
 		case UISUBCLASS_SFF8070I:
 			break;
 		default:
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_attach, return);
 			return (NULL);
 		}
 		switch (id->bInterfaceProtocol) {
@@ -676,7 +641,6 @@ bbb_attach(struct usb_device *udev, uint8_t iface_index,
 		case UIPROTO_MASS_BBB:
 			break;
 		default:
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_attach, return);
 			return (NULL);
 		}
 		pconfig = bbb_config;
@@ -687,14 +651,12 @@ bbb_attach(struct usb_device *udev, uint8_t iface_index,
 		case 0:
 			break;
 		default:
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_attach, return);
 			return (NULL);
 		}
 		pconfig = bbb_raw_config;
 		nconfig = 1;
 		break;
 	default:
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_attach, return);
 		return (NULL);
 	}
 
@@ -706,7 +668,6 @@ bbb_attach(struct usb_device *udev, uint8_t iface_index,
 	    nconfig, sc, &sc->mtx);
 	if (err) {
 		bbb_detach(sc);
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_attach, return);
 		return (NULL);
 	}
 	switch (id->bInterfaceClass) {
@@ -724,19 +685,16 @@ bbb_attach(struct usb_device *udev, uint8_t iface_index,
 	default:
 		break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_attach, return);
 	return (sc);
 }
 
 static void
 bbb_detach(struct bbb_transfer *sc)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_detach, entry);
 	usbd_transfer_unsetup(sc->xfer, ST_MAX);
 	mtx_destroy(&sc->mtx);
 	cv_destroy(&sc->cv);
 	free(sc, M_USB);
-	SDT_PROBE0(tpw, kernel, usb_msctest_bbb_detach, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -749,7 +707,6 @@ bbb_detach(struct bbb_transfer *sc)
 int
 usb_iface_is_cdrom(struct usb_device *udev, uint8_t iface_index)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_iface_is_cdrom, entry);
 	struct bbb_transfer *sc;
 	uint8_t timeout;
 	uint8_t is_cdrom;
@@ -758,10 +715,7 @@ usb_iface_is_cdrom(struct usb_device *udev, uint8_t iface_index)
 
 	sc = bbb_attach(udev, iface_index, UICLASS_MASS);
 	if (sc == NULL)
-{
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_iface_is_cdrom, return);
 		return (0);
-}
 
 	is_cdrom = 0;
 	timeout = 4;	/* tries */
@@ -773,25 +727,19 @@ usb_iface_is_cdrom(struct usb_device *udev, uint8_t iface_index)
 		if (err == 0 && sc->actlen > 0) {
 			sid_type = sc->buffer[0] & 0x1F;
 			if (sid_type == 0x05)
-{
 				is_cdrom = 1;
-}
 			break;
 		} else if (err != ERR_CSW_FAILED)
-{
 			break;	/* non retryable error */
-}
 		usb_pause_mtx(NULL, hz);
 	}
 	bbb_detach(sc);
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_iface_is_cdrom, return);
 	return (is_cdrom);
 }
 
 static uint8_t
 usb_msc_get_max_lun(struct usb_device *udev, uint8_t iface_index)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_get_max_lun, entry);
 	struct usb_device_request req;
 	usb_error_t err;
 	uint8_t buf = 0;
@@ -807,18 +755,14 @@ usb_msc_get_max_lun(struct usb_device *udev, uint8_t iface_index)
 
 	err = usbd_do_request(udev, NULL, &req, &buf);
 	if (err)
-{
 		buf = 0;
-}
 
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_get_max_lun, return);
 	return (buf);
 }
 
 usb_error_t
 usb_msc_auto_quirk(struct usb_device *udev, uint8_t iface_index)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_auto_quirk, entry);
 	struct bbb_transfer *sc;
 	uint8_t timeout;
 	uint8_t is_no_direct;
@@ -827,10 +771,7 @@ usb_msc_auto_quirk(struct usb_device *udev, uint8_t iface_index)
 
 	sc = bbb_attach(udev, iface_index, UICLASS_MASS);
 	if (sc == NULL)
-{
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_auto_quirk, return);
 		return (0);
-}
 
 	/*
 	 * Some devices need a delay after that the configuration
@@ -852,9 +793,7 @@ usb_msc_auto_quirk(struct usb_device *udev, uint8_t iface_index)
 		if (err == 0 && sc->actlen > 0) {
 			sid_type = sc->buffer[0] & 0x1F;
 			if (sid_type == 0x00)
-{
 				is_no_direct = 0;
-}
 			break;
 		} else if (err != ERR_CSW_FAILED) {
 			DPRINTF("Device is not responding "
@@ -875,9 +814,7 @@ usb_msc_auto_quirk(struct usb_device *udev, uint8_t iface_index)
 
 	if (err != 0) {
 		if (err != ERR_CSW_FAILED)
-{
 			goto error;
-}
 		DPRINTF("Test unit ready failed\n");
 	}
 
@@ -893,9 +830,7 @@ usb_msc_auto_quirk(struct usb_device *udev, uint8_t iface_index)
 
 	if (err != 0) {
 		if (err != ERR_CSW_FAILED)
-{
 			goto error;
-}
 		DPRINTF("Device doesn't handle prevent and allow removal\n");
 		usbd_add_dynamic_quirk(udev, UQ_MSC_NO_PREVENT_ALLOW);
 	}
@@ -910,9 +845,7 @@ retry_sync_cache:
 	if (err != 0) {
 
 		if (err != ERR_CSW_FAILED)
-{
 			goto error;
-}
 
 		DPRINTF("Device doesn't handle synchronize cache\n");
 
@@ -932,9 +865,7 @@ retry_sync_cache:
 
 		if (err != 0) {
 			if (err != ERR_CSW_FAILED)
-{
 				goto error;
-}
 
 			err = bbb_command_start(sc, DIR_IN, 0, sc->buffer, 8,
 			    &scsi_read_capacity, sizeof(scsi_read_capacity),
@@ -942,9 +873,7 @@ retry_sync_cache:
 
 			if (err == 0) {
 				if (timeout--)
-{
 					goto retry_sync_cache;
-}
 
 				DPRINTF("Device most likely doesn't "
 				    "handle synchronize cache\n");
@@ -953,9 +882,7 @@ retry_sync_cache:
 				    UQ_MSC_NO_SYNC_CACHE);
 			} else {
 				if (err != ERR_CSW_FAILED)
-{
 					goto error;
-}
 			}
 		}
 	}
@@ -971,9 +898,7 @@ retry_sync_cache:
 	if (err != 0) {
 
 		if (err != ERR_CSW_FAILED)
-{
 			goto error;
-}
 	}
 
 	err = bbb_command_start(sc, DIR_IN, 0, sc->buffer,
@@ -985,14 +910,11 @@ retry_sync_cache:
 	if (err != 0) {
 
 		if (err != ERR_CSW_FAILED)
-{
 			goto error;
-}
 	}
 
 done:
 	bbb_detach(sc);
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_auto_quirk, return);
 	return (0);
 
 error:
@@ -1007,23 +929,18 @@ error:
 	/* Need to re-enumerate the device */
 	usbd_req_re_enumerate(udev, NULL);
 
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_auto_quirk, return);
 	return (USB_ERR_STALLED);
 }
 
 usb_error_t
 usb_msc_eject(struct usb_device *udev, uint8_t iface_index, int method)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_eject, entry);
 	struct bbb_transfer *sc;
 	usb_error_t err;
 
 	sc = bbb_attach(udev, iface_index, UICLASS_MASS);
 	if (sc == NULL)
-{
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_eject, return);
 		return (USB_ERR_INVAL);
-}
 
 	switch (method) {
 	case MSC_EJECT_STOPUNIT:
@@ -1072,34 +989,27 @@ usb_msc_eject(struct usb_device *udev, uint8_t iface_index, int method)
 	default:
 		DPRINTF("Unknown eject method (%d)\n", method);
 		bbb_detach(sc);
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_eject, return);
 		return (USB_ERR_INVAL);
 	}
 
 	DPRINTF("Eject CD command status: %s\n", usbd_errstr(err));
 
 	bbb_detach(sc);
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_eject, return);
 	return (0);
 }
 
 usb_error_t
 usb_dymo_eject(struct usb_device *udev, uint8_t iface_index)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_dymo_eject, entry);
 	static const uint8_t data[3] = { 0x1b, 0x5a, 0x01 };
 	struct bbb_transfer *sc;
 	usb_error_t err;
 
 	sc = bbb_attach(udev, iface_index, UICLASS_HID);
 	if (sc == NULL)
-{
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_dymo_eject, return);
 		return (USB_ERR_INVAL);
-}
 	err = bbb_raw_write(sc, data, sizeof(data), USB_MS_HZ);
 	bbb_detach(sc);
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_dymo_eject, return);
 	return (err);
 }
 
@@ -1107,7 +1017,6 @@ usb_error_t
 usb_msc_read_10(struct usb_device *udev, uint8_t iface_index,
     uint32_t lba, uint32_t blocks, void *buffer)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_read_10, entry);
 	struct bbb_transfer *sc;
 	uint8_t cmd[10];
 	usb_error_t err;
@@ -1125,17 +1034,13 @@ usb_msc_read_10(struct usb_device *udev, uint8_t iface_index,
 
 	sc = bbb_attach(udev, iface_index, UICLASS_MASS);
 	if (sc == NULL)
-{
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_read_10, return);
 		return (USB_ERR_INVAL);
-}
 
 	err = bbb_command_start(sc, DIR_IN, 0, buffer,
 	    blocks * SCSI_FIXED_BLOCK_SIZE, cmd, 10, USB_MS_HZ);
 
 	bbb_detach(sc);
 
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_read_10, return);
 	return (err);
 }
 
@@ -1143,7 +1048,6 @@ usb_error_t
 usb_msc_write_10(struct usb_device *udev, uint8_t iface_index,
     uint32_t lba, uint32_t blocks, void *buffer)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_write_10, entry);
 	struct bbb_transfer *sc;
 	uint8_t cmd[10];
 	usb_error_t err;
@@ -1161,17 +1065,13 @@ usb_msc_write_10(struct usb_device *udev, uint8_t iface_index,
 
 	sc = bbb_attach(udev, iface_index, UICLASS_MASS);
 	if (sc == NULL)
-{
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_write_10, return);
 		return (USB_ERR_INVAL);
-}
 
 	err = bbb_command_start(sc, DIR_OUT, 0, buffer,
 	    blocks * SCSI_FIXED_BLOCK_SIZE, cmd, 10, USB_MS_HZ);
 
 	bbb_detach(sc);
 
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_write_10, return);
 	return (err);
 }
 
@@ -1179,16 +1079,12 @@ usb_error_t
 usb_msc_read_capacity(struct usb_device *udev, uint8_t iface_index,
     uint32_t *lba_last, uint32_t *block_size)
 {
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_read_capacity, entry);
 	struct bbb_transfer *sc;
 	usb_error_t err;
 
 	sc = bbb_attach(udev, iface_index, UICLASS_MASS);
 	if (sc == NULL)
-{
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_read_capacity, return);
 		return (USB_ERR_INVAL);
-}
 
 	err = bbb_command_start(sc, DIR_IN, 0, sc->buffer, 8,
 	    &scsi_read_capacity, sizeof(scsi_read_capacity),
@@ -1208,12 +1104,9 @@ usb_msc_read_capacity(struct usb_device *udev, uint8_t iface_index,
 
 	/* we currently only support one block size */
 	if (*block_size != SCSI_FIXED_BLOCK_SIZE)
-{
 		err = USB_ERR_INVAL;
-}
 
 	bbb_detach(sc);
 
-	SDT_PROBE0(tpw, kernel, usb_msctest_usb_msc_read_capacity, return);
 	return (err);
 }

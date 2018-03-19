@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.1/sys/dev/usb/usb_error.c 246122 2013-01-30 15:26:04Z hselasky $ */
+/* $FreeBSD: releng/11.1/sys/dev/usb/usb_mbuf.c 246122 2013-01-30 15:26:04Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -48,50 +48,55 @@
 
 #include <dev/usb/usb.h>
 #include <dev/usb/usbdi.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
+#include <dev/usb/usb_dev.h>
+#include <dev/usb/usb_mbuf.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
-static const char* usb_errstr_table[USB_ERR_MAX] = {
-	[USB_ERR_NORMAL_COMPLETION]	= "USB_ERR_NORMAL_COMPLETION",
-	[USB_ERR_PENDING_REQUESTS]	= "USB_ERR_PENDING_REQUESTS",
-	[USB_ERR_NOT_STARTED]		= "USB_ERR_NOT_STARTED",
-	[USB_ERR_INVAL]			= "USB_ERR_INVAL",
-	[USB_ERR_NOMEM]			= "USB_ERR_NOMEM",
-	[USB_ERR_CANCELLED]		= "USB_ERR_CANCELLED",
-	[USB_ERR_BAD_ADDRESS]		= "USB_ERR_BAD_ADDRESS",
-	[USB_ERR_BAD_BUFSIZE]		= "USB_ERR_BAD_BUFSIZE",
-	[USB_ERR_BAD_FLAG]		= "USB_ERR_BAD_FLAG",
-	[USB_ERR_NO_CALLBACK]		= "USB_ERR_NO_CALLBACK",
-	[USB_ERR_IN_USE]		= "USB_ERR_IN_USE",
-	[USB_ERR_NO_ADDR]		= "USB_ERR_NO_ADDR",
-	[USB_ERR_NO_PIPE]		= "USB_ERR_NO_PIPE",
-	[USB_ERR_ZERO_NFRAMES]		= "USB_ERR_ZERO_NFRAMES",
-	[USB_ERR_ZERO_MAXP]		= "USB_ERR_ZERO_MAXP",
-	[USB_ERR_SET_ADDR_FAILED]	= "USB_ERR_SET_ADDR_FAILED",
-	[USB_ERR_NO_POWER]		= "USB_ERR_NO_POWER",
-	[USB_ERR_TOO_DEEP]		= "USB_ERR_TOO_DEEP",
-	[USB_ERR_IOERROR]		= "USB_ERR_IOERROR",
-	[USB_ERR_NOT_CONFIGURED]	= "USB_ERR_NOT_CONFIGURED",
-	[USB_ERR_TIMEOUT]		= "USB_ERR_TIMEOUT",
-	[USB_ERR_SHORT_XFER]		= "USB_ERR_SHORT_XFER",
-	[USB_ERR_STALLED]		= "USB_ERR_STALLED",
-	[USB_ERR_INTERRUPTED]		= "USB_ERR_INTERRUPTED",
-	[USB_ERR_DMA_LOAD_FAILED]	= "USB_ERR_DMA_LOAD_FAILED",
-	[USB_ERR_BAD_CONTEXT]		= "USB_ERR_BAD_CONTEXT",
-	[USB_ERR_NO_ROOT_HUB]		= "USB_ERR_NO_ROOT_HUB",
-	[USB_ERR_NO_INTR_THREAD]	= "USB_ERR_NO_INTR_THREAD",
-	[USB_ERR_NOT_LOCKED]		= "USB_ERR_NOT_LOCKED",
-};
-
 /*------------------------------------------------------------------------*
- *	usbd_errstr
+ *      usb_alloc_mbufs - allocate mbufs to an usbd interface queue
  *
- * This function converts an USB error code into a string.
+ * Returns:
+ *   A pointer that should be passed to "free()" when the buffer(s)
+ *   should be released.
  *------------------------------------------------------------------------*/
-const char *
-usbd_errstr(usb_error_t err)
+void   *
+usb_alloc_mbufs(struct malloc_type *type, struct usb_ifqueue *ifq,
+    usb_size_t block_size, uint16_t nblocks)
 {
-	SDT_PROBE0(tpw, kernel, usb_error_usbd_errstr, entry);
-	SDT_PROBE0(tpw, kernel, usb_error_usbd_errstr, return);
-	return (err < USB_ERR_MAX ? usb_errstr_table[err] : "USB_ERR_UNKNOWN");
+	struct usb_mbuf *m_ptr;
+	uint8_t *data_ptr;
+	void *free_ptr = NULL;
+	usb_size_t alloc_size;
+
+	/* align data */
+	block_size += ((-block_size) & (USB_HOST_ALIGN - 1));
+
+	if (nblocks && block_size) {
+
+		alloc_size = (block_size + sizeof(struct usb_mbuf)) * nblocks;
+
+		free_ptr = malloc(alloc_size, type, M_WAITOK | M_ZERO);
+
+		if (free_ptr == NULL) {
+			goto done;
+		}
+		m_ptr = free_ptr;
+		data_ptr = (void *)(m_ptr + nblocks);
+
+		while (nblocks--) {
+
+			m_ptr->cur_data_ptr =
+			    m_ptr->min_data_ptr = data_ptr;
+
+			m_ptr->cur_data_len =
+			    m_ptr->max_data_len = block_size;
+
+			USB_IF_ENQUEUE(ifq, m_ptr);
+
+			m_ptr++;
+			data_ptr += block_size;
+		}
+	}
+done:
+	return (free_ptr);
 }
