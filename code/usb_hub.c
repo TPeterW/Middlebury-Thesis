@@ -71,8 +71,6 @@
 
 #include <dev/usb/usb_controller.h>
 #include <dev/usb/usb_bus.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 #define	UHUB_INTR_INTERVAL 250		/* ms */
@@ -216,8 +214,6 @@ MODULE_VERSION(uhub, 1);
 static void
 uhub_intr_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_intr_callback, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_intr_callback, entry);
 	struct uhub_softc *sc = usbd_xfer_softc(xfer);
 
 	switch (USB_GET_STATE(xfer)) {
@@ -249,8 +245,6 @@ uhub_intr_callback(struct usb_xfer *xfer, usb_error_t error)
 		}
 		break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_intr_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_intr_callback, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -262,8 +256,6 @@ uhub_intr_callback(struct usb_xfer *xfer, usb_error_t error)
 static void
 uhub_reset_tt_proc(struct usb_proc_msg *_pm)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reset_tt_proc, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reset_tt_proc, entry);
 	struct usb_udev_msg *pm = (void *)_pm;
 	struct usb_device *udev = pm->udev;
 	struct usb_hub *hub;
@@ -271,22 +263,10 @@ uhub_reset_tt_proc(struct usb_proc_msg *_pm)
 
 	hub = udev->hub;
 	if (hub == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reset_tt_proc, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reset_tt_proc, return);
 		return;
-}
 	sc = hub->hubsoftc;
 	if (sc == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reset_tt_proc, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reset_tt_proc, return);
 		return;
-}
 
 	/* Change lock */
 	USB_BUS_UNLOCK(udev->bus);
@@ -296,8 +276,6 @@ uhub_reset_tt_proc(struct usb_proc_msg *_pm)
 	/* Change lock */
 	mtx_unlock(&sc->sc_mtx);
 	USB_BUS_LOCK(udev->bus);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reset_tt_proc, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reset_tt_proc, return);
 }
 #endif
 
@@ -310,8 +288,6 @@ uhub_reset_tt_proc(struct usb_proc_msg *_pm)
 void
 uhub_tt_buffer_reset_async_locked(struct usb_device *child, struct usb_endpoint *ep)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_tt_buffer_reset_async_locked, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_tt_buffer_reset_async_locked, entry);
 	struct usb_device_request req;
 	struct usb_device *udev;
 	struct usb_hub *hub;
@@ -320,25 +296,13 @@ uhub_tt_buffer_reset_async_locked(struct usb_device *child, struct usb_endpoint 
 	uint8_t port;
 
 	if (child == NULL || ep == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_tt_buffer_reset_async_locked, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_tt_buffer_reset_async_locked, return);
 		return;
-}
 
 	udev = child->parent_hs_hub;
 	port = child->hs_port_no;
 
 	if (udev == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_tt_buffer_reset_async_locked, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_tt_buffer_reset_async_locked, return);
 		return;
-}
 
 	hub = udev->hub;
 	if ((hub == NULL) ||
@@ -348,8 +312,6 @@ uhub_tt_buffer_reset_async_locked(struct usb_device *child, struct usb_endpoint 
 	    (child->flags.usb_mode != USB_MODE_HOST) ||
 	    (port == 0) || (ep->edesc == NULL)) {
 		/* not applicable */
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_tt_buffer_reset_async_locked, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_tt_buffer_reset_async_locked, return);
 		return;
 	}
 
@@ -386,8 +348,6 @@ uhub_tt_buffer_reset_async_locked(struct usb_device *child, struct usb_endpoint 
 	/* get reset transfer started */
 	usb_proc_msignal(USB_BUS_TT_PROC(udev->bus),
 	    &hub->tt_msg[0], &hub->tt_msg[1]);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_tt_buffer_reset_async_locked, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_tt_buffer_reset_async_locked, return);
 }
 #endif
 
@@ -395,8 +355,6 @@ uhub_tt_buffer_reset_async_locked(struct usb_device *child, struct usb_endpoint 
 static void
 uhub_reset_tt_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reset_tt_callback, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reset_tt_callback, entry);
 	struct uhub_softc *sc;
 	struct usb_device *udev;
 	struct usb_port *up;
@@ -417,11 +375,7 @@ tr_setup:
 			up = udev->hub->ports + x;
 
 			if (up->req_reset_tt.bRequest == 0)
-{
-{
 				continue;
-}
-}
 
 			/* copy in the transfer */
 			usbd_copy_in(xfer->frbuffers, 0, &up->req_reset_tt,
@@ -435,8 +389,6 @@ tr_setup:
 			USB_BUS_UNLOCK(udev->bus);
 
 			usbd_transfer_submit(xfer);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reset_tt_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reset_tt_callback, return);
 			return;
 		}
 		USB_BUS_UNLOCK(udev->bus);
@@ -444,17 +396,11 @@ tr_setup:
 
 	default:
 		if (error == USB_ERR_CANCELLED)
-{
-{
 			break;
-}
-}
 
 		DPRINTF("TT buffer reset failed (%s)\n", usbd_errstr(error));
 		goto tr_setup;
 	}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reset_tt_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reset_tt_callback, return);
 }
 #endif
 
@@ -466,8 +412,6 @@ tr_setup:
 uint8_t
 uhub_count_active_host_ports(struct usb_device *udev, enum usb_dev_speed speed)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_count_active_host_ports, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_count_active_host_ports, entry);
 	struct uhub_softc *sc;
 	struct usb_device *child;
 	struct usb_hub *hub;
@@ -476,25 +420,13 @@ uhub_count_active_host_ports(struct usb_device *udev, enum usb_dev_speed speed)
 	uint8_t x;
 
 	if (udev == NULL)
-{
-{
 		goto done;
-}
-}
 	hub = udev->hub;
 	if (hub == NULL)
-{
-{
 		goto done;
-}
-}
 	sc = hub->hubsoftc;
 	if (sc == NULL)
-{
-{
 		goto done;
-}
-}
 
 	for (x = 0; x != hub->nports; x++) {
 		up = hub->ports + x;
@@ -505,28 +437,18 @@ uhub_count_active_host_ports(struct usb_device *udev, enum usb_dev_speed speed)
 			retval++;
 	}
 done:
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_count_active_host_ports, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_count_active_host_ports, return);
 	return (retval);
 }
 
 void
 uhub_explore_handle_re_enumerate(struct usb_device *child)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore_handle_re_enumerate, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore_handle_re_enumerate, entry);
 	uint8_t do_unlock;
 	usb_error_t err;
 
 	/* check if device should be re-enumerated */
 	if (child->flags.usb_mode != USB_MODE_HOST)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore_handle_re_enumerate, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore_handle_re_enumerate, return);
 		return;
-}
 
 	do_unlock = usbd_enum_lock(child);
 	switch (child->re_enumerate_wait) {
@@ -545,11 +467,7 @@ uhub_explore_handle_re_enumerate(struct usb_device *child)
 			err = usbd_req_re_enumerate(child, NULL);
 		}
 		if (err == 0)
-{
-{
 			err = usbd_set_config_index(child, 0);
-}
-}
 		if (err == 0) {
 			err = usb_probe_and_attach(child,
 			    USB_IFACE_INDEX_ANY);
@@ -599,13 +517,7 @@ uhub_explore_handle_re_enumerate(struct usb_device *child)
 		break;
 	}
 	if (do_unlock)
-{
-{
 		usbd_enum_unlock(child);
-}
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore_handle_re_enumerate, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore_handle_re_enumerate, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -618,8 +530,6 @@ uhub_explore_handle_re_enumerate(struct usb_device *child)
 static usb_error_t
 uhub_explore_sub(struct uhub_softc *sc, struct usb_port *up)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore_sub, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore_sub, entry);
 	struct usb_bus *bus;
 	struct usb_device *child;
 	uint8_t refcount;
@@ -653,24 +563,14 @@ uhub_explore_sub(struct uhub_softc *sc, struct usb_port *up)
 	/* start control transfer, if device mode */
 
 	if (child->flags.usb_mode == USB_MODE_DEVICE)
-{
-{
 		usbd_ctrl_transfer_setup(child);
-}
-}
 
 	/* if a HUB becomes present, do a recursive HUB explore */
 
 	if (child->hub)
-{
-{
 		err = (child->hub->explore) (child);
-}
-}
 
 done:
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore_sub, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore_sub, return);
 	return (err);
 }
 
@@ -680,8 +580,6 @@ done:
 static usb_error_t
 uhub_read_port_status(struct uhub_softc *sc, uint8_t portno)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_read_port_status, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_read_port_status, entry);
 	struct usb_port_status ps;
 	usb_error_t err;
 
@@ -699,8 +597,6 @@ uhub_read_port_status(struct uhub_softc *sc, uint8_t portno)
 	    "wPortChange=0x%04x, err=%s\n",
 	    portno, sc->sc_st.port_status,
 	    sc->sc_st.port_change, usbd_errstr(err));
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_read_port_status, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_read_port_status, return);
 	return (err);
 }
 
@@ -714,8 +610,6 @@ uhub_read_port_status(struct uhub_softc *sc, uint8_t portno)
 static usb_error_t
 uhub_reattach_port(struct uhub_softc *sc, uint8_t portno)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reattach_port, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reattach_port, entry);
 	struct usb_device *child;
 	struct usb_device *udev;
 	enum usb_dev_speed speed;
@@ -739,11 +633,7 @@ repeat:
 	    portno, UHF_C_PORT_CONNECTION);
 
 	if (err)
-{
-{
 		goto error;
-}
-}
 
 	/* check if there is a child */
 
@@ -758,11 +648,7 @@ repeat:
 
 	err = uhub_read_port_status(sc, portno);
 	if (err)
-{
-{
 		goto error;
-}
-}
 
 #if USB_HAVE_DISABLE_ENUM
 	/* check if we should skip enumeration from this USB HUB */
@@ -775,11 +661,7 @@ repeat:
 	/* check if nothing is connected to the port */
 
 	if (!(sc->sc_st.port_status & UPS_CURRENT_CONNECT_STATUS))
-{
-{
 		goto error;
-}
-}
 
 	/* check if there is no power on the port and print a warning */
 
@@ -791,11 +673,7 @@ repeat:
 		break;
 	case USB_SPEED_SUPER:
 		if (udev->parent_hub == NULL)
-{
-{
 			power_mask = UPS_PORT_POWER;
-}
-}
 		else
 			power_mask = UPS_PORT_POWER_SS;
 		break;
@@ -871,27 +749,15 @@ repeat:
 	switch (udev->speed) {
 	case USB_SPEED_HIGH:
 		if (sc->sc_st.port_status & UPS_HIGH_SPEED)
-{
-{
 			speed = USB_SPEED_HIGH;
-}
-}
 		else if (sc->sc_st.port_status & UPS_LOW_SPEED)
-{
-{
 			speed = USB_SPEED_LOW;
-}
-}
 		else
 			speed = USB_SPEED_FULL;
 		break;
 	case USB_SPEED_FULL:
 		if (sc->sc_st.port_status & UPS_LOW_SPEED)
-{
-{
 			speed = USB_SPEED_LOW;
-}
-}
 		else
 			speed = USB_SPEED_FULL;
 		break;
@@ -950,11 +816,7 @@ repeat:
 		/* inherit mode from the parent HUB */
 		mode = udev->parent_hub->flags.usb_mode;
 	} else if (sc->sc_st.port_status & UPS_PORT_MODE_DEVICE)
-{
-{
 		mode = USB_MODE_DEVICE;
-}
-}
 	else
 		mode = USB_MODE_HOST;
 
@@ -965,8 +827,6 @@ repeat:
 		DPRINTFN(0, "could not allocate new device\n");
 		goto error;
 	}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reattach_port, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reattach_port, return);
 	return (0);			/* success */
 
 error:
@@ -988,8 +848,6 @@ error:
 		DPRINTFN(0, "device problem (%s), "
 		    "disabling port %d\n", usbd_errstr(err), portno);
 	}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reattach_port, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_reattach_port, return);
 	return (err);
 }
 
@@ -1003,26 +861,14 @@ error:
 static uint8_t
 usb_device_20_compatible(struct usb_device *udev)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_device_20_compatible, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_device_20_compatible, entry);
 	if (udev == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_device_20_compatible, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_device_20_compatible, return);
 		return (0);
-}
 	switch (udev->speed) {
 	case USB_SPEED_LOW:
 	case USB_SPEED_FULL:
 	case USB_SPEED_HIGH:
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_device_20_compatible, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_device_20_compatible, return);
 		return (1);
 	default:
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_device_20_compatible, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_device_20_compatible, return);
 		return (0);
 	}
 }
@@ -1037,8 +883,6 @@ usb_device_20_compatible(struct usb_device *udev)
 static usb_error_t
 uhub_suspend_resume_port(struct uhub_softc *sc, uint8_t portno)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_suspend_resume_port, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_suspend_resume_port, entry);
 	struct usb_device *child;
 	struct usb_device *udev;
 	uint8_t is_suspend;
@@ -1105,21 +949,11 @@ uhub_suspend_resume_port(struct uhub_softc *sc, uint8_t portno)
 		 * suspend and resume here
 		 */
 		if (is_suspend == 0)
-{
-{
 			usb_dev_resume_peer(child);
-}
-}
 		else if (child->flags.usb_mode == USB_MODE_DEVICE)
-{
-{
 			usb_dev_suspend_peer(child);
-}
-}
 	}
 done:
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_suspend_resume_port, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_suspend_resume_port, return);
 	return (err);
 }
 
@@ -1133,48 +967,28 @@ done:
 void
 uhub_root_intr(struct usb_bus *bus, const uint8_t *ptr, uint8_t len)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_root_intr, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_root_intr, entry);
 	USB_BUS_LOCK_ASSERT(bus, MA_OWNED);
 
 	usb_needs_explore(bus, 0);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_root_intr, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_root_intr, return);
 }
 
 static uint8_t
 uhub_is_too_deep(struct usb_device *udev)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_is_too_deep, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_is_too_deep, entry);
 	switch (udev->speed) {
 	case USB_SPEED_FULL:
 	case USB_SPEED_LOW:
 	case USB_SPEED_HIGH:
 		if (udev->depth > USB_HUB_MAX_DEPTH)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_is_too_deep, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_is_too_deep, return);
 			return (1);
-}
 		break;
 	case USB_SPEED_SUPER:
 		if (udev->depth > USB_SS_HUB_DEPTH_MAX)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_is_too_deep, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_is_too_deep, return);
 			return (1);
-}
 		break;
 	default:
 		break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_is_too_deep, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_is_too_deep, return);
 	return (0);
 }
 
@@ -1188,8 +1002,6 @@ uhub_is_too_deep(struct usb_device *udev)
 static usb_error_t
 uhub_explore(struct usb_device *udev)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore, entry);
 	struct usb_hub *hub;
 	struct uhub_softc *sc;
 	struct usb_port *up;
@@ -1205,20 +1017,12 @@ uhub_explore(struct usb_device *udev)
 
 	/* ignore devices that are too deep */
 	if (uhub_is_too_deep(udev))
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore, return);
 		return (USB_ERR_TOO_DEEP);
-}
 
 	/* check if device is suspended */
 	if (udev->flags.self_suspended) {
 		/* need to wait until the child signals resume */
 		DPRINTF("Device is suspended!\n");
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore, return);
 		return (0);
 	}
 
@@ -1307,36 +1111,22 @@ uhub_explore(struct usb_device *udev)
 	}
 
 	if (do_unlock)
-{
-{
 		usbd_enum_unlock(udev);
-}
-}
 
 	/* initial status checked */
 	sc->sc_flags |= UHUB_FLAG_DID_EXPLORE;
 
 	/* return success */
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_explore, return);
 	return (USB_ERR_NORMAL_COMPLETION);
 }
 
 static int
 uhub_probe(device_t dev)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_probe, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_probe, entry);
 	struct usb_attach_arg *uaa = device_get_ivars(dev);
 
 	if (uaa->usb_mode != USB_MODE_HOST)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_probe, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_probe, return);
 		return (ENXIO);
-}
 
 	/*
 	 * The subclass for USB HUBs is currently ignored because it
@@ -1344,12 +1134,8 @@ uhub_probe(device_t dev)
 	 */
 	if (uaa->info.bConfigIndex == 0 &&
 	    uaa->info.bDeviceClass == UDCLASS_HUB)
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_probe, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_probe, return);
 		return (0);
 
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_probe, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_probe, return);
 	return (ENXIO);
 }
 
@@ -1357,8 +1143,6 @@ uhub_probe(device_t dev)
 usb_error_t
 uhub_query_info(struct usb_device *udev, uint8_t *pnports, uint8_t *ptt)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_query_info, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_query_info, entry);
 	struct usb_hub_descriptor hubdesc20;
 	struct usb_hub_ss_descriptor hubdesc30;
 	usb_error_t err;
@@ -1366,13 +1150,7 @@ uhub_query_info(struct usb_device *udev, uint8_t *pnports, uint8_t *ptt)
 	uint8_t tt;
 
 	if (udev->ddesc.bDeviceClass != UDCLASS_HUB)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_query_info, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_query_info, return);
 		return (USB_ERR_INVAL);
-}
 
 	nports = 0;
 	tt = 0;
@@ -1390,18 +1168,10 @@ uhub_query_info(struct usb_device *udev, uint8_t *pnports, uint8_t *ptt)
 		}
 		nports = hubdesc20.bNbrPorts;
 		if (nports > 127)
-{
-{
 			nports = 127;
-}
-}
 
 		if (udev->speed == USB_SPEED_HIGH)
-{
-{
 			tt = (UGETW(hubdesc20.wHubCharacteristics) >> 5) & 3;
-}
-}
 		break;
 
 	case USB_SPEED_SUPER:
@@ -1413,11 +1183,7 @@ uhub_query_info(struct usb_device *udev, uint8_t *pnports, uint8_t *ptt)
 		}
 		nports = hubdesc30.bNbrPorts;
 		if (nports > 16)
-{
-{
 			nports = 16;
-}
-}
 		break;
 
 	default:
@@ -1426,29 +1192,17 @@ uhub_query_info(struct usb_device *udev, uint8_t *pnports, uint8_t *ptt)
 	}
 
 	if (pnports != NULL)
-{
-{
 		*pnports = nports;
-}
-}
 
 	if (ptt != NULL)
-{
-{
 		*ptt = tt;
-}
-}
 
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_query_info, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_query_info, return);
 	return (err);
 }
 
 static int
 uhub_attach(device_t dev)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_attach, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_attach, entry);
 	struct uhub_softc *sc = device_get_softc(dev);
 	struct usb_attach_arg *uaa = device_get_ivars(dev);
 	struct usb_device *udev = uaa->device;
@@ -1615,11 +1369,7 @@ uhub_attach(device_t dev)
 	    M_USBDEV, M_WAITOK | M_ZERO);
 
 	if (hub == NULL)
-{
-{
 		goto error;
-}
-}
 #else
 	hub = &sc->sc_hub;
 #endif
@@ -1722,19 +1472,11 @@ uhub_attach(device_t dev)
 		case USB_SPEED_FULL:
 		case USB_SPEED_HIGH:
 			if (!UHD_NOT_REMOV(&hubdesc20, portno))
-{
-{
 				removable++;
-}
-}
 			break;
 		case USB_SPEED_SUPER:
 			if (!UHD_NOT_REMOV(&hubdesc30, portno))
-{
-{
 				removable++;
-}
-}
 			break;
 		default:
 			DPRINTF("Assuming removable port\n");
@@ -1785,8 +1527,6 @@ uhub_attach(device_t dev)
 
 	usbd_set_power_mode(udev, USB_POWER_MODE_SAVE);
 
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_attach, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_attach, return);
 	return (0);
 
 error:
@@ -1799,8 +1539,6 @@ error:
 
 	mtx_destroy(&sc->sc_mtx);
 
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_attach, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_attach, return);
 	return (ENXIO);
 }
 
@@ -1811,8 +1549,6 @@ error:
 static int
 uhub_detach(device_t dev)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_detach, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_detach, entry);
 	struct uhub_softc *sc = device_get_softc(dev);
 	struct usb_hub *hub = sc->sc_udev->hub;
 	struct usb_bus *bus = sc->sc_udev->bus;
@@ -1820,8 +1556,6 @@ uhub_detach(device_t dev)
 	uint8_t x;
 
 	if (hub == NULL)		/* must be partially working */
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_detach, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_detach, return);
 		return (0);
 
 	/* Make sure interrupt transfer is gone. */
@@ -1857,43 +1591,29 @@ uhub_detach(device_t dev)
 
 	mtx_destroy(&sc->sc_mtx);
 
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_detach, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_detach, return);
 	return (0);
 }
 
 static int
 uhub_suspend(device_t dev)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_suspend, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_suspend, entry);
 	DPRINTF("\n");
 	/* Sub-devices are not suspended here! */
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_suspend, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_suspend, return);
 	return (0);
 }
 
 static int
 uhub_resume(device_t dev)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_resume, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_resume, entry);
 	DPRINTF("\n");
 	/* Sub-devices are not resumed here! */
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_resume, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_resume, return);
 	return (0);
 }
 
 static void
 uhub_driver_added(device_t dev, driver_t *driver)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_driver_added, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_driver_added, entry);
 	usb_needs_explore_all();
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_driver_added, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_driver_added, return);
 }
 
 struct hub_result {
@@ -1906,8 +1626,6 @@ static void
 uhub_find_iface_index(struct usb_hub *hub, device_t child,
     struct hub_result *res)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_find_iface_index, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_find_iface_index, entry);
 	struct usb_interface *iface;
 	struct usb_device *udev;
 	uint8_t nports;
@@ -1928,8 +1646,6 @@ uhub_find_iface_index(struct usb_hub *hub, device_t child,
 				res->iface_index = i;
 				res->udev = udev;
 				res->portno = x + 1;
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_find_iface_index, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_find_iface_index, return);
 				return;
 			}
 		}
@@ -1937,29 +1653,19 @@ uhub_find_iface_index(struct usb_hub *hub, device_t child,
 	res->iface_index = 0;
 	res->udev = NULL;
 	res->portno = 0;
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_find_iface_index, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_find_iface_index, return);
 }
 
 static int
 uhub_child_location_string(device_t parent, device_t child,
     char *buf, size_t buflen)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_child_location_string, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_child_location_string, entry);
 	struct uhub_softc *sc;
 	struct usb_hub *hub;
 	struct hub_result res;
 
 	if (!device_is_attached(parent)) {
 		if (buflen)
-{
-{
 			buf[0] = 0;
-}
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_child_location_string, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_child_location_string, return);
 		return (0);
 	}
 
@@ -1991,8 +1697,6 @@ uhub_child_location_string(device_t parent, device_t child,
 done:
 	mtx_unlock(&Giant);
 
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_child_location_string, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_child_location_string, return);
 	return (0);
 }
 
@@ -2000,8 +1704,6 @@ static int
 uhub_child_pnpinfo_string(device_t parent, device_t child,
     char *buf, size_t buflen)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_child_pnpinfo_string, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_child_pnpinfo_string, entry);
 	struct uhub_softc *sc;
 	struct usb_hub *hub;
 	struct usb_interface *iface;
@@ -2009,13 +1711,7 @@ uhub_child_pnpinfo_string(device_t parent, device_t child,
 
 	if (!device_is_attached(parent)) {
 		if (buflen)
-{
-{
 			buf[0] = 0;
-}
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_child_pnpinfo_string, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_child_pnpinfo_string, return);
 		return (0);
 	}
 
@@ -2063,8 +1759,6 @@ uhub_child_pnpinfo_string(device_t parent, device_t child,
 done:
 	mtx_unlock(&Giant);
 
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_child_pnpinfo_string, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_uhub_child_pnpinfo_string, return);
 	return (0);
 }
 
@@ -2108,8 +1802,6 @@ static uint8_t
 usb_intr_find_best_slot(usb_size_t *ptr, uint8_t start,
     uint8_t end, uint8_t mask)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_intr_find_best_slot, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_intr_find_best_slot, entry);
 	usb_size_t min = (usb_size_t)-1;
 	usb_size_t sum;
 	uint8_t x;
@@ -2127,11 +1819,7 @@ usb_intr_find_best_slot(usb_size_t *ptr, uint8_t start,
 		/* compute sum of bandwidth */
 		for (z = x; z < end; z++) {
 			if (mask & (1U << (z - x)))
-{
-{
 				sum += ptr[z];
-}
-}
 		}
 
 		/* check if the current multi-slot is more optimal */
@@ -2142,14 +1830,8 @@ usb_intr_find_best_slot(usb_size_t *ptr, uint8_t start,
 
 		/* check if the mask is about to be shifted out */
 		if (mask & (1U << (end - 1 - x)))
-{
-{
 			break;
-}
-}
 	}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_intr_find_best_slot, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_intr_find_best_slot, return);
 	return (y);
 }
 
@@ -2169,8 +1851,6 @@ static uint8_t
 usb_hs_bandwidth_adjust(struct usb_device *udev, int16_t len,
     uint8_t slot, uint8_t mask)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_adjust, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_adjust, entry);
 	struct usb_bus *bus = udev->bus;
 	struct usb_hub *hub;
 	enum usb_dev_speed speed;
@@ -2217,8 +1897,6 @@ usb_hs_bandwidth_adjust(struct usb_device *udev, int16_t len,
 		}
 		break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_adjust, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_adjust, return);
 	return (slot);
 }
 
@@ -2230,8 +1908,6 @@ usb_hs_bandwidth_adjust(struct usb_device *udev, int16_t len,
 void
 usb_hs_bandwidth_alloc(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_alloc, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_alloc, entry);
 	struct usb_device *udev;
 	uint8_t slot;
 	uint8_t mask;
@@ -2240,23 +1916,11 @@ usb_hs_bandwidth_alloc(struct usb_xfer *xfer)
 	udev = xfer->xroot->udev;
 
 	if (udev->flags.usb_mode != USB_MODE_HOST)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_alloc, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_alloc, return);
 		return;		/* not supported */
-}
 
 	xfer->endpoint->refcount_bw++;
 	if (xfer->endpoint->refcount_bw != 1)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_alloc, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_alloc, return);
 		return;		/* already allocated */
-}
 
 	speed = usbd_get_speed(udev);
 
@@ -2315,8 +1979,6 @@ usb_hs_bandwidth_alloc(struct usb_xfer *xfer)
 	DPRINTFN(11, "slot=%d, mask=0x%02x\n", 
 	    xfer->endpoint->usb_uframe, 
 	    xfer->endpoint->usb_smask >> xfer->endpoint->usb_uframe);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_alloc, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_alloc, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2327,8 +1989,6 @@ usb_hs_bandwidth_alloc(struct usb_xfer *xfer)
 void
 usb_hs_bandwidth_free(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_free, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_free, entry);
 	struct usb_device *udev;
 	uint8_t slot;
 	uint8_t mask;
@@ -2336,23 +1996,11 @@ usb_hs_bandwidth_free(struct usb_xfer *xfer)
 	udev = xfer->xroot->udev;
 
 	if (udev->flags.usb_mode != USB_MODE_HOST)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_free, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_free, return);
 		return;		/* not supported */
-}
 
 	xfer->endpoint->refcount_bw--;
 	if (xfer->endpoint->refcount_bw != 0)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_free, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_free, return);
 		return;		/* still allocated */
-}
 
 	switch (xfer->endpoint->edesc->bmAttributes & UE_XFERTYPE) {
 	case UE_INTERRUPT:
@@ -2376,8 +2024,6 @@ usb_hs_bandwidth_free(struct usb_xfer *xfer)
 	default:
 		break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_free, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_hs_bandwidth_free, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2391,8 +2037,6 @@ usb_hs_bandwidth_free(struct usb_xfer *xfer)
 uint16_t
 usb_isoc_time_expand(struct usb_bus *bus, uint16_t isoc_time_curr)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_isoc_time_expand, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_isoc_time_expand, entry);
 	uint16_t rem;
 
 	USB_BUS_LOCK_ASSERT(bus, MA_OWNED);
@@ -2410,8 +2054,6 @@ usb_isoc_time_expand(struct usb_bus *bus, uint16_t isoc_time_curr)
 	bus->isoc_time_last &= ~(USB_ISOC_TIME_MAX - 1);
 	bus->isoc_time_last |= isoc_time_curr;
 
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_isoc_time_expand, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_isoc_time_expand, return);
 	return (bus->isoc_time_last);
 }
 
@@ -2429,8 +2071,6 @@ usb_isoc_time_expand(struct usb_bus *bus, uint16_t isoc_time_curr)
 uint8_t
 usbd_fs_isoc_schedule_alloc_slot(struct usb_xfer *isoc_xfer, uint16_t isoc_time)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_fs_isoc_schedule_alloc_slot, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_fs_isoc_schedule_alloc_slot, entry);
 	struct usb_xfer *xfer;
 	struct usb_xfer *pipe_xfer;
 	struct usb_bus *bus;
@@ -2450,11 +2090,7 @@ usbd_fs_isoc_schedule_alloc_slot(struct usb_xfer *isoc_xfer, uint16_t isoc_time)
 		/* skip self, if any */
 
 		if (xfer == isoc_xfer)
-{
-{
 			continue;
-}
-}
 
 		/* check if this USB transfer is going through the same TT */
 
@@ -2469,11 +2105,7 @@ usbd_fs_isoc_schedule_alloc_slot(struct usb_xfer *isoc_xfer, uint16_t isoc_time)
 			continue;
 		}
 		if (xfer->endpoint->methods != isoc_xfer->endpoint->methods)
-{
-{
 			continue;
-}
-}
 
 		/* check if isoc_time is part of this transfer */
 
@@ -2499,11 +2131,7 @@ usbd_fs_isoc_schedule_alloc_slot(struct usb_xfer *isoc_xfer, uint16_t isoc_time)
 			/* skip self, if any */
 
 			if (pipe_xfer == isoc_xfer)
-{
-{
 				continue;
-}
-}
 
 			/* check if isoc_time is part of this transfer */
 
@@ -2529,13 +2157,7 @@ usbd_fs_isoc_schedule_alloc_slot(struct usb_xfer *isoc_xfer, uint16_t isoc_time)
 	/* check for overflow */
 
 	if (slot >= USB_FS_ISOC_UFRAME_MAX)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_fs_isoc_schedule_alloc_slot, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_fs_isoc_schedule_alloc_slot, return);
 		return (255);
-}
 
 	retval = slot;
 
@@ -2559,16 +2181,8 @@ usbd_fs_isoc_schedule_alloc_slot(struct usb_xfer *isoc_xfer, uint16_t isoc_time)
 	/* check for overflow */
 
 	if (slot >= USB_FS_ISOC_UFRAME_MAX)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_fs_isoc_schedule_alloc_slot, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_fs_isoc_schedule_alloc_slot, return);
 		return (255);
-}
 
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_fs_isoc_schedule_alloc_slot, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_fs_isoc_schedule_alloc_slot, return);
 	return (retval);
 }
 #endif
@@ -2581,22 +2195,14 @@ usbd_fs_isoc_schedule_alloc_slot(struct usb_xfer *isoc_xfer, uint16_t isoc_time)
 struct usb_device *
 usb_bus_port_get_device(struct usb_bus *bus, struct usb_port *up)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_port_get_device, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_port_get_device, entry);
 	if ((bus == NULL) || (up == NULL)) {
 		/* be NULL safe */
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_port_get_device, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_port_get_device, return);
 		return (NULL);
 	}
 	if (up->device_index == 0) {
 		/* nothing to do */
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_port_get_device, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_port_get_device, return);
 		return (NULL);
 	}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_port_get_device, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_port_get_device, return);
 	return (bus->devices[up->device_index]);
 }
 
@@ -2609,12 +2215,8 @@ void
 usb_bus_port_set_device(struct usb_bus *bus, struct usb_port *up,
     struct usb_device *udev, uint8_t device_index)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_port_set_device, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_port_set_device, entry);
 	if (bus == NULL) {
 		/* be NULL safe */
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_port_set_device, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_port_set_device, return);
 		return;
 	}
 	/*
@@ -2645,8 +2247,6 @@ usb_bus_port_set_device(struct usb_bus *bus, struct usb_port *up,
 	 * Debug print
 	 */
 	DPRINTFN(2, "bus %p devices[%u] = %p\n", bus, device_index, udev);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_port_set_device, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_port_set_device, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2657,30 +2257,22 @@ usb_bus_port_set_device(struct usb_bus *bus, struct usb_port *up,
 void
 usb_needs_explore(struct usb_bus *bus, uint8_t do_probe)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore, entry);
 	uint8_t do_unlock;
 
 	DPRINTF("\n");
 
 	if (cold != 0) {
 		DPRINTF("Cold\n");
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore, return);
 		return;
 	}
 
 	if (bus == NULL) {
 		DPRINTF("No bus pointer!\n");
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore, return);
 		return;
 	}
 	if ((bus->devices == NULL) ||
 	    (bus->devices[USB_ROOT_HUB_ADDR] == NULL)) {
 		DPRINTF("No root HUB\n");
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore, return);
 		return;
 	}
 	if (mtx_owned(&bus->bus_mtx)) {
@@ -2699,8 +2291,6 @@ usb_needs_explore(struct usb_bus *bus, uint8_t do_probe)
 	if (do_unlock) {
 		USB_BUS_UNLOCK(bus);
 	}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2712,8 +2302,6 @@ usb_needs_explore(struct usb_bus *bus, uint8_t do_probe)
 void
 usb_needs_explore_all(void)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore_all, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore_all, entry);
 	struct usb_bus *bus;
 	devclass_t dc;
 	device_t dev;
@@ -2724,8 +2312,6 @@ usb_needs_explore_all(void)
 	dc = usb_devclass_ptr;
 	if (dc == NULL) {
 		DPRINTFN(0, "no devclass\n");
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore_all, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore_all, return);
 		return;
 	}
 	/*
@@ -2742,8 +2328,6 @@ usb_needs_explore_all(void)
 		}
 		max--;
 	}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore_all, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore_all, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2755,22 +2339,14 @@ usb_needs_explore_all(void)
 static void
 usb_needs_explore_init(void *arg)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore_init, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore_init, entry);
 	/*
 	 * The cold variable should be cleared prior to this function
 	 * being called:
 	 */
 	if (cold == 0)
-{
-{
 		usb_needs_explore_all();
-}
-}
 	else
 		DPRINTFN(-1, "Cold variable is still set!\n");
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore_init, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_needs_explore_init, return);
 }
 SYSINIT(usb_needs_explore_init, SI_SUB_KICK_SCHEDULER, SI_ORDER_SECOND, usb_needs_explore_init, NULL);
 
@@ -2785,11 +2361,7 @@ SYSINIT(usb_needs_explore_init, SI_SUB_KICK_SCHEDULER, SI_ORDER_SECOND, usb_need
 void
 usb_bus_power_update(struct usb_bus *bus)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_power_update, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_power_update, entry);
 	usb_needs_explore(bus, 0 /* no probe */ );
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_power_update, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_power_update, return);
 }
 #endif
 
@@ -2804,8 +2376,6 @@ usb_bus_power_update(struct usb_bus *bus)
 void
 usbd_transfer_power_ref(struct usb_xfer *xfer, int val)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_transfer_power_ref, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_transfer_power_ref, entry);
 	static const usb_power_mask_t power_mask[4] = {
 		[UE_CONTROL] = USB_HW_POWER_CONTROL,
 		[UE_BULK] = USB_HW_POWER_BULK,
@@ -2821,8 +2391,6 @@ usbd_transfer_power_ref(struct usb_xfer *xfer, int val)
 
 	if (udev->device_index == USB_ROOT_HUB_ADDR) {
 		/* no power save for root HUB */
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_transfer_power_ref, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_transfer_power_ref, return);
 		return;
 	}
 	USB_BUS_LOCK(udev->bus);
@@ -2849,11 +2417,7 @@ usbd_transfer_power_ref(struct usb_xfer *xfer, int val)
 
 	if (val > 0) {
 		if (udev->flags.self_suspended)
-{
-{
 			needs_explore = usb_peer_should_wakeup(udev);
-}
-}
 		else
 			needs_explore = 0;
 
@@ -2880,8 +2444,6 @@ usbd_transfer_power_ref(struct usb_xfer *xfer, int val)
 			(udev->bus->methods->set_hw_power) (udev->bus);
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_transfer_power_ref, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_transfer_power_ref, return);
 }
 #endif
 
@@ -2893,10 +2455,6 @@ usbd_transfer_power_ref(struct usb_xfer *xfer, int val)
 static uint8_t
 usb_peer_should_wakeup(struct usb_device *udev)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_peer_should_wakeup, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_peer_should_wakeup, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_peer_should_wakeup, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_peer_should_wakeup, return);
 	return (((udev->power_mode == USB_POWER_MODE_ON) &&
 	    (udev->flags.usb_mode == USB_MODE_HOST)) ||
 	    (udev->driver_added_refcount != udev->bus->driver_added_refcount) ||
@@ -2918,8 +2476,6 @@ usb_peer_should_wakeup(struct usb_device *udev)
 void
 usb_bus_powerd(struct usb_bus *bus)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_powerd, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_powerd, entry);
 	struct usb_device *udev;
 	usb_ticks_t temp;
 	usb_ticks_t limit;
@@ -2929,17 +2485,9 @@ usb_bus_powerd(struct usb_bus *bus)
 
 	limit = usb_power_timeout;
 	if (limit == 0)
-{
-{
 		limit = hz;
-}
-}
 	else if (limit > 255)
-{
-{
 		limit = 255 * hz;
-}
-}
 	else
 		limit = limit * hz;
 
@@ -2956,11 +2504,7 @@ usb_bus_powerd(struct usb_bus *bus)
 
 		udev = bus->devices[x];
 		if (udev == NULL)
-{
-{
 			continue;
-}
-}
 
 		temp = ticks - udev->pwr_save.last_xfer_time;
 
@@ -2998,11 +2542,7 @@ usb_bus_powerd(struct usb_bus *bus)
 
 		udev = bus->devices[x];
 		if (udev == NULL)
-{
-{
 			continue;
-}
-}
 
 		/* we found a non-Root-Hub USB device */
 		type_refs[4] += 1;
@@ -3015,11 +2555,7 @@ usb_bus_powerd(struct usb_bus *bus)
 		 * bus:
 		 */
 		if (temp < mintime)
-{
-{
 			mintime = temp;
-}
-}
 
 		if (udev->flags.self_suspended == 0) {
 			type_refs[0] += udev->pwr_save.type_refs[0];
@@ -3034,35 +2570,15 @@ usb_bus_powerd(struct usb_bus *bus)
 		DPRINTF("Recomputing power masks\n");
 		bus->hw_power_state = 0;
 		if (type_refs[UE_CONTROL] != 0)
-{
-{
 			bus->hw_power_state |= USB_HW_POWER_CONTROL;
-}
-}
 		if (type_refs[UE_BULK] != 0)
-{
-{
 			bus->hw_power_state |= USB_HW_POWER_BULK;
-}
-}
 		if (type_refs[UE_INTERRUPT] != 0)
-{
-{
 			bus->hw_power_state |= USB_HW_POWER_INTERRUPT;
-}
-}
 		if (type_refs[UE_ISOCHRONOUS] != 0)
-{
-{
 			bus->hw_power_state |= USB_HW_POWER_ISOC;
-}
-}
 		if (type_refs[4] != 0)
-{
-{
 			bus->hw_power_state |= USB_HW_POWER_NON_ROOT_HUB;
-}
-}
 	}
 	USB_BUS_UNLOCK(bus);
 
@@ -3070,11 +2586,7 @@ usb_bus_powerd(struct usb_bus *bus)
 		/* always update hardware power! */
 		(bus->methods->set_hw_power) (bus);
 	}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_powerd, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_powerd, return);
 	return;
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_powerd, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_bus_powerd, return);
 }
 #endif
 
@@ -3087,40 +2599,20 @@ usb_bus_powerd(struct usb_bus *bus)
 static void
 usb_dev_resume_peer(struct usb_device *udev)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_resume_peer, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_resume_peer, entry);
 	struct usb_bus *bus;
 	int err;
 
 	/* be NULL safe */
 	if (udev == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_resume_peer, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_resume_peer, return);
 		return;
-}
 
 	/* check if already resumed */
 	if (udev->flags.self_suspended == 0)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_resume_peer, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_resume_peer, return);
 		return;
-}
 
 	/* we need a parent HUB to do resume */
 	if (udev->parent_hub == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_resume_peer, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_resume_peer, return);
 		return;
-}
 
 	DPRINTF("udev=%p\n", udev);
 
@@ -3131,8 +2623,6 @@ usb_dev_resume_peer(struct usb_device *udev)
 		 * not wake it up either!
 		 */
 		DPRINTF("remote wakeup is not set!\n");
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_resume_peer, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_resume_peer, return);
 		return;
 	}
 	/* get bus pointer */
@@ -3150,8 +2640,6 @@ usb_dev_resume_peer(struct usb_device *udev)
 		    NULL, udev->port_no, UHF_PORT_SUSPEND);
 		if (err) {
 			DPRINTFN(0, "Resuming port failed\n");
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_resume_peer, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_resume_peer, return);
 			return;
 		}
 	} else {
@@ -3160,8 +2648,6 @@ usb_dev_resume_peer(struct usb_device *udev)
 		    NULL, udev->port_no, UPS_PORT_LS_U0);
 		if (err) {
 			DPRINTFN(0, "Resuming port failed\n");
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_resume_peer, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_resume_peer, return);
 			return;
 		}
 	}
@@ -3182,29 +2668,13 @@ usb_dev_resume_peer(struct usb_device *udev)
 
 	/* make sure the needed power masks are on */
 	if (udev->pwr_save.type_refs[UE_CONTROL] != 0)
-{
-{
 		bus->hw_power_state |= USB_HW_POWER_CONTROL;
-}
-}
 	if (udev->pwr_save.type_refs[UE_BULK] != 0)
-{
-{
 		bus->hw_power_state |= USB_HW_POWER_BULK;
-}
-}
 	if (udev->pwr_save.type_refs[UE_INTERRUPT] != 0)
-{
-{
 		bus->hw_power_state |= USB_HW_POWER_INTERRUPT;
-}
-}
 	if (udev->pwr_save.type_refs[UE_ISOCHRONOUS] != 0)
-{
-{
 		bus->hw_power_state |= USB_HW_POWER_ISOC;
-}
-}
 #endif
 	USB_BUS_UNLOCK(bus);
 
@@ -3231,8 +2701,6 @@ usb_dev_resume_peer(struct usb_device *udev)
 			    usbd_errstr(err));
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_resume_peer, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_resume_peer, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -3244,8 +2712,6 @@ usb_dev_resume_peer(struct usb_device *udev)
 static void
 usb_dev_suspend_peer(struct usb_device *udev)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, entry);
 	struct usb_device *child;
 	int err;
 	uint8_t x;
@@ -3254,33 +2720,15 @@ usb_dev_suspend_peer(struct usb_device *udev)
 repeat:
 	/* be NULL safe */
 	if (udev == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, return);
 		return;
-}
 
 	/* check if already suspended */
 	if (udev->flags.self_suspended)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, return);
 		return;
-}
 
 	/* we need a parent HUB to do suspend */
 	if (udev->parent_hub == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, return);
 		return;
-}
 
 	DPRINTF("udev=%p\n", udev);
 
@@ -3294,22 +2742,12 @@ repeat:
 			    udev->hub->ports + x);
 
 			if (child == NULL)
-{
-{
 				continue;
-}
-}
 
 			if (child->flags.self_suspended)
-{
-{
 				continue;
-}
-}
 
 			DPRINTFN(1, "Port %u is busy on the HUB!\n", x + 1);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, return);
 			return;
 		}
 	}
@@ -3371,8 +2809,6 @@ repeat:
 			usb_pause_mtx(NULL, USB_MS_TO_TICKS(usb_port_resume_delay));
 		}
 		DPRINTF("Suspend was cancelled!\n");
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, return);
 		return;
 	}
 
@@ -3392,11 +2828,7 @@ repeat:
 		/* do DMA delay */
 		temp = usbd_get_dma_delay(udev);
 		if (temp != 0)
-{
-{
 			usb_pause_mtx(NULL, USB_MS_TO_TICKS(temp));
-}
-}
 
 	}
 
@@ -3406,8 +2838,6 @@ repeat:
 		    NULL, udev->port_no, UHF_PORT_SUSPEND);
 		if (err) {
 			DPRINTFN(0, "Suspending port failed\n");
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, return);
 			return;
 		}
 	} else {
@@ -3416,16 +2846,12 @@ repeat:
 		    NULL, udev->port_no, UPS_PORT_LS_U3);
 		if (err) {
 			DPRINTFN(0, "Suspending port failed\n");
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, return);
 			return;
 		}
 	}
 
 	udev = udev->parent_hub;
 	goto repeat;
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usb_dev_suspend_peer, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -3437,8 +2863,6 @@ repeat:
 void
 usbd_set_power_mode(struct usb_device *udev, uint8_t power_mode)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_set_power_mode, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_set_power_mode, entry);
 	/* filter input argument */
 	if ((power_mode != USB_POWER_MODE_ON) &&
 	    (power_mode != USB_POWER_MODE_OFF))
@@ -3453,8 +2877,6 @@ usbd_set_power_mode(struct usb_device *udev, uint8_t power_mode)
 #else
 	usb_needs_explore(udev->bus, 0 /* no probe */ );
 #endif
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_set_power_mode, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_set_power_mode, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -3465,8 +2887,6 @@ usbd_set_power_mode(struct usb_device *udev, uint8_t power_mode)
 uint8_t
 usbd_filter_power_mode(struct usb_device *udev, uint8_t power_mode)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_filter_power_mode, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_filter_power_mode, entry);
 	const struct usb_bus_methods *mtod;
 	int8_t temp;
 
@@ -3474,25 +2894,13 @@ usbd_filter_power_mode(struct usb_device *udev, uint8_t power_mode)
 	temp = -1;
 
 	if (mtod->get_power_mode != NULL)
-{
-{
 		(mtod->get_power_mode) (udev, &temp);
-}
-}
 
 	/* check if we should not filter */
 	if (temp < 0)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_filter_power_mode, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_filter_power_mode, return);
 		return (power_mode);
-}
 
 	/* use fixed power mode given by hardware driver */
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_filter_power_mode, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_filter_power_mode, return);
 	return (temp);
 }
 
@@ -3506,14 +2914,10 @@ usbd_filter_power_mode(struct usb_device *udev, uint8_t power_mode)
 void
 usbd_start_re_enumerate(struct usb_device *udev)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_start_re_enumerate, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_start_re_enumerate, entry);
 	if (udev->re_enumerate_wait == USB_RE_ENUM_DONE) {
 		udev->re_enumerate_wait = USB_RE_ENUM_START;
 		usb_needs_explore(udev->bus, 0);
 	}
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_start_re_enumerate, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_start_re_enumerate, return);
 }
 
 /*-----------------------------------------------------------------------*
@@ -3526,30 +2930,20 @@ usbd_start_re_enumerate(struct usb_device *udev)
 usb_error_t
 usbd_start_set_config(struct usb_device *udev, uint8_t index)
 {
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_start_set_config, entry);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_start_set_config, entry);
 	if (udev->re_enumerate_wait == USB_RE_ENUM_DONE) {
 		if (udev->curr_config_index == index) {
 			/* no change needed */
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_start_set_config, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_start_set_config, return);
 			return (0);
 		}
 		udev->next_config_index = index;
 		udev->re_enumerate_wait = USB_RE_ENUM_SET_CONFIG;
 		usb_needs_explore(udev->bus, 0);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_start_set_config, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_start_set_config, return);
 		return (0);
 	} else if (udev->re_enumerate_wait == USB_RE_ENUM_SET_CONFIG) {
 		if (udev->next_config_index == index) {
 			/* no change needed */
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_start_set_config, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_start_set_config, return);
 			return (0);
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_start_set_config, return);
-	SDT_PROBE0(tpw, kernel, usb_hub_usbd_start_set_config, return);
 	return (USB_ERR_PENDING_REQUESTS);
 }

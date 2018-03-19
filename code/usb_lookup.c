@@ -50,8 +50,6 @@
 
 #include <dev/usb/usb.h>
 #include <dev/usb/usbdi.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 /*------------------------------------------------------------------------*
@@ -72,8 +70,6 @@ const struct usb_device_id *
 usbd_lookup_id_by_info(const struct usb_device_id *id, usb_size_t sizeof_id,
     const struct usbd_lookup_info *info)
 {
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_info, entry);
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_info, entry);
 	const struct usb_device_id *id_end;
 
 	if (id == NULL) {
@@ -128,14 +124,10 @@ usbd_lookup_id_by_info(const struct usb_device_id *id, usb_size_t sizeof_id,
 			continue;
 		}
 		/* We found a match! */
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_info, return);
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_info, return);
 		return (id);
 	}
 
 done:
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_info, return);
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_info, return);
 	return (NULL);
 }
 
@@ -150,18 +142,12 @@ int
 usbd_lookup_id_by_uaa(const struct usb_device_id *id, usb_size_t sizeof_id,
     struct usb_attach_arg *uaa)
 {
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_uaa, entry);
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_uaa, entry);
 	id = usbd_lookup_id_by_info(id, sizeof_id, &uaa->info);
 	if (id) {
 		/* copy driver info */
 		uaa->driver_info = id->driver_info;
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_uaa, return);
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_uaa, return);
 		return (0);
 	}
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_uaa, return);
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_uaa, return);
 	return (ENXIO);
 }
 

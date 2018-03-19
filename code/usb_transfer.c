@@ -64,8 +64,6 @@
 #include <dev/usb/usb_controller.h>
 #include <dev/usb/usb_bus.h>
 #include <dev/usb/usb_pf.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 struct usb_std_packet_size {
@@ -127,18 +125,10 @@ static void	usbd_get_std_packet_size(struct usb_std_packet_size *ptr,
 static void
 usb_request_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_request_callback, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_request_callback, entry);
 	if (xfer->flags_int.usb_mode == USB_MODE_DEVICE)
-{
-{
 		usb_handle_request_callback(xfer, error);
-}
-}
 	else
 		usbd_do_request_callback(xfer, error);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_request_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_request_callback, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -150,15 +140,11 @@ usb_request_callback(struct usb_xfer *xfer, usb_error_t error)
 static void
 usbd_update_max_frame_size(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_update_max_frame_size, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_update_max_frame_size, entry);
 	/* compute maximum frame size */
 	/* this computation should not overflow 16-bit */
 	/* max = 15 * 1024 */
 
 	xfer->max_frame_size = xfer->max_packet_size * xfer->max_packet_count;
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_update_max_frame_size, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_update_max_frame_size, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -174,8 +160,6 @@ usbd_update_max_frame_size(struct usb_xfer *xfer)
 usb_timeout_t
 usbd_get_dma_delay(struct usb_device *udev)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_get_dma_delay, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_get_dma_delay, entry);
 	const struct usb_bus_methods *mtod;
 	uint32_t temp;
 
@@ -191,8 +175,6 @@ usbd_get_dma_delay(struct usb_device *udev)
 		temp += 0x3FF;
 		temp /= 0x400;
 	}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_get_dma_delay, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_get_dma_delay, return);
 	return (temp);
 }
 
@@ -217,8 +199,6 @@ usbd_transfer_setup_sub_malloc(struct usb_setup_params *parm,
     struct usb_page_cache **ppc, usb_size_t size, usb_size_t align,
     usb_size_t count)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub_malloc, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub_malloc, entry);
 	struct usb_page_cache *pc;
 	struct usb_page *pg;
 	void *buf;
@@ -235,8 +215,6 @@ usbd_transfer_setup_sub_malloc(struct usb_setup_params *parm,
 	USB_ASSERT(size > 0, ("Invalid size = 0\n"));
 
 	if (count == 0) {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub_malloc, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub_malloc, return);
 		return (0);		/* nothing to allocate */
 	}
 	/*
@@ -286,8 +264,6 @@ usbd_transfer_setup_sub_malloc(struct usb_setup_params *parm,
 		/* reserve memory (no-auto-free) */
 		parm->dma_page_ptr += count * n_dma_pg;
 		parm->xfer_page_cache_ptr += count;
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub_malloc, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub_malloc, return);
 		return (0);
 	}
 	for (x = 0; x != n_dma_pc; x++) {
@@ -303,11 +279,7 @@ usbd_transfer_setup_sub_malloc(struct usb_setup_params *parm,
 
 	if (ppc != NULL) {
 		if (n_obj != 1)
-{
-{
 			*ppc = parm->xfer_page_cache_ptr;
-}
-}
 		else
 			*ppc = parm->dma_page_cache_ptr;
 	}
@@ -324,8 +296,6 @@ usbd_transfer_setup_sub_malloc(struct usb_setup_params *parm,
 	    for (x = 0; x != n_dma_pc; x++) {
 		if (usb_pc_alloc_mem(parm->dma_page_cache_ptr,
 		    pg, z, align)) {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub_malloc, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub_malloc, return);
 			return (1);	/* failure */
 		}
 		/* Make room for one DMA page cache and "n_dma_pg" pages */
@@ -342,8 +312,6 @@ usbd_transfer_setup_sub_malloc(struct usb_setup_params *parm,
 		}
 		if (usb_pc_alloc_mem(parm->dma_page_cache_ptr,
 		    pg, z, align)) {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub_malloc, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub_malloc, return);
 			return (1);	/* failure */
 		}
 		/* Set beginning of current buffer */
@@ -356,8 +324,6 @@ usbd_transfer_setup_sub_malloc(struct usb_setup_params *parm,
 
 			/* Load sub-chunk into DMA */
 			if (usb_pc_dmamap_create(pc, size)) {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub_malloc, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub_malloc, return);
 				return (1);	/* failure */
 			}
 			pc->buffer = USB_ADD_BYTES(buf, y * size);
@@ -366,8 +332,6 @@ usbd_transfer_setup_sub_malloc(struct usb_setup_params *parm,
 			mtx_lock(pc->tag_parent->mtx);
 			if (usb_pc_load_mem(pc, size, 1 /* synchronous */ )) {
 				mtx_unlock(pc->tag_parent->mtx);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub_malloc, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub_malloc, return);
 				return (1);	/* failure */
 			}
 			mtx_unlock(pc->tag_parent->mtx);
@@ -377,8 +341,6 @@ usbd_transfer_setup_sub_malloc(struct usb_setup_params *parm,
 
 	parm->xfer_page_cache_ptr = pc;
 	parm->dma_page_ptr = pg;
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub_malloc, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub_malloc, return);
 	return (0);
 }
 #endif
@@ -395,8 +357,6 @@ usbd_transfer_setup_sub_malloc(struct usb_setup_params *parm,
 void
 usbd_transfer_setup_sub(struct usb_setup_params *parm)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub, entry);
 	enum {
 		REQ_SIZE = 8,
 		MIN_PKT = 8,
@@ -451,11 +411,7 @@ usbd_transfer_setup_sub(struct usb_setup_params *parm)
 
 			/* check for invalid max packet count */
 			if (xfer->max_packet_count > 3)
-{
-{
 				xfer->max_packet_count = 3;
-}
-}
 			break;
 		default:
 			break;
@@ -466,11 +422,7 @@ usbd_transfer_setup_sub(struct usb_setup_params *parm)
 		xfer->max_packet_count += (xfer->max_packet_size >> 11) & 3;
 
 		if (ecomp != NULL)
-{
-{
 			xfer->max_packet_count += ecomp->bMaxBurst;
-}
-}
 
 		if ((xfer->max_packet_count == 0) || 
 		    (xfer->max_packet_count > 16))
@@ -487,11 +439,7 @@ usbd_transfer_setup_sub(struct usb_setup_params *parm)
 				mult = UE_GET_SS_ISO_MULT(
 				    ecomp->bmAttributes) + 1;
 				if (mult > 3)
-{
-{
 					mult = 3;
-}
-}
 
 				xfer->max_packet_count *= mult;
 			}
@@ -551,11 +499,7 @@ usbd_transfer_setup_sub(struct usb_setup_params *parm)
 	 * and clamped to a valid value:
 	 */
 	if (maxp_old != xfer->max_packet_size)
-{
-{
 		xfer->flags_int.maxp_was_clamped = 1;
-}
-}
 	
 	/* compute "max_frame_size" */
 
@@ -587,23 +531,11 @@ usbd_transfer_setup_sub(struct usb_setup_params *parm)
 			frame_limit = USB_MAX_HS_ISOC_FRAMES_PER_XFER;
 			xfer->fps_shift = edesc->bInterval;
 			if (xfer->fps_shift > 0)
-{
-{
 				xfer->fps_shift--;
-}
-}
 			if (xfer->fps_shift > 3)
-{
-{
 				xfer->fps_shift = 3;
-}
-}
 			if (xfer->flags.pre_scale_frames != 0)
-{
-{
 				xfer->nframes <<= (3 - xfer->fps_shift);
-}
-}
 			break;
 		}
 
@@ -643,17 +575,9 @@ usbd_transfer_setup_sub(struct usb_setup_params *parm)
 				default:
 					/* 125us -> 1ms */
 					if (xfer->interval < 4)
-{
-{
 						xfer->interval = 1;
-}
-}
 					else if (xfer->interval > 16)
-{
-{
 						xfer->interval = (1 << (16 - 4));
-}
-}
 					else
 						xfer->interval = 
 						    (1 << (xfer->interval - 4));
@@ -946,26 +870,18 @@ done:
 		xfer->nframes = 0;
 		xfer->max_frame_count = 0;
 	}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_sub, return);
 }
 
 static uint8_t
 usbd_transfer_setup_has_bulk(const struct usb_config *setup_start,
     uint16_t n_setup)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_has_bulk, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_has_bulk, entry);
 	while (n_setup--) {
 		uint8_t type = setup_start[n_setup].type;
 		if (type == UE_BULK || type == UE_BULK_INTR ||
 		    type == UE_TYPE_ANY)
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_has_bulk, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_has_bulk, return);
 			return (1);
 	}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_has_bulk, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup_has_bulk, return);
 	return (0);
 }
 
@@ -988,8 +904,6 @@ usbd_transfer_setup(struct usb_device *udev,
     const struct usb_config *setup_start, uint16_t n_setup,
     void *priv_sc, struct mtx *xfer_mtx)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup, entry);
 	const struct usb_config *setup_end = setup_start + n_setup;
 	const struct usb_config *setup;
 	struct usb_setup_params *parm;
@@ -1009,14 +923,10 @@ usbd_transfer_setup(struct usb_device *udev,
 
 	if (n_setup == 0) {
 		DPRINTFN(6, "setup array has zero length!\n");
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup, return);
 		return (USB_ERR_INVAL);
 	}
 	if (ifaces == NULL) {
 		DPRINTFN(6, "ifaces array is NULL!\n");
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup, return);
 		return (USB_ERR_INVAL);
 	}
 	if (xfer_mtx == NULL) {
@@ -1040,13 +950,7 @@ usbd_transfer_setup(struct usb_device *udev,
 	}
 
 	if (error)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup, return);
 		return (error);
-}
 
 	/* Protect scratch area */
 	do_unlock = usbd_ctrl_lock(udev);
@@ -1117,26 +1021,14 @@ usbd_transfer_setup(struct usb_device *udev,
 			 * deadlock!
 			 */
 			if (setup_start == usb_control_ep_cfg)
-{
-{
 				info->done_p =
 				    USB_BUS_CONTROL_XFER_PROC(udev->bus);
-}
-}
 			else if (xfer_mtx == &Giant)
-{
-{
 				info->done_p =
 				    USB_BUS_GIANT_PROC(udev->bus);
-}
-}
 			else if (usbd_transfer_setup_has_bulk(setup_start, n_setup))
-{
-{
 				info->done_p =
 				    USB_BUS_NON_GIANT_BULK_PROC(udev->bus);
-}
-}
 			else
 				info->done_p =
 				    USB_BUS_NON_GIANT_ISOC_PROC(udev->bus);
@@ -1173,11 +1065,7 @@ usbd_transfer_setup(struct usb_device *udev,
 			    (setup->stream_id >= USB_MAX_EP_STREAMS ||
 			    (ep->ep_mode != USB_EP_MODE_STREAMS)))) {
 				if (setup->flags.no_pipe_ok)
-{
-{
 					continue;
-}
-}
 				if ((setup->usb_mode != USB_MODE_DUAL) &&
 				    (setup->usb_mode != udev->flags.usb_mode))
 					continue;
@@ -1234,11 +1122,7 @@ usbd_transfer_setup(struct usb_device *udev,
 
 			/* check for error */
 			if (parm->err)
-{
-{
 				goto done;
-}
-}
 
 			if (buf) {
 				/*
@@ -1252,20 +1136,12 @@ usbd_transfer_setup(struct usb_device *udev,
 				 */
 				USB_BUS_LOCK(info->bus);
 				if (xfer->endpoint->refcount_alloc >= USB_EP_REF_MAX)
-{
-{
 					parm->err = USB_ERR_INVAL;
-}
-}
 
 				xfer->endpoint->refcount_alloc++;
 
 				if (xfer->endpoint->refcount_alloc == 0)
-{
-{
 					panic("usbd_transfer_setup(): Refcount wrapped to zero\n");
-}
-}
 				USB_BUS_UNLOCK(info->bus);
 
 				/*
@@ -1284,27 +1160,15 @@ usbd_transfer_setup(struct usb_device *udev,
 
 			/* check for error */
 			if (parm->err)
-{
-{
 				goto done;
-}
-}
 		}
 
 		if (buf != NULL || parm->err != 0)
-{
-{
 			goto done;
-}
-}
 
 		/* if no transfers, nothing to do */
 		if (refcount == 0)
-{
-{
 			goto done;
-}
-}
 
 		/* align data properly */
 		parm->size[0] += ((-parm->size[0]) & (USB_HOST_ALIGN - 1));
@@ -1405,23 +1269,13 @@ done:
 
 	/* check if any errors happened */
 	if (parm->err)
-{
-{
 		usbd_transfer_unsetup(ppxfer, n_setup);
-}
-}
 
 	error = parm->err;
 
 	if (do_unlock)
-{
-{
 		usbd_ctrl_unlock(udev);
-}
-}
 
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_setup, return);
 	return (error);
 }
 
@@ -1431,8 +1285,6 @@ done:
 static void
 usbd_transfer_unsetup_sub(struct usb_xfer_root *info, uint8_t needs_delay)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_unsetup_sub, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_unsetup_sub, entry);
 #if USB_HAVE_BUSDMA
 	struct usb_page_cache *pc;
 #endif
@@ -1481,8 +1333,6 @@ usbd_transfer_unsetup_sub(struct usb_xfer_root *info, uint8_t needs_delay)
 	 * contained within the "memory_base"!
 	 */
 	free(info->memory_base, M_USB);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_unsetup_sub, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_unsetup_sub, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -1495,8 +1345,6 @@ usbd_transfer_unsetup_sub(struct usb_xfer_root *info, uint8_t needs_delay)
 void
 usbd_transfer_unsetup(struct usb_xfer **pxfer, uint16_t n_setup)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_unsetup, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_unsetup, entry);
 	struct usb_xfer *xfer;
 	struct usb_xfer_root *info;
 	uint8_t needs_delay = 0;
@@ -1508,11 +1356,7 @@ usbd_transfer_unsetup(struct usb_xfer **pxfer, uint16_t n_setup)
 		xfer = pxfer[n_setup];
 
 		if (xfer == NULL)
-{
-{
 			continue;
-}
-}
 
 		info = xfer->xroot;
 
@@ -1544,11 +1388,7 @@ usbd_transfer_unsetup(struct usb_xfer **pxfer, uint16_t n_setup)
 
 #if USB_HAVE_BUSDMA
 		if (xfer->flags_int.bdma_enable)
-{
-{
 			needs_delay = 1;
-}
-}
 #endif
 		/*
 		 * NOTE: default endpoint does not have an
@@ -1574,8 +1414,6 @@ usbd_transfer_unsetup(struct usb_xfer **pxfer, uint16_t n_setup)
 			USB_BUS_UNLOCK(info->bus);
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_unsetup, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_unsetup, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -1592,8 +1430,6 @@ usbd_transfer_unsetup(struct usb_xfer **pxfer, uint16_t n_setup)
 static void
 usbd_control_transfer_init(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_control_transfer_init, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_control_transfer_init, entry);
 	struct usb_device_request req;
 
 	/* copy out the USB request header */
@@ -1609,8 +1445,6 @@ usbd_control_transfer_init(struct usb_xfer *xfer)
 	xfer->endpointno &= ~(UE_DIR_IN | UE_DIR_OUT);
 	xfer->endpointno |=
 	    (req.bmRequestType & UT_READ) ? UE_DIR_IN : UE_DIR_OUT;
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_control_transfer_init, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_control_transfer_init, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -1623,26 +1457,16 @@ usbd_control_transfer_init(struct usb_xfer *xfer)
 static uint8_t
 usbd_control_transfer_did_data(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_control_transfer_did_data, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_control_transfer_did_data, entry);
 	struct usb_device_request req;
 
 	/* SETUP packet is not yet sent */
 	if (xfer->flags_int.control_hdr != 0)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_control_transfer_did_data, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_control_transfer_did_data, return);
 		return (0);
-}
 
 	/* copy out the USB request header */
 	usbd_copy_out(xfer->frbuffers, 0, &req, sizeof(req));
 
 	/* compare remainder to the initial value */
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_control_transfer_did_data, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_control_transfer_did_data, return);
 	return (xfer->flags_int.control_rem != UGETW(req.wLength));
 }
 
@@ -1660,8 +1484,6 @@ usbd_control_transfer_did_data(struct usb_xfer *xfer)
 static int
 usbd_setup_ctrl_transfer(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_setup_ctrl_transfer, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_setup_ctrl_transfer, entry);
 	usb_frlength_t len;
 
 	/* Check for control endpoint stall */
@@ -1802,13 +1624,9 @@ usbd_setup_ctrl_transfer(struct usb_xfer *xfer)
 		/* time to execute the STATUS stage */
 		xfer->flags_int.control_act = 0;
 	}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_setup_ctrl_transfer, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_setup_ctrl_transfer, return);
 	return (0);			/* success */
 
 error:
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_setup_ctrl_transfer, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_setup_ctrl_transfer, return);
 	return (1);			/* failure */
 }
 
@@ -1820,8 +1638,6 @@ error:
 void
 usbd_transfer_submit(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_submit, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_submit, entry);
 	struct usb_xfer_root *info;
 	struct usb_bus *bus;
 	usb_frcount_t x;
@@ -1902,8 +1718,6 @@ usbd_transfer_submit(struct usb_xfer *xfer)
 		 */
 		usbd_transfer_done(xfer, USB_ERR_CANCELLED);
 		USB_BUS_UNLOCK(bus);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_submit, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_submit, return);
 		return;
 	}
 
@@ -1922,15 +1736,11 @@ usbd_transfer_submit(struct usb_xfer *xfer)
 			usb_command_wrapper(&xfer->endpoint->
 			    endpoint_q[xfer->stream_id], xfer);
 			USB_BUS_UNLOCK(bus);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_submit, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_submit, return);
 			return;
 		}
 		USB_BUS_LOCK(bus);
 		usbd_transfer_done(xfer, USB_ERR_INVAL);
 		USB_BUS_UNLOCK(bus);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_submit, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_submit, return);
 		return;
 	}
 	/* compute some variables */
@@ -1945,8 +1755,6 @@ usbd_transfer_submit(struct usb_xfer *xfer)
 			USB_BUS_LOCK(bus);
 			usbd_transfer_done(xfer, USB_ERR_INVAL);
 			USB_BUS_UNLOCK(bus);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_submit, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_submit, return);
 			return;
 		}
 	}
@@ -1964,8 +1772,6 @@ usbd_transfer_submit(struct usb_xfer *xfer)
 			USB_BUS_LOCK(bus);
 			usbd_transfer_done(xfer, USB_ERR_STALLED);
 			USB_BUS_UNLOCK(bus);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_submit, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_submit, return);
 			return;
 		}
 	}
@@ -2008,8 +1814,6 @@ usbd_transfer_submit(struct usb_xfer *xfer)
 	if (xfer->flags_int.bdma_enable) {
 		/* insert the USB transfer last in the BUS-DMA queue */
 		usb_command_wrapper(&xfer->xroot->dma_q, xfer);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_submit, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_submit, return);
 		return;
 	}
 #endif
@@ -2018,8 +1822,6 @@ usbd_transfer_submit(struct usb_xfer *xfer)
 	 * Device Controller schedule:
 	 */
 	usbd_pipe_enter(xfer);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_submit, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_submit, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2028,8 +1830,6 @@ usbd_transfer_submit(struct usb_xfer *xfer)
 void
 usbd_pipe_enter(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_enter, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_enter, entry);
 	struct usb_endpoint *ep;
 
 	USB_XFER_LOCK_ASSERT(xfer, MA_OWNED);
@@ -2051,16 +1851,12 @@ usbd_pipe_enter(struct usb_xfer *xfer)
 		/* some error has happened */
 		usbd_transfer_done(xfer, 0);
 		USB_BUS_UNLOCK(xfer->xroot->bus);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_enter, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_enter, return);
 		return;
 	}
 
 	/* start the transfer */
 	usb_command_wrapper(&ep->endpoint_q[xfer->stream_id], xfer);
 	USB_BUS_UNLOCK(xfer->xroot->bus);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_enter, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_enter, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2073,12 +1869,8 @@ usbd_pipe_enter(struct usb_xfer *xfer)
 void
 usbd_transfer_start(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_start, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_start, entry);
 	if (xfer == NULL) {
 		/* transfer is gone */
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_start, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_start, return);
 		return;
 	}
 	USB_XFER_LOCK_ASSERT(xfer, MA_OWNED);
@@ -2094,16 +1886,12 @@ usbd_transfer_start(struct usb_xfer *xfer)
 	/* check if the USB transfer callback is already transferring */
 
 	if (xfer->flags_int.transferring) {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_start, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_start, return);
 		return;
 	}
 	USB_BUS_LOCK(xfer->xroot->bus);
 	/* call the USB transfer callback */
 	usbd_callback_ss_done_defer(xfer);
 	USB_BUS_UNLOCK(xfer->xroot->bus);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_start, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_start, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2117,14 +1905,10 @@ usbd_transfer_start(struct usb_xfer *xfer)
 void
 usbd_transfer_stop(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_stop, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_stop, entry);
 	struct usb_endpoint *ep;
 
 	if (xfer == NULL) {
 		/* transfer is gone */
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_stop, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_stop, return);
 		return;
 	}
 	USB_XFER_LOCK_ASSERT(xfer, MA_OWNED);
@@ -2139,8 +1923,6 @@ usbd_transfer_stop(struct usb_xfer *xfer)
 			xfer->flags_int.started = 0;
 			USB_BUS_UNLOCK(xfer->xroot->bus);
 		}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_stop, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_stop, return);
 		return;
 	}
 	/* try to stop the current USB transfer */
@@ -2201,8 +1983,6 @@ usbd_transfer_stop(struct usb_xfer *xfer)
 	}
 
 	USB_BUS_UNLOCK(xfer->xroot->bus);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_stop, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_stop, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2217,31 +1997,23 @@ usbd_transfer_stop(struct usb_xfer *xfer)
 uint8_t
 usbd_transfer_pending(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_pending, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_pending, entry);
 	struct usb_xfer_root *info;
 	struct usb_xfer_queue *pq;
 
 	if (xfer == NULL) {
 		/* transfer is gone */
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_pending, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_pending, return);
 		return (0);
 	}
 	USB_XFER_LOCK_ASSERT(xfer, MA_OWNED);
 
 	if (xfer->flags_int.transferring) {
 		/* trivial case */
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_pending, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_pending, return);
 		return (1);
 	}
 	USB_BUS_LOCK(xfer->xroot->bus);
 	if (xfer->wait_queue) {
 		/* we are waiting on a queue somewhere */
 		USB_BUS_UNLOCK(xfer->xroot->bus);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_pending, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_pending, return);
 		return (1);
 	}
 	info = xfer->xroot;
@@ -2250,14 +2022,10 @@ usbd_transfer_pending(struct usb_xfer *xfer)
 	if (pq->curr == xfer) {
 		/* we are currently scheduled for callback */
 		USB_BUS_UNLOCK(xfer->xroot->bus);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_pending, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_pending, return);
 		return (1);
 	}
 	/* we are not pending */
 	USB_BUS_UNLOCK(xfer->xroot->bus);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_pending, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_pending, return);
 	return (0);
 }
 
@@ -2272,15 +2040,11 @@ usbd_transfer_pending(struct usb_xfer *xfer)
 void
 usbd_transfer_drain(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_drain, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_drain, entry);
 	WITNESS_WARN(WARN_GIANTOK | WARN_SLEEPOK, NULL,
 	    "usbd_transfer_drain can sleep!");
 
 	if (xfer == NULL) {
 		/* transfer is gone */
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_drain, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_drain, return);
 		return;
 	}
 	if (xfer->xroot->xfer_mtx != &Giant) {
@@ -2309,34 +2073,24 @@ usbd_transfer_drain(struct usb_xfer *xfer)
 		cv_wait(&xfer->xroot->cv_drain, xfer->xroot->xfer_mtx);
 	}
 	USB_XFER_UNLOCK(xfer);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_drain, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_drain, return);
 }
 
 struct usb_page_cache *
 usbd_xfer_get_frame(struct usb_xfer *xfer, usb_frcount_t frindex)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_get_frame, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_get_frame, entry);
 	KASSERT(frindex < xfer->max_frame_count, ("frame index overflow"));
 
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_get_frame, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_get_frame, return);
 	return (&xfer->frbuffers[frindex]);
 }
 
 void *
 usbd_xfer_get_frame_buffer(struct usb_xfer *xfer, usb_frcount_t frindex)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_get_frame_buffer, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_get_frame_buffer, entry);
 	struct usb_page_search page_info;
 
 	KASSERT(frindex < xfer->max_frame_count, ("frame index overflow"));
 
 	usbd_get_page(&xfer->frbuffers[frindex], 0, &page_info);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_get_frame_buffer, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_get_frame_buffer, return);
 	return (page_info.buffer);
 }
 
@@ -2354,22 +2108,14 @@ usbd_xfer_get_frame_buffer(struct usb_xfer *xfer, usb_frcount_t frindex)
 uint8_t
 usbd_xfer_get_fps_shift(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_get_fps_shift, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_get_fps_shift, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_get_fps_shift, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_get_fps_shift, return);
 	return (xfer->fps_shift);
 }
 
 usb_frlength_t
 usbd_xfer_frame_len(struct usb_xfer *xfer, usb_frcount_t frindex)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_frame_len, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_frame_len, entry);
 	KASSERT(frindex < xfer->max_frame_count, ("frame index overflow"));
 
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_frame_len, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_frame_len, return);
 	return (xfer->frlengths[frindex]);
 }
 
@@ -2385,39 +2131,23 @@ void
 usbd_xfer_set_frame_data(struct usb_xfer *xfer, usb_frcount_t frindex,
     void *ptr, usb_frlength_t len)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_frame_data, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_frame_data, entry);
 	KASSERT(frindex < xfer->max_frame_count, ("frame index overflow"));
 
 	/* set virtual address to load and length */
 	xfer->frbuffers[frindex].buffer = ptr;
 	usbd_xfer_set_frame_len(xfer, frindex, len);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_frame_data, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_frame_data, return);
 }
 
 void
 usbd_xfer_frame_data(struct usb_xfer *xfer, usb_frcount_t frindex,
     void **ptr, int *len)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_frame_data, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_frame_data, entry);
 	KASSERT(frindex < xfer->max_frame_count, ("frame index overflow"));
 
 	if (ptr != NULL)
-{
-{
 		*ptr = xfer->frbuffers[frindex].buffer;
-}
-}
 	if (len != NULL)
-{
-{
 		*len = xfer->frlengths[frindex];
-}
-}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_frame_data, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_frame_data, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2431,12 +2161,8 @@ usbd_xfer_frame_data(struct usb_xfer *xfer, usb_frcount_t frindex,
 usb_frlength_t
 usbd_xfer_old_frame_length(struct usb_xfer *xfer, usb_frcount_t frindex)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_old_frame_length, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_old_frame_length, entry);
 	KASSERT(frindex < xfer->max_frame_count, ("frame index overflow"));
 
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_old_frame_length, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_old_frame_length, return);
 	return (xfer->frlengths[frindex + xfer->max_frame_count]);
 }
 
@@ -2444,34 +2170,14 @@ void
 usbd_xfer_status(struct usb_xfer *xfer, int *actlen, int *sumlen, int *aframes,
     int *nframes)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_status, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_status, entry);
 	if (actlen != NULL)
-{
-{
 		*actlen = xfer->actlen;
-}
-}
 	if (sumlen != NULL)
-{
-{
 		*sumlen = xfer->sumlen;
-}
-}
 	if (aframes != NULL)
-{
-{
 		*aframes = xfer->aframes;
-}
-}
 	if (nframes != NULL)
-{
-{
 		*nframes = xfer->nframes;
-}
-}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_status, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_status, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2484,8 +2190,6 @@ void
 usbd_xfer_set_frame_offset(struct usb_xfer *xfer, usb_frlength_t offset,
     usb_frcount_t frindex)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_frame_offset, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_frame_offset, entry);
 	KASSERT(!xfer->flags.ext_buffer, ("Cannot offset data frame "
 	    "when the USB buffer is external\n"));
 	KASSERT(frindex < xfer->max_frame_count, ("frame index overflow"));
@@ -2493,67 +2197,41 @@ usbd_xfer_set_frame_offset(struct usb_xfer *xfer, usb_frlength_t offset,
 	/* set virtual address to load */
 	xfer->frbuffers[frindex].buffer =
 	    USB_ADD_BYTES(xfer->local_buffer, offset);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_frame_offset, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_frame_offset, return);
 }
 
 void
 usbd_xfer_set_interval(struct usb_xfer *xfer, int i)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_interval, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_interval, entry);
 	xfer->interval = i;
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_interval, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_interval, return);
 }
 
 void
 usbd_xfer_set_timeout(struct usb_xfer *xfer, int t)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_timeout, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_timeout, entry);
 	xfer->timeout = t;
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_timeout, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_timeout, return);
 }
 
 void
 usbd_xfer_set_frames(struct usb_xfer *xfer, usb_frcount_t n)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_frames, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_frames, entry);
 	xfer->nframes = n;
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_frames, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_frames, return);
 }
 
 usb_frcount_t
 usbd_xfer_max_frames(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_max_frames, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_max_frames, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_max_frames, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_max_frames, return);
 	return (xfer->max_frame_count);
 }
 
 usb_frlength_t
 usbd_xfer_max_len(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_max_len, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_max_len, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_max_len, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_max_len, return);
 	return (xfer->max_data_length);
 }
 
 usb_frlength_t
 usbd_xfer_max_framelen(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_max_framelen, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_max_framelen, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_max_framelen, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_max_framelen, return);
 	return (xfer->max_frame_size);
 }
 
@@ -2561,13 +2239,9 @@ void
 usbd_xfer_set_frame_len(struct usb_xfer *xfer, usb_frcount_t frindex,
     usb_frlength_t len)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_frame_len, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_frame_len, entry);
 	KASSERT(frindex < xfer->max_frame_count, ("frame index overflow"));
 
 	xfer->frlengths[frindex] = len;
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_frame_len, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_frame_len, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2578,8 +2252,6 @@ usbd_xfer_set_frame_len(struct usb_xfer *xfer, usb_frcount_t frindex,
 static void
 usb_callback_proc(struct usb_proc_msg *_pm)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_callback_proc, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_callback_proc, entry);
 	struct usb_done_msg *pm = (void *)_pm;
 	struct usb_xfer_root *info = pm->xroot;
 
@@ -2598,8 +2270,6 @@ usb_callback_proc(struct usb_proc_msg *_pm)
 	    info->done_q.curr);
 
 	mtx_unlock(info->xfer_mtx);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_callback_proc, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_callback_proc, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2611,8 +2281,6 @@ usb_callback_proc(struct usb_proc_msg *_pm)
 static void
 usbd_callback_ss_done_defer(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_ss_done_defer, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_ss_done_defer, entry);
 	struct usb_xfer_root *info = xfer->xroot;
 	struct usb_xfer_queue *pq = &info->done_q;
 
@@ -2634,12 +2302,8 @@ usbd_callback_ss_done_defer(struct usb_xfer *xfer)
 		/* clear second recurse flag */
 		pq->recurse_2 = 0;
 	}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_ss_done_defer, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_ss_done_defer, return);
 	return;
 
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_ss_done_defer, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_ss_done_defer, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2653,8 +2317,6 @@ usbd_callback_ss_done_defer(struct usb_xfer *xfer)
 static void
 usbd_callback_wrapper(struct usb_xfer_queue *pq)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_wrapper, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_wrapper, entry);
 	struct usb_xfer *xfer = pq->curr;
 	struct usb_xfer_root *info = xfer->xroot;
 
@@ -2679,8 +2341,6 @@ usbd_callback_wrapper(struct usb_xfer_queue *pq)
 	         */
 		(void) usb_proc_msignal(info->done_p,
 		    &info->done_m[0], &info->done_m[1]);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_wrapper, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_wrapper, return);
 		return;
 	}
 	/*
@@ -2761,8 +2421,6 @@ usbd_callback_wrapper(struct usb_xfer_queue *pq)
 		xfer->flags_int.doing_callback = 0;
 		/* try to loop, but not recursivly */
 		usb_command_wrapper(&info->done_q, xfer);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_wrapper, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_wrapper, return);
 		return;
 	}
 
@@ -2783,8 +2441,6 @@ done:
 	/* do the next callback, if any */
 	usb_command_wrapper(&info->done_q,
 	    info->done_q.curr);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_wrapper, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_wrapper, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2798,16 +2454,12 @@ done:
 void
 usb_dma_delay_done_cb(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_dma_delay_done_cb, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_dma_delay_done_cb, entry);
 	USB_BUS_LOCK_ASSERT(xfer->xroot->bus, MA_OWNED);
 
 	DPRINTFN(3, "Completed %p\n", xfer);
 
 	/* queue callback for execution, again */
 	usbd_transfer_done(xfer, 0);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_dma_delay_done_cb, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_dma_delay_done_cb, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2821,18 +2473,13 @@ usb_dma_delay_done_cb(struct usb_xfer *xfer)
 void
 usbd_transfer_dequeue(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_dequeue, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_dequeue, entry);
 	struct usb_xfer_queue *pq;
 
 	pq = xfer->wait_queue;
-	
 	if (pq) {
 		TAILQ_REMOVE(&pq->head, xfer, wait_entry);
 		xfer->wait_queue = NULL;
 	}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_dequeue, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_dequeue, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2846,8 +2493,6 @@ usbd_transfer_dequeue(struct usb_xfer *xfer)
 void
 usbd_transfer_enqueue(struct usb_xfer_queue *pq, struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_enqueue, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_enqueue, entry);
 	/*
 	 * Insert the USB transfer into the queue, if it is not
 	 * already on a USB transfer queue:
@@ -2856,8 +2501,6 @@ usbd_transfer_enqueue(struct usb_xfer_queue *pq, struct usb_xfer *xfer)
 		xfer->wait_queue = pq;
 		TAILQ_INSERT_TAIL(&pq->head, xfer, wait_entry);
 	}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_enqueue, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_enqueue, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2874,8 +2517,6 @@ usbd_transfer_enqueue(struct usb_xfer_queue *pq, struct usb_xfer *xfer)
 void
 usbd_transfer_done(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_done, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_done, entry);
 	struct usb_xfer_root *info = xfer->xroot;
 
 	USB_BUS_LOCK_ASSERT(info->bus, MA_OWNED);
@@ -2890,17 +2531,11 @@ usbd_transfer_done(struct usb_xfer *xfer, usb_error_t error)
 		DPRINTF("not transferring\n");
 		/* end of control transfer, if any */
 		xfer->flags_int.control_act = 0;
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_done, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_done, return);
 		return;
 	}
 	/* only set transfer error, if not already set */
 	if (xfer->error == USB_ERR_NORMAL_COMPLETION)
-{
-{
 		xfer->error = error;
-}
-}
 
 	/* stop any callouts */
 	usb_callout_stop(&xfer->timeout_handle);
@@ -2939,8 +2574,6 @@ usbd_transfer_done(struct usb_xfer *xfer, usb_error_t error)
 
 	/* call the USB transfer callback */
 	usbd_callback_ss_done_defer(xfer);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_done, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_done, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2953,8 +2586,6 @@ usbd_transfer_done(struct usb_xfer *xfer, usb_error_t error)
 static void
 usbd_transfer_start_cb(void *arg)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_start_cb, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_start_cb, entry);
 	struct usb_xfer *xfer = arg;
 	struct usb_endpoint *ep = xfer->endpoint;
 
@@ -2971,19 +2602,13 @@ usbd_transfer_start_cb(void *arg)
 
 	/* start USB transfer, if no error */
 	if (xfer->error == 0)
-{
-{
 		(ep->methods->start) (xfer);
-}
-}
 
 	/* check for transfer error */
 	if (xfer->error) {
 		/* some error has happened */
 		usbd_transfer_done(xfer, 0);
 	}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_start_cb, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_start_cb, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2995,12 +2620,8 @@ usbd_transfer_start_cb(void *arg)
 void
 usbd_xfer_set_stall(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_stall, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_stall, entry);
 	if (xfer == NULL) {
 		/* tearing down */
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_stall, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_stall, return);
 		return;
 	}
 	USB_XFER_LOCK_ASSERT(xfer, MA_OWNED);
@@ -3009,17 +2630,11 @@ usbd_xfer_set_stall(struct usb_xfer *xfer)
 	USB_BUS_LOCK(xfer->xroot->bus);
 	xfer->flags.stall_pipe = 1;
 	USB_BUS_UNLOCK(xfer->xroot->bus);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_stall, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_set_stall, return);
 }
 
 int
 usbd_xfer_is_stalled(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_is_stalled, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_is_stalled, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_is_stalled, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_xfer_is_stalled, return);
 	return (xfer->endpoint->is_stalled);
 }
 
@@ -3032,12 +2647,8 @@ usbd_xfer_is_stalled(struct usb_xfer *xfer)
 void
 usbd_transfer_clear_stall(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_clear_stall, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_clear_stall, entry);
 	if (xfer == NULL) {
 		/* tearing down */
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_clear_stall, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_clear_stall, return);
 		return;
 	}
 	USB_XFER_LOCK_ASSERT(xfer, MA_OWNED);
@@ -3048,8 +2659,6 @@ usbd_transfer_clear_stall(struct usb_xfer *xfer)
 	xfer->flags.stall_pipe = 0;
 
 	USB_BUS_UNLOCK(xfer->xroot->bus);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_clear_stall, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_clear_stall, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -3060,8 +2669,6 @@ usbd_transfer_clear_stall(struct usb_xfer *xfer)
 void
 usbd_pipe_start(struct usb_xfer_queue *pq)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_start, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_start, entry);
 	struct usb_endpoint *ep;
 	struct usb_xfer *xfer;
 	uint8_t type;
@@ -3075,8 +2682,6 @@ usbd_pipe_start(struct usb_xfer_queue *pq)
 	 * If the endpoint is already stalled we do nothing !
 	 */
 	if (ep->is_stalled) {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_start, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_start, return);
 		return;
 	}
 	/*
@@ -3126,8 +2731,6 @@ usbd_pipe_start(struct usb_xfer_queue *pq)
 				 * message is received.
 				 */
 				ep->is_stalled = 1;
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_start, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_start, return);
 				return;
 			}
 		} else if (type == UE_ISOCHRONOUS) {
@@ -3148,8 +2751,6 @@ usbd_pipe_start(struct usb_xfer_queue *pq)
 		/* we are complete */
 		xfer->aframes = 0;
 		usbd_transfer_done(xfer, 0);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_start, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_start, return);
 		return;
 	}
 	/*
@@ -3170,8 +2771,6 @@ usbd_pipe_start(struct usb_xfer_queue *pq)
 			usbd_transfer_timeout_ms(xfer,
 			    &usbd_transfer_start_cb,
 			    xfer->interval);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_start, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_start, return);
 			return;
 		}
 	}
@@ -3185,19 +2784,13 @@ usbd_pipe_start(struct usb_xfer_queue *pq)
 
 	/* start USB transfer, if no error */
 	if (xfer->error == 0)
-{
-{
 		(ep->methods->start) (xfer);
-}
-}
 
 	/* check for transfer error */
 	if (xfer->error) {
 		/* some error has happened */
 		usbd_transfer_done(xfer, 0);
 	}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_start, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_pipe_start, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -3211,15 +2804,11 @@ void
 usbd_transfer_timeout_ms(struct usb_xfer *xfer,
     void (*cb) (void *arg), usb_timeout_t ms)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_timeout_ms, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_timeout_ms, entry);
 	USB_BUS_LOCK_ASSERT(xfer->xroot->bus, MA_OWNED);
 
 	/* defer delay */
 	usb_callout_reset(&xfer->timeout_handle,
 	    USB_MS_TO_TICKS(ms) + USB_CALLOUT_ZERO_TICKS, cb, xfer);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_timeout_ms, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_timeout_ms, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -3242,8 +2831,6 @@ usbd_transfer_timeout_ms(struct usb_xfer *xfer,
 static uint8_t
 usbd_callback_wrapper_sub(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_wrapper_sub, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_wrapper_sub, entry);
 	struct usb_endpoint *ep;
 	struct usb_bus *bus;
 	usb_frcount_t x;
@@ -3258,8 +2845,6 @@ usbd_callback_wrapper_sub(struct usb_xfer *xfer)
 		USB_BUS_UNLOCK(bus);
 		/* only close once */
 		xfer->flags_int.did_close = 1;
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_wrapper_sub, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_wrapper_sub, return);
 		return (1);		/* wait for new callback */
 	}
 	/*
@@ -3300,8 +2885,6 @@ usbd_callback_wrapper_sub(struct usb_xfer *xfer)
 				    temp);
 			}
 			USB_BUS_UNLOCK(bus);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_wrapper_sub, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_wrapper_sub, return);
 			return (1);	/* wait for new callback */
 		}
 	}
@@ -3424,8 +3007,6 @@ usbd_callback_wrapper_sub(struct usb_xfer *xfer)
 	}
 	USB_BUS_UNLOCK(bus);
 done:
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_wrapper_sub, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_callback_wrapper_sub, return);
 	return (0);
 }
 
@@ -3438,8 +3019,6 @@ done:
 void
 usb_command_wrapper(struct usb_xfer_queue *pq, struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_command_wrapper, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_command_wrapper, entry);
 	if (xfer) {
 		/*
 		 * If the transfer is not already processing,
@@ -3450,8 +3029,6 @@ usb_command_wrapper(struct usb_xfer_queue *pq, struct usb_xfer *xfer)
 			if (pq->curr != NULL) {
 				/* something is already processing */
 				DPRINTFN(6, "busy %p\n", pq->curr);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_command_wrapper, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_command_wrapper, return);
 				return;
 			}
 		}
@@ -3500,8 +3077,6 @@ usb_command_wrapper(struct usb_xfer_queue *pq, struct usb_xfer *xfer)
 		/* clear second recurse flag */
 		pq->recurse_2 = 0;
 	}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_command_wrapper, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usb_command_wrapper, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -3513,21 +3088,13 @@ usb_command_wrapper(struct usb_xfer_queue *pq, struct usb_xfer *xfer)
 void
 usbd_ctrl_transfer_setup(struct usb_device *udev)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_ctrl_transfer_setup, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_ctrl_transfer_setup, entry);
 	struct usb_xfer *xfer;
 	uint8_t no_resetup;
 	uint8_t iface_index;
 
 	/* check for root HUB */
 	if (udev->parent_hub == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_ctrl_transfer_setup, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_ctrl_transfer_setup, return);
 		return;
-}
 repeat:
 
 	xfer = udev->ctrl_xfer[0];
@@ -3557,8 +3124,6 @@ repeat:
 	         * All parameters are exactly the same like before.
 	         * Just return.
 	         */
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_ctrl_transfer_setup, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_ctrl_transfer_setup, return);
 		return;
 	}
 	/*
@@ -3590,8 +3155,6 @@ repeat:
 	} else {
 		goto repeat;
 	}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_ctrl_transfer_setup, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_ctrl_transfer_setup, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -3603,8 +3166,6 @@ repeat:
 void
 usbd_clear_stall_locked(struct usb_device *udev, struct usb_endpoint *ep)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_locked, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_locked, entry);
 	USB_BUS_LOCK_ASSERT(udev->bus, MA_OWNED);
 
 	/* check that we have a valid case */
@@ -3614,8 +3175,6 @@ usbd_clear_stall_locked(struct usb_device *udev, struct usb_endpoint *ep)
 	    ep->methods != NULL) {
 		(udev->bus->methods->clear_stall) (udev, ep);
 	}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_locked, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_locked, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -3627,8 +3186,6 @@ usbd_clear_stall_locked(struct usb_device *udev, struct usb_endpoint *ep)
 void
 usbd_clear_data_toggle(struct usb_device *udev, struct usb_endpoint *ep)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_data_toggle, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_data_toggle, entry);
 	DPRINTFN(5, "udev=%p endpoint=%p\n", udev, ep);
 
 	USB_BUS_LOCK(udev->bus);
@@ -3636,8 +3193,6 @@ usbd_clear_data_toggle(struct usb_device *udev, struct usb_endpoint *ep)
 	/* some hardware needs a callback to clear the data toggle */
 	usbd_clear_stall_locked(udev, ep);
 	USB_BUS_UNLOCK(udev->bus);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_data_toggle, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_data_toggle, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -3673,15 +3228,11 @@ uint8_t
 usbd_clear_stall_callback(struct usb_xfer *xfer1,
     struct usb_xfer *xfer2)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, entry);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, entry);
 	struct usb_device_request req;
 
 	if (xfer2 == NULL) {
 		/* looks like we are tearing down */
 		DPRINTF("NULL input parameter\n");
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
 		return (0);
 	}
 	USB_XFER_LOCK_ASSERT(xfer1, MA_OWNED);
@@ -3721,8 +3272,6 @@ usbd_clear_stall_callback(struct usb_xfer *xfer1,
 		xfer1->nframes = 1;
 
 		usbd_transfer_submit(xfer1);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
 		return (0);
 
 	case USB_ST_TRANSFERRED:
@@ -3730,14 +3279,10 @@ usbd_clear_stall_callback(struct usb_xfer *xfer1,
 
 	default:			/* Error */
 		if (xfer1->error == USB_ERR_CANCELLED) {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
 			return (0);
 		}
 		break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
 	return (1);			/* Clear Stall Finished */
 }
 
@@ -3766,43 +3311,19 @@ usbd_transfer_poll(struct usb_xfer **ppxfer, uint16_t max)
 		/* Extra checks to avoid panic */
 		xfer = ppxfer[n];
 		if (xfer == NULL)
-{
-{
 			continue;	/* no USB transfer */
-}
-}
 		xroot = xfer->xroot;
 		if (xroot == NULL)
-{
-{
 			continue;	/* no USB root */
-}
-}
 		udev = xroot->udev;
 		if (udev == NULL)
-{
-{
 			continue;	/* no USB device */
-}
-}
 		if (udev->bus == NULL)
-{
-{
 			continue;	/* no BUS structure */
-}
-}
 		if (udev->bus->methods == NULL)
-{
-{
 			continue;	/* no BUS methods */
-}
-}
 		if (udev->bus->methods->xfer_poll == NULL)
-{
-{
 			continue;	/* no poll method */
-}
-}
 
 		/* make sure that the BUS mutex is not locked */
 		drop_bus = 0;
@@ -3907,11 +3428,7 @@ usbd_get_std_packet_size(struct usb_std_packet_size *ptr,
 		break;
 	default:
 		if (type == UE_BULK)
-{
-{
 			temp = bulk_min[speed];
-}
-}
 		else /* UE_CONTROL */
 			temp = control_min[speed];
 
@@ -3940,16 +3457,12 @@ usbd_get_std_packet_size(struct usb_std_packet_size *ptr,
 void	*
 usbd_xfer_softc(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
 	return (xfer->priv_sc);
 }
 
 void *
 usbd_xfer_get_priv(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
 	return (xfer->priv_fifo);
 }
 
@@ -3962,8 +3475,6 @@ usbd_xfer_set_priv(struct usb_xfer *xfer, void *ptr)
 uint8_t
 usbd_xfer_state(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
 	return (xfer->usb_state);
 }
 
@@ -4013,8 +3524,6 @@ usbd_xfer_clr_flag(struct usb_xfer *xfer, int flag)
 uint16_t
 usbd_xfer_get_timestamp(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
 	return (xfer->isoc_time_complete);
 }
 
@@ -4025,7 +3534,5 @@ usbd_xfer_get_timestamp(struct usb_xfer *xfer)
 uint8_t
 usbd_xfer_maxp_was_clamped(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_clear_stall_callback, return);
 	return (xfer->flags_int.maxp_was_clamped);
 }

@@ -78,8 +78,6 @@
 #include <sys/syscallsubr.h>
 
 #include <machine/stdarg.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 #if USB_HAVE_UGEN
@@ -170,14 +168,10 @@ struct mtx usb_ref_lock;
 static void
 usb_loc_fill(struct usb_fs_privdata* pd, struct usb_cdev_privdata *cpd)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_loc_fill, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_loc_fill, entry);
 	cpd->bus_index = pd->bus_index;
 	cpd->dev_index = pd->dev_index;
 	cpd->ep_addr = pd->ep_addr;
 	cpd->fifo_index = pd->fifo_index;
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_loc_fill, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_loc_fill, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -195,8 +189,6 @@ static usb_error_t
 usb_ref_device(struct usb_cdev_privdata *cpd, 
     struct usb_cdev_refdata *crd, int need_uref)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ref_device, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ref_device, entry);
 	struct usb_fifo **ppf;
 	struct usb_fifo *f;
 
@@ -263,17 +255,9 @@ usb_ref_device(struct usb_cdev_privdata *cpd,
 			crd->txfifo = f;
 			crd->is_write = 1;	/* ref */
 			if (f == NULL || f->refcount == USB_FIFO_REF_MAX)
-{
-{
 				goto error;
-}
-}
 			if (f->curr_cpd != cpd)
-{
-{
 				goto error;
-}
-}
 			/* check if USB-FS is active */
 			if (f->fs_ep_max != 0) {
 				crd->is_usbfs = 1;
@@ -287,17 +271,9 @@ usb_ref_device(struct usb_cdev_privdata *cpd,
 			crd->rxfifo = f;
 			crd->is_read = 1;	/* ref */
 			if (f == NULL || f->refcount == USB_FIFO_REF_MAX)
-{
-{
 				goto error;
-}
-}
 			if (f->curr_cpd != cpd)
-{
-{
 				goto error;
-}
-}
 			/* check if USB-FS is active */
 			if (f->fs_ep_max != 0) {
 				crd->is_usbfs = 1;
@@ -316,25 +292,15 @@ usb_ref_device(struct usb_cdev_privdata *cpd,
 	}
 	mtx_unlock(&usb_ref_lock);
 
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ref_device, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ref_device, return);
 	return (0);
 
 error:
 	if (crd->do_unlock)
-{
-{
 		usbd_enum_unlock(cpd->udev);
-}
-}
 
 	if (crd->is_uref) {
 		if (--(cpd->udev->refcount) == 0)
-{
-{
 			cv_broadcast(&cpd->udev->ref_cv);
-}
-}
 	}
 	mtx_unlock(&usb_ref_lock);
 	DPRINTFN(2, "fail\n");
@@ -342,8 +308,6 @@ error:
 	/* clear all refs */
 	memset(crd, 0, sizeof(*crd));
 
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ref_device, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ref_device, return);
 	return (USB_ERR_INVAL);
 }
 
@@ -361,19 +325,11 @@ static usb_error_t
 usb_usb_ref_device(struct usb_cdev_privdata *cpd,
     struct usb_cdev_refdata *crd)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_usb_ref_device, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_usb_ref_device, entry);
 	/*
 	 * Check if we already got an USB reference on this location:
 	 */
 	if (crd->is_uref)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_usb_ref_device, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_usb_ref_device, return);
 		return (0);		/* success */
-}
 
 	/*
 	 * To avoid deadlock at detach we need to drop the FIFO ref
@@ -381,8 +337,6 @@ usb_usb_ref_device(struct usb_cdev_privdata *cpd,
 	 */
 	usb_unref_device(cpd, crd);
 
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_usb_ref_device, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_usb_ref_device, return);
 	return (usb_ref_device(cpd, crd, 1 /* need uref */));
 }
 
@@ -396,17 +350,11 @@ static void
 usb_unref_device(struct usb_cdev_privdata *cpd,
     struct usb_cdev_refdata *crd)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_unref_device, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_unref_device, entry);
 
 	DPRINTFN(2, "cpd=%p is_uref=%d\n", cpd, crd->is_uref);
 
 	if (crd->do_unlock)
-{
-{
 		usbd_enum_unlock(cpd->udev);
-}
-}
 
 	mtx_lock(&usb_ref_lock);
 	if (crd->is_read) {
@@ -424,22 +372,14 @@ usb_unref_device(struct usb_cdev_privdata *cpd,
 	if (crd->is_uref) {
 		crd->is_uref = 0;
 		if (--(cpd->udev->refcount) == 0)
-{
-{
 			cv_broadcast(&cpd->udev->ref_cv);
-}
-}
 	}
 	mtx_unlock(&usb_ref_lock);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_unref_device, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_unref_device, return);
 }
 
 static struct usb_fifo *
 usb_fifo_alloc(struct mtx *mtx)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_alloc, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_alloc, entry);
 	struct usb_fifo *f;
 
 	f = malloc(sizeof(*f), M_USBDEV, M_WAITOK | M_ZERO);
@@ -450,8 +390,6 @@ usb_fifo_alloc(struct mtx *mtx)
 		f->refcount = 1;
 		knlist_init_mtx(&f->selinfo.si_note, mtx);
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_alloc, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_alloc, return);
 	return (f);
 }
 
@@ -462,8 +400,6 @@ static int
 usb_fifo_create(struct usb_cdev_privdata *cpd,
     struct usb_cdev_refdata *crd)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, entry);
 	struct usb_device *udev = cpd->udev;
 	struct usb_fifo *f;
 	struct usb_endpoint *ep;
@@ -485,29 +421,15 @@ usb_fifo_create(struct usb_cdev_privdata *cpd,
 		if (is_tx) {
 			f = udev->fifo[cpd->fifo_index + USB_FIFO_TX];
 			if (f == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
 				return (EINVAL);
-}
 			crd->txfifo = f;
 		}
 		if (is_rx) {
 			f = udev->fifo[cpd->fifo_index + USB_FIFO_RX];
 			if (f == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
 				return (EINVAL);
-}
 			crd->rxfifo = f;
 		}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
 		return (0);
 	}
 
@@ -524,8 +446,6 @@ usb_fifo_create(struct usb_cdev_privdata *cpd,
 			} else {
 				/* end of FIFOs reached */
 				DPRINTFN(5, "out of FIFOs\n");
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
 				return (ENOMEM);
 			}
 		}
@@ -570,8 +490,6 @@ usb_fifo_create(struct usb_cdev_privdata *cpd,
 		if (e >= (USB_EP_MAX / 2)) {
 			/* we don't create any endpoints in this range */
 			DPRINTFN(5, "ep out of range\n");
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
 			return (is_busy ? EBUSY : EINVAL);
 		}
 	}
@@ -582,8 +500,6 @@ usb_fifo_create(struct usb_cdev_privdata *cpd,
 		 * opened multiple times!
 		 */
 		DPRINTFN(5, "busy\n");
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
 		return (EBUSY);
 	}
 
@@ -594,15 +510,11 @@ usb_fifo_create(struct usb_cdev_privdata *cpd,
 		DPRINTFN(5, "dev_get_endpoint(%d, 0x%x)\n", e, USB_FIFO_TX);
 		if (ep == NULL) {
 			DPRINTFN(5, "dev_get_endpoint returned NULL\n");
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
 			return (EINVAL);
 		}
 		f = usb_fifo_alloc(&udev->device_mtx);
 		if (f == NULL) {
 			DPRINTFN(5, "could not alloc tx fifo\n");
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
 			return (ENOMEM);
 		}
 		/* update some fields */
@@ -624,15 +536,11 @@ usb_fifo_create(struct usb_cdev_privdata *cpd,
 		DPRINTFN(5, "dev_get_endpoint(%d, 0x%x)\n", e, USB_FIFO_RX);
 		if (ep == NULL) {
 			DPRINTFN(5, "dev_get_endpoint returned NULL\n");
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
 			return (EINVAL);
 		}
 		f = usb_fifo_alloc(&udev->device_mtx);
 		if (f == NULL) {
 			DPRINTFN(5, "could not alloc rx fifo\n");
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
 			return (ENOMEM);
 		}
 		/* update some fields */
@@ -658,22 +566,16 @@ usb_fifo_create(struct usb_cdev_privdata *cpd,
 
 	/* complete */
 
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_create, return);
 	return (0);
 }
 
 void
 usb_fifo_free(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_free, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_free, entry);
 	uint8_t n;
 
 	if (f == NULL) {
 		/* be NULL safe */
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_free, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_free, return);
 		return;
 	}
 	/* destroy symlink devices, if any */
@@ -715,11 +617,7 @@ usb_fifo_free(struct usb_fifo *f)
 		 * during the unlocked time before entering wait:
 		 */
 		if (f->refcount == 0)
-{
-{
 			break;
-}
-}
 
 		/* wait for sync */
 		cv_wait(&f->cv_drain, &usb_ref_lock);
@@ -737,15 +635,11 @@ usb_fifo_free(struct usb_fifo *f)
 	knlist_destroy(&f->selinfo.si_note);
 
 	free(f, M_USBDEV);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_free, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_free, return);
 }
 
 static struct usb_endpoint *
 usb_dev_get_ep(struct usb_device *udev, uint8_t ep_index, uint8_t dir)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_get_ep, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_get_ep, entry);
 	struct usb_endpoint *ep;
 	uint8_t ep_dir;
 
@@ -770,18 +664,12 @@ usb_dev_get_ep(struct usb_device *udev, uint8_t ep_index, uint8_t dir)
 
 	if (ep == NULL) {
 		/* if the endpoint does not exist then return */
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_get_ep, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_get_ep, return);
 		return (NULL);
 	}
 	if (ep->edesc == NULL) {
 		/* invalid endpoint */
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_get_ep, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_get_ep, return);
 		return (NULL);
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_get_ep, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_get_ep, return);
 	return (ep);			/* success */
 }
 
@@ -796,15 +684,11 @@ static int
 usb_fifo_open(struct usb_cdev_privdata *cpd, 
     struct usb_fifo *f, int fflags)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_open, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_open, entry);
 	int err;
 
 	if (f == NULL) {
 		/* no FIFO there */
 		DPRINTFN(2, "no FIFO\n");
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_open, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_open, return);
 		return (ENXIO);
 	}
 	/* remove FWRITE and FREAD flags */
@@ -862,8 +746,6 @@ usb_fifo_open(struct usb_cdev_privdata *cpd,
 
 	mtx_unlock(f->priv_mtx);
 done:
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_open, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_open, return);
 	return (err);
 }
 
@@ -873,13 +755,9 @@ done:
 void
 usb_fifo_reset(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_reset, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_reset, entry);
 	struct usb_mbuf *m;
 
 	if (f == NULL) {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_reset, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_reset, return);
 		return;
 	}
 	while (1) {
@@ -892,8 +770,6 @@ usb_fifo_reset(struct usb_fifo *f)
 	}
 	/* reset have fragment flag */
 	f->flag_have_fragment = 0;
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_reset, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_reset, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -902,15 +778,11 @@ usb_fifo_reset(struct usb_fifo *f)
 static void
 usb_fifo_close(struct usb_fifo *f, int fflags)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_close, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_close, entry);
 	int err;
 
 	/* check if we are not opened */
 	if (f->curr_cpd == NULL) {
 		/* nothing to do - already closed */
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_close, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_close, return);
 		return;
 	}
 	mtx_lock(f->priv_mtx);
@@ -993,8 +865,6 @@ usb_fifo_close(struct usb_fifo *f, int fflags)
 	(f->methods->f_close) (f, fflags);
 
 	DPRINTF("closed\n");
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_close, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_close, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -1003,8 +873,6 @@ usb_fifo_close(struct usb_fifo *f, int fflags)
 static int
 usb_open(struct cdev *dev, int fflags, int devtype, struct thread *td)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_open, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_open, entry);
 	struct usb_fs_privdata* pd = (struct usb_fs_privdata*)dev->si_drv1;
 	struct usb_cdev_refdata refs;
 	struct usb_cdev_privdata *cpd;
@@ -1016,8 +884,6 @@ usb_open(struct cdev *dev, int fflags, int devtype, struct thread *td)
 	if (((fflags & FREAD) && !(pd->mode & FREAD)) ||
 	    ((fflags & FWRITE) && !(pd->mode & FWRITE))) {
 		DPRINTFN(2, "access mode not supported\n");
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_open, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_open, return);
 		return (EPERM);
 	}
 
@@ -1029,8 +895,6 @@ usb_open(struct cdev *dev, int fflags, int devtype, struct thread *td)
 	if (err) {
 		DPRINTFN(2, "cannot ref device\n");
 		free(cpd, M_USBDEV);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_open, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_open, return);
 		return (ENXIO);
 	}
 	cpd->fflags = fflags;	/* access mode for open lifetime */
@@ -1042,8 +906,6 @@ usb_open(struct cdev *dev, int fflags, int devtype, struct thread *td)
 		DPRINTFN(2, "cannot create fifo\n");
 		usb_unref_device(cpd, &refs);
 		free(cpd, M_USBDEV);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_open, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_open, return);
 		return (err);
 	}
 	if (fflags & FREAD) {
@@ -1052,8 +914,6 @@ usb_open(struct cdev *dev, int fflags, int devtype, struct thread *td)
 			DPRINTFN(2, "read open failed\n");
 			usb_unref_device(cpd, &refs);
 			free(cpd, M_USBDEV);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_open, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_open, return);
 			return (err);
 		}
 	}
@@ -1066,16 +926,12 @@ usb_open(struct cdev *dev, int fflags, int devtype, struct thread *td)
 			}
 			usb_unref_device(cpd, &refs);
 			free(cpd, M_USBDEV);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_open, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_open, return);
 			return (err);
 		}
 	}
 	usb_unref_device(cpd, &refs);
 	devfs_set_cdevpriv(cpd, usb_close);
 
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_open, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_open, return);
 	return (0);
 }
 
@@ -1085,8 +941,6 @@ usb_open(struct cdev *dev, int fflags, int devtype, struct thread *td)
 static void
 usb_close(void *arg)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_close, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_close, entry);
 	struct usb_cdev_refdata refs;
 	struct usb_cdev_privdata *cpd = arg;
 	int err;
@@ -1109,23 +963,17 @@ usb_close(void *arg)
 	usb_unref_device(cpd, &refs);
 done:
 	free(cpd, M_USBDEV);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_close, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_close, return);
 }
 
 static void
 usb_dev_init(void *arg)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_init, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_init, entry);
 	mtx_init(&usb_ref_lock, "USB ref mutex", NULL, MTX_DEF);
 	sx_init(&usb_sym_lock, "USB sym mutex");
 	TAILQ_INIT(&usb_sym_head);
 
 	/* check the UGEN methods */
 	usb_fifo_check_methods(&usb_ugen_methods);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_init, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_init, return);
 }
 
 SYSINIT(usb_dev_init, SI_SUB_KLD, SI_ORDER_FIRST, usb_dev_init, NULL);
@@ -1133,8 +981,6 @@ SYSINIT(usb_dev_init, SI_SUB_KLD, SI_ORDER_FIRST, usb_dev_init, NULL);
 static void
 usb_dev_init_post(void *arg)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_init_post, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_init_post, entry);
 	/*
 	 * Create /dev/usb - this is needed for usbconfig(8), which
 	 * needs a well-known device name to access.
@@ -1144,8 +990,6 @@ usb_dev_init_post(void *arg)
 	if (usb_dev == NULL) {
 		DPRINTFN(0, "Could not create usb bus device\n");
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_init_post, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_init_post, return);
 }
 
 SYSINIT(usb_dev_init_post, SI_SUB_KICK_SCHEDULER, SI_ORDER_FIRST, usb_dev_init_post, NULL);
@@ -1153,16 +997,12 @@ SYSINIT(usb_dev_init_post, SI_SUB_KICK_SCHEDULER, SI_ORDER_FIRST, usb_dev_init_p
 static void
 usb_dev_uninit(void *arg)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_uninit, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_uninit, entry);
 	if (usb_dev != NULL) {
 		destroy_dev(usb_dev);
 		usb_dev = NULL;
 	}
 	mtx_destroy(&usb_ref_lock);
 	sx_destroy(&usb_sym_lock);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_uninit, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_dev_uninit, return);
 }
 
 SYSUNINIT(usb_dev_uninit, SI_SUB_KICK_SCHEDULER, SI_ORDER_ANY, usb_dev_uninit, NULL);
@@ -1171,8 +1011,6 @@ static int
 usb_ioctl_f_sub(struct usb_fifo *f, u_long cmd, void *addr,
     struct thread *td)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl_f_sub, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl_f_sub, entry);
 	int error = 0;
 
 	switch (cmd) {
@@ -1208,13 +1046,9 @@ usb_ioctl_f_sub(struct usb_fifo *f, u_long cmd, void *addr,
 		}
 		break;
 	default:
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl_f_sub, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl_f_sub, return);
 		return (ENOIOCTL);
 	}
 	DPRINTFN(3, "cmd 0x%lx = %d\n", cmd, error);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl_f_sub, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl_f_sub, return);
 	return (error);
 }
 
@@ -1224,8 +1058,6 @@ usb_ioctl_f_sub(struct usb_fifo *f, u_long cmd, void *addr,
 static int
 usb_ioctl(struct cdev *dev, u_long cmd, caddr_t addr, int fflag, struct thread* td)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl, entry);
 	struct usb_cdev_refdata refs;
 	struct usb_cdev_privdata* cpd;
 	struct usb_fifo *f;
@@ -1236,13 +1068,7 @@ usb_ioctl(struct cdev *dev, u_long cmd, caddr_t addr, int fflag, struct thread* 
 
 	err = devfs_get_cdevpriv((void **)&cpd);
 	if (err != 0)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl, return);
 		return (err);
-}
 
 	/* 
 	 * Performance optimisation: We try to check for IOCTL's that
@@ -1251,13 +1077,7 @@ usb_ioctl(struct cdev *dev, u_long cmd, caddr_t addr, int fflag, struct thread* 
 	 */
 	err = usb_ref_device(cpd, &refs, 0 /* no uref */ );
 	if (err)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl, return);
 		return (ENXIO);
-}
 
 	fflags = cpd->fflags;
 
@@ -1274,27 +1094,17 @@ usb_ioctl(struct cdev *dev, u_long cmd, caddr_t addr, int fflag, struct thread* 
 	}
 	KASSERT(f != NULL, ("fifo not found"));
 	if (err != ENOIOCTL)
-{
-{
 		goto done;
-}
-}
 
 	err = (f->methods->f_ioctl) (f, cmd, addr, fflags);
 
 	DPRINTFN(2, "f_ioctl cmd 0x%lx = %d\n", cmd, err);
 
 	if (err != ENOIOCTL)
-{
-{
 		goto done;
-}
-}
 
 	if (usb_usb_ref_device(cpd, &refs)) {
 		/* we lost the reference */
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl, return);
 		return (ENXIO);
 	}
 
@@ -1303,18 +1113,10 @@ usb_ioctl(struct cdev *dev, u_long cmd, caddr_t addr, int fflag, struct thread* 
 	DPRINTFN(2, "f_ioctl_post cmd 0x%lx = %d\n", cmd, err);
 
 	if (err == ENOIOCTL)
-{
-{
 		err = ENOTTY;
-}
-}
 
 	if (err)
-{
-{
 		goto done;
-}
-}
 
 	/* Wait for re-enumeration, if any */
 
@@ -1327,8 +1129,6 @@ usb_ioctl(struct cdev *dev, u_long cmd, caddr_t addr, int fflag, struct thread* 
 		while (usb_ref_device(cpd, &refs, 1 /* need uref */)) {
 			if (usb_ref_device(cpd, &refs, 0)) {
 				/* device no longer exists */
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl, return);
 				return (ENXIO);
 			}
 			usb_unref_device(cpd, &refs);
@@ -1338,27 +1138,19 @@ usb_ioctl(struct cdev *dev, u_long cmd, caddr_t addr, int fflag, struct thread* 
 
 done:
 	usb_unref_device(cpd, &refs);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_ioctl, return);
 	return (err);
 }
 
 static void
 usb_filter_detach(struct knote *kn)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_filter_detach, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_filter_detach, entry);
 	struct usb_fifo *f = kn->kn_hook;
 	knlist_remove(&f->selinfo.si_note, kn, 0);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_filter_detach, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_filter_detach, return);
 }
 
 static int
 usb_filter_write(struct knote *kn, long hint)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_filter_write, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_filter_write, entry);
 	struct usb_cdev_privdata* cpd;
 	struct usb_fifo *f;
 	struct usb_mbuf *m;
@@ -1394,16 +1186,12 @@ usb_filter_write(struct knote *kn, long hint)
 			m = NULL;
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_filter_write, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_filter_write, return);
 	return (m ? 1 : 0);
 }
 
 static int
 usb_filter_read(struct knote *kn, long hint)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_filter_read, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_filter_read, entry);
 	struct usb_cdev_privdata* cpd;
 	struct usb_fifo *f;
 	struct usb_mbuf *m;
@@ -1434,11 +1222,7 @@ usb_filter_read(struct knote *kn, long hint)
 
 			/* start reading data, if any */
 			if (m == NULL)
-{
-{
 				(f->methods->f_start_read) (f);
-}
-}
 		}
 	} else {
 		if (f->flag_iscomplete) {
@@ -1447,8 +1231,6 @@ usb_filter_read(struct knote *kn, long hint)
 			m = NULL;
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_filter_read, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_filter_read, return);
 	return (m ? 1 : 0);
 }
 
@@ -1469,8 +1251,6 @@ static struct filterops usb_filtops_read = {
 static int
 usb_kqfilter(struct cdev* dev, struct knote *kn)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_kqfilter, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_kqfilter, entry);
 	struct usb_cdev_refdata refs;
 	struct usb_cdev_privdata* cpd;
 	struct usb_fifo *f;
@@ -1481,8 +1261,6 @@ usb_kqfilter(struct cdev* dev, struct knote *kn)
 
 	if (devfs_get_cdevpriv((void **)&cpd) != 0 ||
 	    usb_ref_device(cpd, &refs, 0) != 0)
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_kqfilter, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_kqfilter, return);
 		return (ENXIO);
 
 	fflags = cpd->fflags;
@@ -1516,8 +1294,6 @@ usb_kqfilter(struct cdev* dev, struct knote *kn)
 	}
 
 	usb_unref_device(cpd, &refs);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_kqfilter, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_kqfilter, return);
 	return (err);
 }
 
@@ -1525,8 +1301,6 @@ usb_kqfilter(struct cdev* dev, struct knote *kn)
 static int
 usb_poll(struct cdev* dev, int events, struct thread* td)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_poll, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_poll, entry);
 	struct usb_cdev_refdata refs;
 	struct usb_cdev_privdata* cpd;
 	struct usb_fifo *f;
@@ -1535,8 +1309,6 @@ usb_poll(struct cdev* dev, int events, struct thread* td)
 
 	if (devfs_get_cdevpriv((void **)&cpd) != 0 ||
 	    usb_ref_device(cpd, &refs, 0) != 0)
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_poll, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_poll, return);
 		return (events &
 		    (POLLHUP|POLLIN|POLLRDNORM|POLLOUT|POLLWRNORM));
 
@@ -1628,16 +1400,12 @@ usb_poll(struct cdev* dev, int events, struct thread* td)
 		mtx_unlock(f->priv_mtx);
 	}
 	usb_unref_device(cpd, &refs);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_poll, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_poll, return);
 	return (revents);
 }
 
 static int
 usb_read(struct cdev *dev, struct uio *uio, int ioflag)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_read, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_read, entry);
 	struct usb_cdev_refdata refs;
 	struct usb_cdev_privdata* cpd;
 	struct usb_fifo *f;
@@ -1650,23 +1418,11 @@ usb_read(struct cdev *dev, struct uio *uio, int ioflag)
 
 	err = devfs_get_cdevpriv((void **)&cpd);
 	if (err != 0)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_read, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_read, return);
 		return (err);
-}
 
 	err = usb_ref_device(cpd, &refs, 0 /* no uref */ );
 	if (err)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_read, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_read, return);
 		return (ENXIO);
-}
 
 	fflags = cpd->fflags;
 
@@ -1674,8 +1430,6 @@ usb_read(struct cdev *dev, struct uio *uio, int ioflag)
 	if (f == NULL) {
 		/* should not happen */
 		usb_unref_device(cpd, &refs);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_read, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_read, return);
 		return (EPERM);
 	}
 
@@ -1769,16 +1523,12 @@ done:
 
 	usb_unref_device(cpd, &refs);
 
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_read, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_read, return);
 	return (err);
 }
 
 static int
 usb_write(struct cdev *dev, struct uio *uio, int ioflag)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_write, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_write, entry);
 	struct usb_cdev_refdata refs;
 	struct usb_cdev_privdata* cpd;
 	struct usb_fifo *f;
@@ -1794,23 +1544,11 @@ usb_write(struct cdev *dev, struct uio *uio, int ioflag)
 
 	err = devfs_get_cdevpriv((void **)&cpd);
 	if (err != 0)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_write, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_write, return);
 		return (err);
-}
 
 	err = usb_ref_device(cpd, &refs, 0 /* no uref */ );
 	if (err)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_write, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_write, return);
 		return (ENXIO);
-}
 
 	fflags = cpd->fflags;
 
@@ -1818,8 +1556,6 @@ usb_write(struct cdev *dev, struct uio *uio, int ioflag)
 	if (f == NULL) {
 		/* should not happen */
 		usb_unref_device(cpd, &refs);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_write, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_write, return);
 		return (EPERM);
 	}
 	resid = uio->uio_resid;
@@ -1873,21 +1609,13 @@ usb_write(struct cdev *dev, struct uio *uio, int ioflag)
 			io_len = m->cur_data_len;
 			pdata = m->cur_data_ptr;
 			if (io_len > uio->uio_resid)
-{
-{
 				io_len = uio->uio_resid;
-}
-}
 			m->cur_data_len = io_len;
 		} else {
 			io_len = m->max_data_len - m->cur_data_len;
 			pdata = m->cur_data_ptr + m->cur_data_len;
 			if (io_len > uio->uio_resid)
-{
-{
 				io_len = uio->uio_resid;
-}
-}
 			m->cur_data_len += io_len;
 		}
 
@@ -1936,8 +1664,6 @@ done:
 
 	usb_unref_device(cpd, &refs);
 
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_write, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_write, return);
 	return (err);
 }
 
@@ -1945,8 +1671,6 @@ int
 usb_static_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag,
     struct thread *td)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_static_ioctl, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_static_ioctl, entry);
 	union {
 		struct usb_read_dir *urd;
 		void* data;
@@ -1972,19 +1696,13 @@ usb_static_ioctl(struct cdev *dev, u_long cmd, caddr_t data, int fflag,
 		case USB_SET_TEMPLATE:
 			err = priv_check(curthread, PRIV_DRIVER);
 			if (err)
-{
-{
 				break;
-}
-}
 			usb_template = *(int *)data;
 			break;
 		default:
 			err = ENOTTY;
 			break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_static_ioctl, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_static_ioctl, return);
 	return (err);
 }
 
@@ -1992,8 +1710,6 @@ static int
 usb_fifo_uiomove(struct usb_fifo *f, void *cp,
     int n, struct uio *uio)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_uiomove, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_uiomove, entry);
 	int error;
 
 	mtx_unlock(f->priv_mtx);
@@ -2006,24 +1722,18 @@ usb_fifo_uiomove(struct usb_fifo *f, void *cp,
 
 	mtx_lock(f->priv_mtx);
 
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_uiomove, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_uiomove, return);
 	return (error);
 }
 
 int
 usb_fifo_wait(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_wait, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_wait, entry);
 	int err;
 
 	mtx_assert(f->priv_mtx, MA_OWNED);
 
 	if (f->flag_iserror) {
 		/* we are gone */
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_wait, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_wait, return);
 		return (EIO);
 	}
 	f->flag_sleeping = 1;
@@ -2034,29 +1744,21 @@ usb_fifo_wait(struct usb_fifo *f)
 		/* we are gone */
 		err = EIO;
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_wait, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_wait, return);
 	return (err);
 }
 
 void
 usb_fifo_signal(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_signal, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_signal, entry);
 	if (f->flag_sleeping) {
 		f->flag_sleeping = 0;
 		cv_broadcast(&f->cv_io);
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_signal, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_signal, return);
 }
 
 void
 usb_fifo_wakeup(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_wakeup, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_wakeup, entry);
 	usb_fifo_signal(f);
 
 	KNOTE_LOCKED(&f->selinfo.si_note, 0);
@@ -2070,116 +1772,60 @@ usb_fifo_wakeup(struct usb_fifo *f)
 		kern_psignal(f->async_p, SIGIO);
 		PROC_UNLOCK(f->async_p);
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_wakeup, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_wakeup, return);
 }
 
 static int
 usb_fifo_dummy_open(struct usb_fifo *fifo, int fflags)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_open, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_open, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_open, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_open, return);
 	return (0);
 }
 
 static void
 usb_fifo_dummy_close(struct usb_fifo *fifo, int fflags)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_close, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_close, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_close, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_close, return);
 	return;
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_close, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_close, return);
 }
 
 static int
 usb_fifo_dummy_ioctl(struct usb_fifo *fifo, u_long cmd, void *addr, int fflags)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_ioctl, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_ioctl, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_ioctl, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_ioctl, return);
 	return (ENOIOCTL);
 }
 
 static void
 usb_fifo_dummy_cmd(struct usb_fifo *fifo)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_cmd, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_cmd, entry);
 	fifo->flag_flushing = 0;	/* not flushing */
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_cmd, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_dummy_cmd, return);
 }
 
 static void
 usb_fifo_check_methods(struct usb_fifo_methods *pm)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_check_methods, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_check_methods, entry);
 	/* check that all callback functions are OK */
 
 	if (pm->f_open == NULL)
-{
-{
 		pm->f_open = &usb_fifo_dummy_open;
-}
-}
 
 	if (pm->f_close == NULL)
-{
-{
 		pm->f_close = &usb_fifo_dummy_close;
-}
-}
 
 	if (pm->f_ioctl == NULL)
-{
-{
 		pm->f_ioctl = &usb_fifo_dummy_ioctl;
-}
-}
 
 	if (pm->f_ioctl_post == NULL)
-{
-{
 		pm->f_ioctl_post = &usb_fifo_dummy_ioctl;
-}
-}
 
 	if (pm->f_start_read == NULL)
-{
-{
 		pm->f_start_read = &usb_fifo_dummy_cmd;
-}
-}
 
 	if (pm->f_stop_read == NULL)
-{
-{
 		pm->f_stop_read = &usb_fifo_dummy_cmd;
-}
-}
 
 	if (pm->f_start_write == NULL)
-{
-{
 		pm->f_start_write = &usb_fifo_dummy_cmd;
-}
-}
 
 	if (pm->f_stop_write == NULL)
-{
-{
 		pm->f_stop_write = &usb_fifo_dummy_cmd;
-}
-}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_check_methods, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_check_methods, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2197,8 +1843,6 @@ usb_fifo_attach(struct usb_device *udev, void *priv_sc,
     struct usb_fifo_sc *f_sc, uint16_t unit, int16_t subunit,
     uint8_t iface_index, uid_t uid, gid_t gid, int mode)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_attach, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_attach, entry);
 	struct usb_fifo *f_tx;
 	struct usb_fifo *f_rx;
 	char devname[32];
@@ -2208,31 +1852,19 @@ usb_fifo_attach(struct usb_device *udev, void *priv_sc,
 	f_sc->fp[USB_FIFO_RX] = NULL;
 
 	if (pm == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_attach, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_attach, return);
 		return (EINVAL);
-}
 
 	/* check the methods */
 	usb_fifo_check_methods(pm);
 
 	if (priv_mtx == NULL)
-{
-{
 		priv_mtx = &Giant;
-}
-}
 
 	/* search for a free FIFO slot */
 	for (n = 0;; n += 2) {
 
 		if (n == USB_FIFO_MAX) {
 			/* end of FIFOs reached */
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_attach, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_attach, return);
 			return (ENOMEM);
 		}
 		/* Check for TX FIFO */
@@ -2252,8 +1884,6 @@ usb_fifo_attach(struct usb_device *udev, void *priv_sc,
 	if ((f_tx == NULL) || (f_rx == NULL)) {
 		usb_fifo_free(f_tx);
 		usb_fifo_free(f_rx);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_attach, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_attach, return);
 		return (ENOMEM);
 	}
 	/* initialise FIFO structures */
@@ -2319,8 +1949,6 @@ usb_fifo_attach(struct usb_device *udev, void *priv_sc,
 	}
 
 	DPRINTFN(2, "attached %p/%p\n", f_tx, f_rx);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_attach, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_attach, return);
 	return (0);
 }
 
@@ -2335,8 +1963,6 @@ int
 usb_fifo_alloc_buffer(struct usb_fifo *f, usb_size_t bufsize,
     uint16_t nbuf)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_alloc_buffer, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_alloc_buffer, entry);
 	usb_fifo_free_buffer(f);
 
 	/* allocate an endpoint */
@@ -2347,12 +1973,8 @@ usb_fifo_alloc_buffer(struct usb_fifo *f, usb_size_t bufsize,
 	    M_USBDEV, &f->free_q, bufsize, nbuf);
 
 	if ((f->queue_data == NULL) && bufsize && nbuf) {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_alloc_buffer, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_alloc_buffer, return);
 		return (ENOMEM);
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_alloc_buffer, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_alloc_buffer, return);
 	return (0);			/* success */
 }
 
@@ -2365,8 +1987,6 @@ usb_fifo_alloc_buffer(struct usb_fifo *f, usb_size_t bufsize,
 void
 usb_fifo_free_buffer(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_free_buffer, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_free_buffer, entry);
 	if (f->queue_data) {
 		/* free old buffer */
 		free(f->queue_data, M_USBDEV);
@@ -2376,18 +1996,12 @@ usb_fifo_free_buffer(struct usb_fifo *f)
 
 	memset(&f->free_q, 0, sizeof(f->free_q));
 	memset(&f->used_q, 0, sizeof(f->used_q));
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_free_buffer, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_free_buffer, return);
 }
 
 void
 usb_fifo_detach(struct usb_fifo_sc *f_sc)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_detach, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_detach, entry);
 	if (f_sc == NULL) {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_detach, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_detach, return);
 		return;
 	}
 	usb_fifo_free(f_sc->fp[USB_FIFO_TX]);
@@ -2401,15 +2015,11 @@ usb_fifo_detach(struct usb_fifo_sc *f_sc)
 	f_sc->dev = NULL;
 
 	DPRINTFN(2, "detached %p\n", f_sc);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_detach, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_detach, return);
 }
 
 usb_size_t
 usb_fifo_put_bytes_max(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_bytes_max, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_bytes_max, entry);
 	struct usb_mbuf *m;
 	usb_size_t len;
 
@@ -2420,8 +2030,6 @@ usb_fifo_put_bytes_max(struct usb_fifo *f)
 	} else {
 		len = 0;
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_bytes_max, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_bytes_max, return);
 	return (len);
 }
 
@@ -2436,8 +2044,6 @@ void
 usb_fifo_put_data(struct usb_fifo *f, struct usb_page_cache *pc,
     usb_frlength_t offset, usb_frlength_t len, uint8_t what)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data, entry);
 	struct usb_mbuf *m;
 	usb_frlength_t io_len;
 
@@ -2470,16 +2076,12 @@ usb_fifo_put_data(struct usb_fifo *f, struct usb_page_cache *pc,
 			break;
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data, return);
 }
 
 void
 usb_fifo_put_data_linear(struct usb_fifo *f, void *ptr,
     usb_size_t len, uint8_t what)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data_linear, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data_linear, entry);
 	struct usb_mbuf *m;
 	usb_size_t io_len;
 
@@ -2512,15 +2114,11 @@ usb_fifo_put_data_linear(struct usb_fifo *f, void *ptr,
 			break;
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data_linear, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data_linear, return);
 }
 
 uint8_t
 usb_fifo_put_data_buffer(struct usb_fifo *f, void *ptr, usb_size_t len)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data_buffer, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data_buffer, entry);
 	struct usb_mbuf *m;
 
 	USB_IF_DEQUEUE(&f->free_q, m);
@@ -2530,24 +2128,16 @@ usb_fifo_put_data_buffer(struct usb_fifo *f, void *ptr, usb_size_t len)
 		m->cur_data_ptr = ptr;
 		USB_IF_ENQUEUE(&f->used_q, m);
 		usb_fifo_wakeup(f);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data_buffer, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data_buffer, return);
 		return (1);
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data_buffer, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data_buffer, return);
 	return (0);
 }
 
 void
 usb_fifo_put_data_error(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data_error, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data_error, entry);
 	f->flag_iserror = 1;
 	usb_fifo_wakeup(f);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data_error, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_put_data_error, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2566,8 +2156,6 @@ usb_fifo_get_data(struct usb_fifo *f, struct usb_page_cache *pc,
     usb_frlength_t offset, usb_frlength_t len, usb_frlength_t *actlen,
     uint8_t what)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data, entry);
 	struct usb_mbuf *m;
 	usb_frlength_t io_len;
 	uint8_t tr_data = 0;
@@ -2626,8 +2214,6 @@ usb_fifo_get_data(struct usb_fifo *f, struct usb_page_cache *pc,
 			break;
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data, return);
 	return (tr_data);
 }
 
@@ -2635,8 +2221,6 @@ uint8_t
 usb_fifo_get_data_linear(struct usb_fifo *f, void *ptr,
     usb_size_t len, usb_size_t *actlen, uint8_t what)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data_linear, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data_linear, entry);
 	struct usb_mbuf *m;
 	usb_size_t io_len;
 	uint8_t tr_data = 0;
@@ -2695,16 +2279,12 @@ usb_fifo_get_data_linear(struct usb_fifo *f, void *ptr,
 			break;
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data_linear, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data_linear, return);
 	return (tr_data);
 }
 
 uint8_t
 usb_fifo_get_data_buffer(struct usb_fifo *f, void **pptr, usb_size_t *plen)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data_buffer, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data_buffer, entry);
 	struct usb_mbuf *m;
 
 	USB_IF_POLL(&f->used_q, m);
@@ -2713,24 +2293,16 @@ usb_fifo_get_data_buffer(struct usb_fifo *f, void **pptr, usb_size_t *plen)
 		*plen = m->cur_data_len;
 		*pptr = m->cur_data_ptr;
 
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data_buffer, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data_buffer, return);
 		return (1);
 	}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data_buffer, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data_buffer, return);
 	return (0);
 }
 
 void
 usb_fifo_get_data_error(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data_error, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data_error, entry);
 	f->flag_iserror = 1;
 	usb_fifo_wakeup(f);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data_error, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_get_data_error, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2743,14 +2315,10 @@ usb_fifo_get_data_error(struct usb_fifo *f)
 struct usb_symlink *
 usb_alloc_symlink(const char *target)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_alloc_symlink, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_alloc_symlink, entry);
 	struct usb_symlink *ps;
 
 	ps = malloc(sizeof(*ps), M_USBDEV, M_WAITOK);
 	if (ps == NULL) {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_alloc_symlink, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_alloc_symlink, return);
 		return (ps);
 	}
 	/* XXX no longer needed */
@@ -2762,8 +2330,6 @@ usb_alloc_symlink(const char *target)
 	sx_xlock(&usb_sym_lock);
 	TAILQ_INSERT_TAIL(&usb_sym_head, ps, sym_entry);
 	sx_unlock(&usb_sym_lock);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_alloc_symlink, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_alloc_symlink, return);
 	return (ps);
 }
 
@@ -2773,11 +2339,7 @@ usb_alloc_symlink(const char *target)
 void
 usb_free_symlink(struct usb_symlink *ps)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_free_symlink, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_free_symlink, entry);
 	if (ps == NULL) {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_free_symlink, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_free_symlink, return);
 		return;
 	}
 	sx_xlock(&usb_sym_lock);
@@ -2785,8 +2347,6 @@ usb_free_symlink(struct usb_symlink *ps)
 	sx_unlock(&usb_sym_lock);
 
 	free(ps, M_USBDEV);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_free_symlink, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_free_symlink, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -2799,8 +2359,6 @@ usb_free_symlink(struct usb_symlink *ps)
 int
 usb_read_symlink(uint8_t *user_ptr, uint32_t startentry, uint32_t user_len)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_read_symlink, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_read_symlink, entry);
 	struct usb_symlink *ps;
 	uint32_t temp;
 	uint32_t delta = 0;
@@ -2889,60 +2447,34 @@ usb_read_symlink(uint8_t *user_ptr, uint32_t startentry, uint32_t user_len)
 		    USB_ADD_BYTES(user_ptr, delta), 1);
 	}
 	sx_unlock(&usb_sym_lock);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_read_symlink, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_read_symlink, return);
 	return (error);
 }
 
 void
 usb_fifo_set_close_zlp(struct usb_fifo *f, uint8_t onoff)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_set_close_zlp, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_set_close_zlp, entry);
 	if (f == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_set_close_zlp, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_set_close_zlp, return);
 		return;
-}
 
 	/* send a Zero Length Packet, ZLP, before close */
 	f->flag_short = onoff;
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_set_close_zlp, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_set_close_zlp, return);
 }
 
 void
 usb_fifo_set_write_defrag(struct usb_fifo *f, uint8_t onoff)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_set_write_defrag, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_set_write_defrag, entry);
 	if (f == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_set_write_defrag, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_set_write_defrag, return);
 		return;
-}
 
 	/* defrag written data */
 	f->flag_write_defrag = onoff;
 	/* reset defrag state */
 	f->flag_have_fragment = 0;
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_set_write_defrag, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_set_write_defrag, return);
 }
 
 void *
 usb_fifo_softc(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_softc, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_softc, entry);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_softc, return);
-	SDT_PROBE0(tpw, kernel, usb_dev_usb_fifo_softc, return);
 	return (f->priv_sc0);
 }
 #endif	/* USB_HAVE_UGEN */

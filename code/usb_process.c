@@ -58,8 +58,6 @@
 #include <sys/proc.h>
 #include <sys/kthread.h>
 #include <sys/sched.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 #if (__FreeBSD_version < 700000)
@@ -104,8 +102,6 @@ SYSCTL_INT(_hw_usb_proc, OID_AUTO, debug, CTLFLAG_RWTUN, &usb_proc_debug, 0,
 static void
 usb_process(void *arg)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_process, entry);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_process, entry);
 	struct usb_process *up = arg;
 	struct usb_proc_msg *pm;
 	struct thread *td;
@@ -126,11 +122,7 @@ usb_process(void *arg)
 	while (1) {
 
 		if (up->up_gone)
-{
-{
 			break;
-}
-}
 
 		/*
 		 * NOTE to reimplementors: dequeueing a command from the
@@ -207,16 +199,10 @@ usb_process(void *arg)
 #if (__FreeBSD_version >= 800000)
 	/* Clear the proc pointer if this is the last thread. */
 	if (--usb_pcount == 0)
-{
-{
 		usbproc = NULL;
-}
-}
 #endif
 
 	USB_THREAD_EXIT(0);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_process, return);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_process, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -236,8 +222,6 @@ int
 usb_proc_create(struct usb_process *up, struct mtx *p_mtx,
     const char *pmesg, uint8_t prio)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_create, entry);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_create, entry);
 	up->up_mtx = p_mtx;
 	up->up_prio = prio;
 
@@ -255,14 +239,10 @@ usb_proc_create(struct usb_process *up, struct mtx *p_mtx,
 #if (__FreeBSD_version >= 800000)
 	usb_pcount++;
 #endif
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_create, return);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_create, return);
 	return (0);
 
 error:
 	usb_proc_free(up);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_create, return);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_create, return);
 	return (ENOMEM);
 }
 
@@ -278,17 +258,9 @@ error:
 void
 usb_proc_free(struct usb_process *up)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_free, entry);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_free, entry);
 	/* check if not initialised */
 	if (up->up_mtx == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_free, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_free, return);
 		return;
-}
 
 	usb_proc_drain(up);
 
@@ -297,8 +269,6 @@ usb_proc_free(struct usb_process *up)
 
 	/* make sure that we do not enter here again */
 	up->up_mtx = NULL;
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_free, return);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_free, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -315,8 +285,6 @@ usb_proc_free(struct usb_process *up)
 void   *
 usb_proc_msignal(struct usb_process *up, void *_pm0, void *_pm1)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_msignal, entry);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_msignal, entry);
 	struct usb_proc_msg *pm0 = _pm0;
 	struct usb_proc_msg *pm1 = _pm1;
 	struct usb_proc_msg *pm2;
@@ -325,13 +293,7 @@ usb_proc_msignal(struct usb_process *up, void *_pm0, void *_pm1)
 
 	/* check if gone, return dummy value */
 	if (up->up_gone)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_msignal, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_msignal, return);
 		return (_pm0);
-}
 
 	mtx_assert(up->up_mtx, MA_OWNED);
 
@@ -393,8 +355,6 @@ usb_proc_msignal(struct usb_process *up, void *_pm0, void *_pm1)
 		up->up_msleep = 0;	/* save "cv_signal()" calls */
 		cv_signal(&up->up_cv);
 	}
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_msignal, return);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_msignal, return);
 	return (pm2);
 }
 
@@ -408,29 +368,15 @@ usb_proc_msignal(struct usb_process *up, void *_pm0, void *_pm1)
 uint8_t
 usb_proc_is_gone(struct usb_process *up)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_is_gone, entry);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_is_gone, entry);
 	if (up->up_gone)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_is_gone, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_is_gone, return);
 		return (1);
-}
 
 	/*
 	 * Allow calls when up_mtx is NULL, before the USB process
 	 * structure is initialised.
 	 */
 	if (up->up_mtx != NULL)
-{
-{
 		mtx_assert(up->up_mtx, MA_OWNED);
-}
-}
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_is_gone, return);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_is_gone, return);
 	return (0);
 }
 
@@ -444,20 +390,12 @@ usb_proc_is_gone(struct usb_process *up)
 void
 usb_proc_mwait(struct usb_process *up, void *_pm0, void *_pm1)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_mwait, entry);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_mwait, entry);
 	struct usb_proc_msg *pm0 = _pm0;
 	struct usb_proc_msg *pm1 = _pm1;
 
 	/* check if gone */
 	if (up->up_gone)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_mwait, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_mwait, return);
 		return;
-}
 
 	mtx_assert(up->up_mtx, MA_OWNED);
 
@@ -476,16 +414,10 @@ usb_proc_mwait(struct usb_process *up, void *_pm0, void *_pm1)
 		    pm1->pm_qentry.tqe_prev) {
 			/* check if config thread is gone */
 			if (up->up_gone)
-{
-{
 				break;
-}
-}
 			up->up_dsleep = 1;
 			cv_wait(&up->up_drain, up->up_mtx);
 		}
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_mwait, return);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_mwait, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -500,24 +432,12 @@ usb_proc_mwait(struct usb_process *up, void *_pm0, void *_pm1)
 void
 usb_proc_drain(struct usb_process *up)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_drain, entry);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_drain, entry);
 	/* check if not initialised */
 	if (up->up_mtx == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_drain, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_drain, return);
 		return;
-}
 	/* handle special case with Giant */
 	if (up->up_mtx != &Giant)
-{
-{
 		mtx_assert(up->up_mtx, MA_NOTOWNED);
-}
-}
 
 	mtx_lock(up->up_mtx);
 
@@ -554,8 +474,6 @@ usb_proc_drain(struct usb_process *up)
 		    "for USB process drain!\n");
 	}
 	mtx_unlock(up->up_mtx);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_drain, return);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_drain, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -569,26 +487,12 @@ usb_proc_drain(struct usb_process *up)
 void
 usb_proc_rewakeup(struct usb_process *up)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_rewakeup, entry);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_rewakeup, entry);
 	/* check if not initialised */
 	if (up->up_mtx == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_rewakeup, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_rewakeup, return);
 		return;
-}
 	/* check if gone */
 	if (up->up_gone)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_rewakeup, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_rewakeup, return);
 		return;
-}
 
 	mtx_assert(up->up_mtx, MA_OWNED);
 
@@ -596,8 +500,6 @@ usb_proc_rewakeup(struct usb_process *up)
 		/* re-wakeup */
 		cv_signal(&up->up_cv);
 	}
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_rewakeup, return);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_rewakeup, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -609,9 +511,5 @@ usb_proc_rewakeup(struct usb_process *up)
 int
 usb_proc_is_called_from(struct usb_process *up)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_is_called_from, entry);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_is_called_from, entry);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_is_called_from, return);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_is_called_from, return);
 	return (up->up_curtd == curthread);
 }

@@ -48,8 +48,6 @@
 
 #include <dev/usb/usb.h>
 #include <dev/usb/usbdi.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 static const char* usb_errstr_table[USB_ERR_MAX] = {
@@ -92,9 +90,5 @@ static const char* usb_errstr_table[USB_ERR_MAX] = {
 const char *
 usbd_errstr(usb_error_t err)
 {
-	SDT_PROBE0(tpw, kernel, usb_error_usbd_errstr, entry);
-	SDT_PROBE0(tpw, kernel, usb_error_usbd_errstr, entry);
-	SDT_PROBE0(tpw, kernel, usb_error_usbd_errstr, return);
-	SDT_PROBE0(tpw, kernel, usb_error_usbd_errstr, return);
 	return (err < USB_ERR_MAX ? usb_errstr_table[err] : "USB_ERR_UNKNOWN");
 }

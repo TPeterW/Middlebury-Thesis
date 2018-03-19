@@ -70,8 +70,6 @@
 
 #include <dev/usb/usb_controller.h>
 #include <dev/usb/usb_bus.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 #if USB_HAVE_UGEN
@@ -144,8 +142,6 @@ static int
 ugen_transfer_setup(struct usb_fifo *f,
     const struct usb_config *setup, uint8_t n_setup)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_transfer_setup, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_transfer_setup, entry);
 	struct usb_endpoint *ep = usb_fifo_softc(f);
 	struct usb_device *udev = f->udev;
 	uint8_t iface_index = ep->iface_index;
@@ -175,16 +171,12 @@ ugen_transfer_setup(struct usb_fifo *f,
 	}
 	mtx_lock(f->priv_mtx);
 
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_transfer_setup, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_transfer_setup, return);
 	return (error);
 }
 
 static int
 ugen_open(struct usb_fifo *f, int fflags)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open, entry);
 	struct usb_endpoint *ep = usb_fifo_softc(f);
 	struct usb_endpoint_descriptor *ed = ep->edesc;
 	uint8_t type;
@@ -213,16 +205,12 @@ ugen_open(struct usb_fifo *f, int fflags)
 	f->fifo_zlp = 0;
 	mtx_unlock(f->priv_mtx);
 
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open, return);
 	return (0);
 }
 
 static void
 ugen_close(struct usb_fifo *f, int fflags)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_close, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_close, entry);
 	DPRINTFN(6, "flag=0x%x\n", fflags);
 
 	/* cleanup */
@@ -239,15 +227,11 @@ ugen_close(struct usb_fifo *f, int fflags)
 		/* ignore any errors - we are closing */
 		DPRINTFN(6, "no FIFOs\n");
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_close, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_close, return);
 }
 
 static int
 ugen_open_pipe_write(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_write, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_write, entry);
 	struct usb_config usb_config[2];
 	struct usb_endpoint *ep = usb_fifo_softc(f);
 	struct usb_endpoint_descriptor *ed = ep->edesc;
@@ -256,8 +240,6 @@ ugen_open_pipe_write(struct usb_fifo *f)
 
 	if (f->xfer[0] || f->xfer[1]) {
 		/* transfers are already opened */
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_write, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_write, return);
 		return (0);
 	}
 	memset(usb_config, 0, sizeof(usb_config));
@@ -290,8 +272,6 @@ ugen_open_pipe_write(struct usb_fifo *f)
 		usb_config[0].frames = 1;
 		usb_config[0].bufsize = f->bufsize;
 		if (ugen_transfer_setup(f, usb_config, 2)) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_write, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_write, return);
 			return (EIO);
 		}
 		/* first transfer does not clear stall */
@@ -309,26 +289,18 @@ ugen_open_pipe_write(struct usb_fifo *f)
 		usb_config[1] = usb_config[0];
 
 		if (ugen_transfer_setup(f, usb_config, 2)) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_write, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_write, return);
 			return (EIO);
 		}
 		break;
 	default:
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_write, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_write, return);
 		return (EINVAL);
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_write, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_write, return);
 	return (0);
 }
 
 static int
 ugen_open_pipe_read(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_read, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_read, entry);
 	struct usb_config usb_config[2];
 	struct usb_endpoint *ep = usb_fifo_softc(f);
 	struct usb_endpoint_descriptor *ed = ep->edesc;
@@ -337,8 +309,6 @@ ugen_open_pipe_read(struct usb_fifo *f)
 
 	if (f->xfer[0] || f->xfer[1]) {
 		/* transfers are already opened */
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_read, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_read, return);
 		return (0);
 	}
 	memset(usb_config, 0, sizeof(usb_config));
@@ -372,8 +342,6 @@ ugen_open_pipe_read(struct usb_fifo *f)
 		usb_config[0].bufsize = f->bufsize;
 
 		if (ugen_transfer_setup(f, usb_config, 2)) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_read, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_read, return);
 			return (EIO);
 		}
 		/* first transfer does not clear stall */
@@ -391,27 +359,19 @@ ugen_open_pipe_read(struct usb_fifo *f)
 		usb_config[1] = usb_config[0];
 
 		if (ugen_transfer_setup(f, usb_config, 2)) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_read, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_read, return);
 			return (EIO);
 		}
 		break;
 
 	default:
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_read, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_read, return);
 		return (EINVAL);
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_read, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_open_pipe_read, return);
 	return (0);
 }
 
 static void
 ugen_start_read(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_start_read, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_start_read, entry);
 	/* check that pipes are open */
 	if (ugen_open_pipe_read(f)) {
 		/* signal error */
@@ -420,15 +380,11 @@ ugen_start_read(struct usb_fifo *f)
 	/* start transfers */
 	usbd_transfer_start(f->xfer[0]);
 	usbd_transfer_start(f->xfer[1]);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_start_read, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_start_read, return);
 }
 
 static void
 ugen_start_write(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_start_write, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_start_write, entry);
 	/* check that pipes are open */
 	if (ugen_open_pipe_write(f)) {
 		/* signal error */
@@ -437,27 +393,19 @@ ugen_start_write(struct usb_fifo *f)
 	/* start transfers */
 	usbd_transfer_start(f->xfer[0]);
 	usbd_transfer_start(f->xfer[1]);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_start_write, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_start_write, return);
 }
 
 static void
 ugen_stop_io(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_stop_io, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_stop_io, entry);
 	/* stop transfers */
 	usbd_transfer_stop(f->xfer[0]);
 	usbd_transfer_stop(f->xfer[1]);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_stop_io, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_stop_io, return);
 }
 
 static void
 ugen_ctrl_read_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ctrl_read_callback, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ctrl_read_callback, entry);
 	struct usb_fifo *f = usbd_xfer_softc(xfer);
 	struct usb_mbuf *m;
 
@@ -505,15 +453,11 @@ ugen_ctrl_read_callback(struct usb_xfer *xfer, usb_error_t error)
 		}
 		break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ctrl_read_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ctrl_read_callback, return);
 }
 
 static void
 ugen_ctrl_write_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ctrl_write_callback, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ctrl_write_callback, entry);
 	struct usb_fifo *f = usbd_xfer_softc(xfer);
 	usb_frlength_t actlen;
 
@@ -547,22 +491,16 @@ ugen_ctrl_write_callback(struct usb_xfer *xfer, usb_error_t error)
 		}
 		break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ctrl_write_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ctrl_write_callback, return);
 }
 
 static void
 ugen_read_clear_stall_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_read_clear_stall_callback, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_read_clear_stall_callback, entry);
 	struct usb_fifo *f = usbd_xfer_softc(xfer);
 	struct usb_xfer *xfer_other = f->xfer[0];
 
 	if (f->flag_stall == 0) {
 		/* nothing to do */
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_read_clear_stall_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_read_clear_stall_callback, return);
 		return;
 	}
 	if (usbd_clear_stall_callback(xfer, xfer_other)) {
@@ -570,22 +508,16 @@ ugen_read_clear_stall_callback(struct usb_xfer *xfer, usb_error_t error)
 		f->flag_stall = 0;
 		usbd_transfer_start(xfer_other);
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_read_clear_stall_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_read_clear_stall_callback, return);
 }
 
 static void
 ugen_write_clear_stall_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_write_clear_stall_callback, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_write_clear_stall_callback, entry);
 	struct usb_fifo *f = usbd_xfer_softc(xfer);
 	struct usb_xfer *xfer_other = f->xfer[0];
 
 	if (f->flag_stall == 0) {
 		/* nothing to do */
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_write_clear_stall_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_write_clear_stall_callback, return);
 		return;
 	}
 	if (usbd_clear_stall_callback(xfer, xfer_other)) {
@@ -593,15 +525,11 @@ ugen_write_clear_stall_callback(struct usb_xfer *xfer, usb_error_t error)
 		f->flag_stall = 0;
 		usbd_transfer_start(xfer_other);
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_write_clear_stall_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_write_clear_stall_callback, return);
 }
 
 static void
 ugen_isoc_read_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_isoc_read_callback, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_isoc_read_callback, entry);
 	struct usb_fifo *f = usbd_xfer_softc(xfer);
 	usb_frlength_t offset;
 	usb_frcount_t n;
@@ -636,15 +564,11 @@ tr_setup:
 		}
 		goto tr_setup;
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_isoc_read_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_isoc_read_callback, return);
 }
 
 static void
 ugen_isoc_write_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_isoc_write_callback, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_isoc_write_callback, entry);
 	struct usb_fifo *f = usbd_xfer_softc(xfer);
 	usb_frlength_t actlen;
 	usb_frlength_t offset;
@@ -680,21 +604,15 @@ tr_setup:
 		}
 		goto tr_setup;
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_isoc_write_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_isoc_write_callback, return);
 }
 
 static int
 ugen_set_config(struct usb_fifo *f, uint8_t index)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_config, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_config, entry);
 	DPRINTFN(2, "index %u\n", index);
 
 	if (f->udev->flags.usb_mode != USB_MODE_HOST) {
 		/* not possible in device side mode */
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_config, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_config, return);
 		return (ENOTTY);
 	}
 
@@ -706,16 +624,8 @@ ugen_set_config(struct usb_fifo *f, uint8_t index)
 	}
 
 	if (usbd_start_set_config(f->udev, index) != 0)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_config, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_config, return);
 		return (EIO);
-}
 
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_config, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_config, return);
 	return (0);
 }
 
@@ -723,14 +633,10 @@ static int
 ugen_set_interface(struct usb_fifo *f,
     uint8_t iface_index, uint8_t alt_index)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_interface, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_interface, entry);
 	DPRINTFN(2, "%u, %u\n", iface_index, alt_index);
 
 	if (f->udev->flags.usb_mode != USB_MODE_HOST) {
 		/* not possible in device side mode */
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_interface, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_interface, return);
 		return (ENOTTY);
 	}
 	/* make sure all FIFO's are gone */
@@ -741,18 +647,12 @@ ugen_set_interface(struct usb_fifo *f,
 	}
 	/* change setting - will free generic FIFOs, if any */
 	if (usbd_set_alt_interface_index(f->udev, iface_index, alt_index)) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_interface, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_interface, return);
 		return (EIO);
 	}
 	/* probe and attach */
 	if (usb_probe_and_attach(f->udev, iface_index)) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_interface, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_interface, return);
 		return (EIO);
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_interface, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_interface, return);
 	return (0);
 }
 
@@ -765,8 +665,6 @@ ugen_set_interface(struct usb_fifo *f,
 static int
 ugen_get_cdesc(struct usb_fifo *f, struct usb_gen_descriptor *ugd)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_cdesc, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_cdesc, entry);
 	struct usb_config_descriptor *cdesc;
 	struct usb_device *udev = f->udev;
 	int error;
@@ -777,36 +675,24 @@ ugen_get_cdesc(struct usb_fifo *f, struct usb_gen_descriptor *ugd)
 
 	if (ugd->ugd_data == NULL) {
 		/* userland pointer should not be zero */
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_cdesc, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_cdesc, return);
 		return (EINVAL);
 	}
 	if ((ugd->ugd_config_index == USB_UNCONFIG_INDEX) ||
 	    (ugd->ugd_config_index == udev->curr_config_index)) {
 		cdesc = usbd_get_config_descriptor(udev);
 		if (cdesc == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_cdesc, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_cdesc, return);
 			return (ENXIO);
-}
 		free_data = 0;
 
 	} else {
 #if (USB_HAVE_FIXED_CONFIG == 0)
 		if (usbd_req_get_config_desc_full(udev,
 		    NULL, &cdesc, ugd->ugd_config_index)) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_cdesc, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_cdesc, return);
 			return (ENXIO);
 		}
 		free_data = 1;
 #else
 		/* configuration descriptor data is shared */
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_cdesc, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_cdesc, return);
 		return (EINVAL);
 #endif
 	}
@@ -823,22 +709,14 @@ ugen_get_cdesc(struct usb_fifo *f, struct usb_gen_descriptor *ugd)
 	error = copyout(cdesc, ugd->ugd_data, len);
 
 	if (free_data)
-{
-{
 		usbd_free_config_desc(udev, cdesc);
-}
-}
 
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_cdesc, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_cdesc, return);
 	return (error);
 }
 
 static int
 ugen_get_sdesc(struct usb_fifo *f, struct usb_gen_descriptor *ugd)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_sdesc, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_sdesc, entry);
 	void *ptr;
 	uint16_t size;
 	int error;
@@ -867,14 +745,8 @@ ugen_get_sdesc(struct usb_fifo *f, struct usb_gen_descriptor *ugd)
 		error = copyout(ptr, ugd->ugd_data, size);
 	}
 	if (do_unlock)
-{
-{
 		usbd_ctrl_unlock(f->udev);
-}
-}
 
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_sdesc, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_sdesc, return);
 	return (error);
 }
 
@@ -890,8 +762,6 @@ ugen_get_sdesc(struct usb_fifo *f, struct usb_gen_descriptor *ugd)
 static int
 ugen_get_iface_driver(struct usb_fifo *f, struct usb_gen_descriptor *ugd)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_iface_driver, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_iface_driver, entry);
 	struct usb_device *udev = f->udev;
 	struct usb_interface *iface;
 	const char *ptr;
@@ -905,16 +775,12 @@ ugen_get_iface_driver(struct usb_fifo *f, struct usb_gen_descriptor *ugd)
 
 	if ((ugd->ugd_data == NULL) || (ugd->ugd_maxlen == 0)) {
 		/* userland pointer should not be zero */
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_iface_driver, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_iface_driver, return);
 		return (EINVAL);
 	}
 
 	iface = usbd_get_iface(udev, ugd->ugd_iface_index);
 	if ((iface == NULL) || (iface->idesc == NULL)) {
 		/* invalid interface index */
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_iface_driver, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_iface_driver, return);
 		return (EINVAL);
 	}
 
@@ -931,11 +797,7 @@ ugen_get_iface_driver(struct usb_fifo *f, struct usb_gen_descriptor *ugd)
 		maxlen = ugd->ugd_maxlen - 1;
 		len = strlen(buf);
 		if (len > maxlen)
-{
-{
 			len = maxlen;
-}
-}
 
 		/* update actual length, including terminating zero */
 		ugd->ugd_actlen = len + 1;
@@ -946,8 +808,6 @@ ugen_get_iface_driver(struct usb_fifo *f, struct usb_gen_descriptor *ugd)
 		/* zero length string is default */
 		error = copyout("", ugd->ugd_data, 1);
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_iface_driver, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_iface_driver, return);
 	return (error);
 }
 
@@ -964,8 +824,6 @@ ugen_get_iface_driver(struct usb_fifo *f, struct usb_gen_descriptor *ugd)
 static int
 usb_gen_fill_deviceinfo(struct usb_fifo *f, struct usb_device_info *di)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_usb_gen_fill_deviceinfo, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_usb_gen_fill_deviceinfo, entry);
 	struct usb_device *udev;
 	struct usb_device *hub;
 
@@ -1001,8 +859,6 @@ usb_gen_fill_deviceinfo(struct usb_fifo *f, struct usb_device_info *di)
 		di->udi_hubindex = hub->device_index;
 		di->udi_hubport = udev->port_no;
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_usb_gen_fill_deviceinfo, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_usb_gen_fill_deviceinfo, return);
 	return (0);
 }
 
@@ -1016,8 +872,6 @@ usb_gen_fill_deviceinfo(struct usb_fifo *f, struct usb_device_info *di)
 static int
 ugen_check_request(struct usb_device *udev, struct usb_device_request *req)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_check_request, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_check_request, entry);
 	struct usb_endpoint *ep;
 	int error;
 
@@ -1035,8 +889,6 @@ ugen_check_request(struct usb_device *udev, struct usb_device_request *req)
 		 */
 		error = priv_check(curthread, PRIV_DRIVER);
 		if (error) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_check_request, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_check_request, return);
 			return (error);
 		}
 	}
@@ -1047,8 +899,6 @@ ugen_check_request(struct usb_device *udev, struct usb_device_request *req)
 
 		ep = usbd_get_ep_by_addr(udev, req->wIndex[0]);
 		if (ep == NULL) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_check_request, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_check_request, return);
 			return (EINVAL);
 		}
 		if ((req->bRequest == UR_CLEAR_FEATURE) &&
@@ -1058,23 +908,17 @@ ugen_check_request(struct usb_device *udev, struct usb_device_request *req)
 	}
 	/* TODO: add more checks to verify the interface index */
 
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_check_request, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_check_request, return);
 	return (0);
 }
 
 int
 ugen_do_request(struct usb_fifo *f, struct usb_ctl_request *ur)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_request, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_request, entry);
 	int error;
 	uint16_t len;
 	uint16_t actlen;
 
 	if (ugen_check_request(f->udev, &ur->ucr_request)) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_request, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_request, return);
 		return (EPERM);
 	}
 	len = UGETW(ur->ucr_request.wLength);
@@ -1082,8 +926,6 @@ ugen_do_request(struct usb_fifo *f, struct usb_ctl_request *ur)
 	/* check if "ucr_data" is valid */
 	if (len != 0) {
 		if (ur->ucr_data == NULL) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_request, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_request, return);
 			return (EFAULT);
 		}
 	}
@@ -1099,8 +941,6 @@ ugen_do_request(struct usb_fifo *f, struct usb_ctl_request *ur)
 	if (error) {
 		error = EIO;
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_request, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_request, return);
 	return (error);
 }
 
@@ -1110,8 +950,6 @@ ugen_do_request(struct usb_fifo *f, struct usb_ctl_request *ur)
 static int
 ugen_re_enumerate(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_re_enumerate, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_re_enumerate, entry);
 	struct usb_device *udev = f->udev;
 	int error;
 
@@ -1120,15 +958,11 @@ ugen_re_enumerate(struct usb_fifo *f)
 	 */
 	error = priv_check(curthread, PRIV_DRIVER);
 	if (error) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_re_enumerate, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_re_enumerate, return);
 		return (error);
 	}
 	if (udev->flags.usb_mode != USB_MODE_HOST) {
 		/* not possible in device side mode */
 		DPRINTFN(6, "device mode\n");
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_re_enumerate, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_re_enumerate, return);
 		return (ENOTTY);
 	}
 	/* make sure all FIFO's are gone */
@@ -1139,19 +973,13 @@ ugen_re_enumerate(struct usb_fifo *f)
 	}
 	/* start re-enumeration of device */
 	usbd_start_re_enumerate(udev);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_re_enumerate, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_re_enumerate, return);
 	return (0);
 }
 
 int
 ugen_fs_uninit(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_uninit, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_uninit, entry);
 	if (f->fs_xfer == NULL) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_uninit, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_uninit, return);
 		return (EINVAL);
 	}
 	usbd_transfer_unsetup(f->fs_xfer, f->fs_ep_max);
@@ -1161,16 +989,12 @@ ugen_fs_uninit(struct usb_fifo *f)
 	f->fs_ep_ptr = NULL;
 	f->flag_iscomplete = 0;
 	usb_fifo_free_buffer(f);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_uninit, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_uninit, return);
 	return (0);
 }
 
 static uint8_t
 ugen_fs_get_complete(struct usb_fifo *f, uint8_t *pindex)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_get_complete, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_get_complete, entry);
 	struct usb_mbuf *m;
 
 	USB_IF_DEQUEUE(&f->used_q, m);
@@ -1180,8 +1004,6 @@ ugen_fs_get_complete(struct usb_fifo *f, uint8_t *pindex)
 
 		USB_IF_ENQUEUE(&f->free_q, m);
 
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_get_complete, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_get_complete, return);
 		return (0);		/* success */
 	} else {
 
@@ -1189,16 +1011,12 @@ ugen_fs_get_complete(struct usb_fifo *f, uint8_t *pindex)
 
 		f->flag_iscomplete = 0;
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_get_complete, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_get_complete, return);
 	return (1);			/* failure */
 }
 
 static void
 ugen_fs_set_complete(struct usb_fifo *f, uint8_t index)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_set_complete, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_set_complete, entry);
 	struct usb_mbuf *m;
 
 	USB_IF_DEQUEUE(&f->free_q, m);
@@ -1206,8 +1024,6 @@ ugen_fs_set_complete(struct usb_fifo *f, uint8_t index)
 	if (m == NULL) {
 		/* can happen during close */
 		DPRINTF("out of buffers\n");
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_set_complete, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_set_complete, return);
 		return;
 	}
 	USB_MBUF_RESET(m);
@@ -1219,15 +1035,11 @@ ugen_fs_set_complete(struct usb_fifo *f, uint8_t index)
 	f->flag_iscomplete = 1;
 
 	usb_fifo_wakeup(f);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_set_complete, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_set_complete, return);
 }
 
 static int
 ugen_fs_copy_in(struct usb_fifo *f, uint8_t ep_index)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, entry);
 	struct usb_device_request *req;
 	struct usb_xfer *xfer;
 	struct usb_fs_endpoint fs_ep;
@@ -1241,21 +1053,15 @@ ugen_fs_copy_in(struct usb_fifo *f, uint8_t ep_index)
 	uint8_t isread;
 
 	if (ep_index >= f->fs_ep_max) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
 		return (EINVAL);
 	}
 	xfer = f->fs_xfer[ep_index];
 	if (xfer == NULL) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
 		return (EINVAL);
 	}
 	mtx_lock(f->priv_mtx);
 	if (usbd_transfer_pending(xfer)) {
 		mtx_unlock(f->priv_mtx);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
 		return (EBUSY);		/* should not happen */
 	}
 	mtx_unlock(f->priv_mtx);
@@ -1263,8 +1069,6 @@ ugen_fs_copy_in(struct usb_fifo *f, uint8_t ep_index)
 	error = copyin(f->fs_ep_ptr +
 	    ep_index, &fs_ep, sizeof(fs_ep));
 	if (error) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
 		return (error);
 	}
 	/* security checks */
@@ -1280,8 +1084,6 @@ ugen_fs_copy_in(struct usb_fifo *f, uint8_t ep_index)
 	error = copyin(fs_ep.ppBuffer,
 	    &uaddr, sizeof(uaddr));
 	if (error) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
 		return (error);
 	}
 	/* reset first frame */
@@ -1294,8 +1096,6 @@ ugen_fs_copy_in(struct usb_fifo *f, uint8_t ep_index)
 		error = copyin(fs_ep.pLength,
 		    &length, sizeof(length));
 		if (error) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
 			return (error);
 		}
 		if (length != sizeof(*req)) {
@@ -1305,8 +1105,6 @@ ugen_fs_copy_in(struct usb_fifo *f, uint8_t ep_index)
 		if (length != 0) {
 			error = copyin(uaddr, req, length);
 			if (error) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
 				return (error);
 			}
 		}
@@ -1344,38 +1142,22 @@ ugen_fs_copy_in(struct usb_fifo *f, uint8_t ep_index)
 		xfer->timeout = 65535;
 	}
 	if (fs_ep.flags & USB_FS_FLAG_SINGLE_SHORT_OK)
-{
-{
 		xfer->flags.short_xfer_ok = 1;
-}
-}
 	else
 		xfer->flags.short_xfer_ok = 0;
 
 	if (fs_ep.flags & USB_FS_FLAG_MULTI_SHORT_OK)
-{
-{
 		xfer->flags.short_frames_ok = 1;
-}
-}
 	else
 		xfer->flags.short_frames_ok = 0;
 
 	if (fs_ep.flags & USB_FS_FLAG_FORCE_SHORT)
-{
-{
 		xfer->flags.force_short_xfer = 1;
-}
-}
 	else
 		xfer->flags.force_short_xfer = 0;
 
 	if (fs_ep.flags & USB_FS_FLAG_CLEAR_STALL)
-{
-{
 		usbd_xfer_set_stall(xfer);
-}
-}
 	else
 		xfer->flags.stall_pipe = 0;
 
@@ -1422,24 +1204,18 @@ ugen_fs_copy_in(struct usb_fifo *f, uint8_t ep_index)
 		}
 		offset += length;
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
 	return (error);
 
 complete:
 	mtx_lock(f->priv_mtx);
 	ugen_fs_set_complete(f, ep_index);
 	mtx_unlock(f->priv_mtx);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_in, return);
 	return (0);
 }
 
 static int
 ugen_fs_copy_out(struct usb_fifo *f, uint8_t ep_index)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, entry);
 	struct usb_device_request *req;
 	struct usb_xfer *xfer;
 	struct usb_fs_endpoint fs_ep;
@@ -1455,29 +1231,15 @@ ugen_fs_copy_out(struct usb_fifo *f, uint8_t ep_index)
 	uint8_t isread;
 
 	if (ep_index >= f->fs_ep_max)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
 		return (EINVAL);
-}
 
 	xfer = f->fs_xfer[ep_index];
 	if (xfer == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
 		return (EINVAL);
-}
 
 	mtx_lock(f->priv_mtx);
 	if (usbd_transfer_pending(xfer)) {
 		mtx_unlock(f->priv_mtx);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
 		return (EBUSY);		/* should not happen */
 	}
 	mtx_unlock(f->priv_mtx);
@@ -1485,8 +1247,6 @@ ugen_fs_copy_out(struct usb_fifo *f, uint8_t ep_index)
 	fs_ep_uptr = f->fs_ep_ptr + ep_index;
 	error = copyin(fs_ep_uptr, &fs_ep, sizeof(fs_ep));
 	if (error) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
 		return (error);
 	}
 	fs_ep.status = xfer->error;
@@ -1505,11 +1265,7 @@ ugen_fs_copy_out(struct usb_fifo *f, uint8_t ep_index)
 			isread = 0;
 		}
 		if (xfer->nframes == 0)
-{
-{
 			n = 0;		/* should never happen */
-}
-}
 		else
 			n = 1;
 	} else {
@@ -1533,8 +1289,6 @@ ugen_fs_copy_out(struct usb_fifo *f, uint8_t ep_index)
 		error = copyin(fs_ep.pLength + n,
 		    &temp, sizeof(temp));
 		if (error) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
 			return (error);
 		}
 		if (temp > rem) {
@@ -1561,8 +1315,6 @@ ugen_fs_copy_out(struct usb_fifo *f, uint8_t ep_index)
 			error = copyin(fs_ep.ppBuffer + n,
 			    &uaddr, sizeof(uaddr));
 			if (error) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
 				return (error);
 			}
 			if (xfer->flags_int.isochronous_xfr) {
@@ -1577,8 +1329,6 @@ ugen_fs_copy_out(struct usb_fifo *f, uint8_t ep_index)
 			/* move data */
 			error = copyout(kaddr, uaddr, length);
 			if (error) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
 				return (error);
 			}
 		}
@@ -1592,8 +1342,6 @@ ugen_fs_copy_out(struct usb_fifo *f, uint8_t ep_index)
 		error = copyout(&length,
 		    fs_ep.pLength + n, sizeof(length));
 		if (error) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
 			return (error);
 		}
 	}
@@ -1603,36 +1351,24 @@ complete:
 	error = copyout(&fs_ep.aFrames, &fs_ep_uptr->aFrames,
 	    sizeof(fs_ep.aFrames));
 	if (error)
-{
-{
 		goto done;
-}
-}
 
 	/* update "isoc_time_complete" */
 	error = copyout(&fs_ep.isoc_time_complete,
 	    &fs_ep_uptr->isoc_time_complete,
 	    sizeof(fs_ep.isoc_time_complete));
 	if (error)
-{
-{
 		goto done;
-}
-}
 	/* update "status" */
 	error = copyout(&fs_ep.status, &fs_ep_uptr->status,
 	    sizeof(fs_ep.status));
 done:
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fs_copy_out, return);
 	return (error);
 }
 
 static uint8_t
 ugen_fifo_in_use(struct usb_fifo *f, int fflags)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fifo_in_use, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fifo_in_use, entry);
 	struct usb_fifo *f_rx;
 	struct usb_fifo *f_tx;
 
@@ -1641,26 +1377,18 @@ ugen_fifo_in_use(struct usb_fifo *f, int fflags)
 
 	if ((fflags & FREAD) && f_rx &&
 	    (f_rx->xfer[0] || f_rx->xfer[1])) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fifo_in_use, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fifo_in_use, return);
 		return (1);		/* RX FIFO in use */
 	}
 	if ((fflags & FWRITE) && f_tx &&
 	    (f_tx->xfer[0] || f_tx->xfer[1])) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fifo_in_use, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fifo_in_use, return);
 		return (1);		/* TX FIFO in use */
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fifo_in_use, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_fifo_in_use, return);
 	return (0);			/* not in use */
 }
 
 static int
 ugen_ioctl(struct usb_fifo *f, u_long cmd, void *addr, int fflags)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ioctl, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ioctl, entry);
 	struct usb_config usb_config[1];
 	struct usb_device_request req;
 	union {
@@ -1703,11 +1431,7 @@ ugen_ioctl(struct usb_fifo *f, u_long cmd, void *addr, int fflags)
 	case USB_FS_START:
 		error = ugen_fs_copy_in(f, u.pstart->ep_index);
 		if (error)
-{
-{
 			break;
-}
-}
 		mtx_lock(f->priv_mtx);
 		xfer = f->fs_xfer[u.pstart->ep_index];
 		usbd_transfer_start(xfer);
@@ -1783,22 +1507,14 @@ ugen_ioctl(struct usb_fifo *f, u_long cmd, void *addr, int fflags)
 		usb_config[0].interval = USB_DEFAULT_INTERVAL;
 		usb_config[0].flags.proxy_buffer = 1;
 		if (pre_scale != 0)
-{
-{
 			usb_config[0].flags.pre_scale_frames = 1;
-}
-}
 		usb_config[0].callback = &ugen_ctrl_fs_callback;
 		usb_config[0].timeout = 0;	/* no timeout */
 		usb_config[0].frames = u.popen->max_frames;
 		usb_config[0].bufsize = u.popen->max_bufsize;
 		usb_config[0].usb_mode = USB_MODE_DUAL;	/* both modes */
 		if (cmd == USB_FS_OPEN_STREAM)
-{
-{
 			usb_config[0].stream_id = u.popen_stream->stream_id;
-}
-}
 
 		if (usb_config[0].type == UE_CONTROL) {
 			if (f->udev->flags.usb_mode != USB_MODE_HOST) {
@@ -1876,8 +1592,6 @@ ugen_ioctl(struct usb_fifo *f, u_long cmd, void *addr, int fflags)
 		mtx_unlock(f->priv_mtx);
 
 		if (error) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ioctl, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ioctl, return);
 			return (EBUSY);
 		}
 		ep = f->fs_xfer[u.pstall->ep_index]->endpoint;
@@ -1905,125 +1619,81 @@ ugen_ioctl(struct usb_fifo *f, u_long cmd, void *addr, int fflags)
 
 	DPRINTFN(6, "error=%d\n", error);
 
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ioctl, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ioctl, return);
 	return (error);
 }
 
 static int
 ugen_set_short_xfer(struct usb_fifo *f, void *addr)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_short_xfer, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_short_xfer, entry);
 	uint8_t t;
 
 	if (*(int *)addr)
-{
-{
 		t = 1;
-}
-}
 	else
 		t = 0;
 
 	if (f->flag_short == t) {
 		/* same value like before - accept */
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_short_xfer, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_short_xfer, return);
 		return (0);
 	}
 	if (f->xfer[0] || f->xfer[1]) {
 		/* cannot change this during transfer */
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_short_xfer, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_short_xfer, return);
 		return (EBUSY);
 	}
 	f->flag_short = t;
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_short_xfer, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_short_xfer, return);
 	return (0);
 }
 
 static int
 ugen_set_timeout(struct usb_fifo *f, void *addr)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_timeout, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_timeout, entry);
 	f->timeout = *(int *)addr;
 	if (f->timeout > 65535) {
 		/* limit user input */
 		f->timeout = 65535;
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_timeout, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_timeout, return);
 	return (0);
 }
 
 static int
 ugen_get_frame_size(struct usb_fifo *f, void *addr)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_frame_size, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_frame_size, entry);
 	if (f->xfer[0]) {
 		*(int *)addr = f->xfer[0]->max_frame_size;
 	} else {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_frame_size, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_frame_size, return);
 		return (EINVAL);
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_frame_size, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_frame_size, return);
 	return (0);
 }
 
 static int
 ugen_set_buffer_size(struct usb_fifo *f, void *addr)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_buffer_size, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_buffer_size, entry);
 	usb_frlength_t t;
 
 	if (*(int *)addr < 0)
-{
-{
 		t = 0;		/* use "wMaxPacketSize" */
-}
-}
 	else if (*(int *)addr < (256 * 1024))
-{
-{
 		t = *(int *)addr;
-}
-}
 	else
 		t = 256 * 1024;
 
 	if (f->bufsize == t) {
 		/* same value like before - accept */
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_buffer_size, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_buffer_size, return);
 		return (0);
 	}
 	if (f->xfer[0] || f->xfer[1]) {
 		/* cannot change this during transfer */
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_buffer_size, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_buffer_size, return);
 		return (EBUSY);
 	}
 	f->bufsize = t;
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_buffer_size, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_buffer_size, return);
 	return (0);
 }
 
 static int
 ugen_get_buffer_size(struct usb_fifo *f, void *addr)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_buffer_size, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_buffer_size, entry);
 	*(int *)addr = f->bufsize;
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_buffer_size, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_buffer_size, return);
 	return (0);
 }
 
@@ -2031,20 +1701,14 @@ static int
 ugen_get_iface_desc(struct usb_fifo *f,
     struct usb_interface_descriptor *idesc)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_iface_desc, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_iface_desc, entry);
 	struct usb_interface *iface;
 
 	iface = usbd_get_iface(f->udev, f->iface_index);
 	if (iface && iface->idesc) {
 		*idesc = *(iface->idesc);
 	} else {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_iface_desc, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_iface_desc, return);
 		return (EIO);
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_iface_desc, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_iface_desc, return);
 	return (0);
 }
 
@@ -2052,8 +1716,6 @@ static int
 ugen_get_endpoint_desc(struct usb_fifo *f,
     struct usb_endpoint_descriptor *ed)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_endpoint_desc, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_endpoint_desc, entry);
 	struct usb_endpoint *ep;
 
 	ep = usb_fifo_softc(f);
@@ -2061,52 +1723,32 @@ ugen_get_endpoint_desc(struct usb_fifo *f,
 	if (ep && ep->edesc) {
 		*ed = *ep->edesc;
 	} else {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_endpoint_desc, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_endpoint_desc, return);
 		return (EINVAL);
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_endpoint_desc, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_endpoint_desc, return);
 	return (0);
 }
 
 static int
 ugen_set_power_mode(struct usb_fifo *f, int mode)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_power_mode, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_power_mode, entry);
 	struct usb_device *udev = f->udev;
 	int err;
 	uint8_t old_mode;
 
 	if ((udev == NULL) ||
 	    (udev->parent_hub == NULL)) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_power_mode, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_power_mode, return);
 		return (EINVAL);
 	}
 	err = priv_check(curthread, PRIV_DRIVER);
 	if (err)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_power_mode, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_power_mode, return);
 		return (err);
-}
 
 	/* get old power mode */
 	old_mode = udev->power_mode;
 
 	/* if no change, then just return */
 	if (old_mode == mode)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_power_mode, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_power_mode, return);
 		return (0);
-}
 
 	switch (mode) {
 	case USB_POWER_MODE_OFF:
@@ -2154,19 +1796,11 @@ ugen_set_power_mode(struct usb_fifo *f, int mode)
 		break;
 
 	default:
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_power_mode, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_power_mode, return);
 		return (EINVAL);
 	}
 
 	if (err)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_power_mode, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_power_mode, return);
 		return (ENXIO);		/* I/O failure */
-}
 
 	/* if we are powered off we need to re-enumerate first */
 	if (old_mode == USB_POWER_MODE_OFF) {
@@ -2180,47 +1814,29 @@ ugen_set_power_mode(struct usb_fifo *f, int mode)
 	/* set new power mode */
 	usbd_set_power_mode(udev, mode);
 
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_power_mode, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_set_power_mode, return);
 	return (0);			/* success */
 }
 
 static int
 ugen_get_power_mode(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_power_mode, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_power_mode, entry);
 	struct usb_device *udev = f->udev;
 
 	if (udev == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_power_mode, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_power_mode, return);
 		return (USB_POWER_MODE_ON);
-}
 
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_power_mode, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_power_mode, return);
 	return (udev->power_mode);
 }
 
 static int
 ugen_get_port_path(struct usb_fifo *f, struct usb_device_port_path *dpp)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_port_path, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_port_path, entry);
 	struct usb_device *udev = f->udev;
 	struct usb_device *next;
 	unsigned int nlevel = 0;
 
 	if (udev == NULL)
-{
-{
 		goto error;
-}
-}
 
 	dpp->udp_bus = device_get_unit(udev->bus->bdev);
 	dpp->udp_index = udev->device_index;
@@ -2234,11 +1850,7 @@ ugen_get_port_path(struct usb_fifo *f, struct usb_device_port_path *dpp)
 
 	/* check if too many levels */
 	if (nlevel > USB_DEVICE_PORT_PATH_MAX)
-{
-{
 		goto error;
-}
-}
 
 	/* store total level of ports */
 	dpp->udp_port_level = nlevel;
@@ -2249,34 +1861,20 @@ ugen_get_port_path(struct usb_fifo *f, struct usb_device_port_path *dpp)
 		dpp->udp_port_no[--nlevel] = next->port_no;
 		next = next->parent_hub;
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_port_path, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_port_path, return);
 	return (0);	/* success */
 
 error:
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_port_path, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_port_path, return);
 	return (EINVAL);	/* failure */
 }
 
 static int
 ugen_get_power_usage(struct usb_fifo *f)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_power_usage, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_power_usage, entry);
 	struct usb_device *udev = f->udev;
 
 	if (udev == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_power_usage, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_power_usage, return);
 		return (0);
-}
 
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_power_usage, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_get_power_usage, return);
 	return (udev->power);
 }
 
@@ -2284,66 +1882,42 @@ static int
 ugen_do_port_feature(struct usb_fifo *f, uint8_t port_no,
     uint8_t set, uint16_t feature)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_port_feature, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_port_feature, entry);
 	struct usb_device *udev = f->udev;
 	struct usb_hub *hub;
 	int err;
 
 	err = priv_check(curthread, PRIV_DRIVER);
 	if (err) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_port_feature, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_port_feature, return);
 		return (err);
 	}
 	if (port_no == 0) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_port_feature, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_port_feature, return);
 		return (EINVAL);
 	}
 	if ((udev == NULL) ||
 	    (udev->hub == NULL)) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_port_feature, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_port_feature, return);
 		return (EINVAL);
 	}
 	hub = udev->hub;
 
 	if (port_no > hub->nports) {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_port_feature, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_port_feature, return);
 		return (EINVAL);
 	}
 	if (set)
-{
-{
 		err = usbd_req_set_port_feature(udev,
 		    NULL, port_no, feature);
-}
-}
 	else
 		err = usbd_req_clear_port_feature(udev,
 		    NULL, port_no, feature);
 
 	if (err)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_port_feature, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_port_feature, return);
 		return (ENXIO);		/* failure */
-}
 
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_port_feature, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_do_port_feature, return);
 	return (0);			/* success */
 }
 
 static int
 ugen_iface_ioctl(struct usb_fifo *f, u_long cmd, void *addr, int fflags)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_iface_ioctl, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_iface_ioctl, entry);
 	struct usb_fifo *f_rx;
 	struct usb_fifo *f_tx;
 	int error = 0;
@@ -2480,16 +2054,12 @@ ugen_iface_ioctl(struct usb_fifo *f, u_long cmd, void *addr, int fflags)
 		error = ENOIOCTL;
 		break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_iface_ioctl, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_iface_ioctl, return);
 	return (error);
 }
 
 static int
 ugen_ioctl_post(struct usb_fifo *f, u_long cmd, void *addr, int fflags)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ioctl_post, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ioctl_post, entry);
 	union {
 		struct usb_interface_descriptor *idesc;
 		struct usb_alt_interface *ai;
@@ -2632,11 +2202,7 @@ ugen_ioctl_post(struct usb_fifo *f, u_long cmd, void *addr, int fflags)
 		iface = usbd_get_iface(f->udev, n);
 
 		if (iface && iface->subdev)
-{
-{
 			error = 0;
-}
-}
 		else
 			error = ENXIO;
 		break;
@@ -2646,11 +2212,7 @@ ugen_ioctl_post(struct usb_fifo *f, u_long cmd, void *addr, int fflags)
 		error = priv_check(curthread, PRIV_DRIVER);
 
 		if (error)
-{
-{
 			break;
-}
-}
 
 		n = *u.pint & 0xFF;
 
@@ -2753,16 +2315,12 @@ ugen_ioctl_post(struct usb_fifo *f, u_long cmd, void *addr, int fflags)
 		break;
 	}
 	DPRINTFN(6, "error=%d\n", error);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ioctl_post, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ioctl_post, return);
 	return (error);
 }
 
 static void
 ugen_ctrl_fs_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ctrl_fs_callback, entry);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ctrl_fs_callback, entry);
 	;				/* workaround for a bug in "indent" */
 
 	DPRINTF("st=%u alen=%u aframes=%u\n",
@@ -2776,7 +2334,5 @@ ugen_ctrl_fs_callback(struct usb_xfer *xfer, usb_error_t error)
 		ugen_fs_set_complete(xfer->priv_sc, USB_P2U(xfer->priv_fifo));
 		break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ctrl_fs_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_generic_ugen_ctrl_fs_callback, return);
 }
 #endif	/* USB_HAVE_UGEN */

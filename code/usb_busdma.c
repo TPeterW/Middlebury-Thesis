@@ -62,8 +62,6 @@
 
 #include <dev/usb/usb_controller.h>
 #include <dev/usb/usb_bus.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 #if USB_HAVE_BUSDMA
@@ -86,8 +84,6 @@ void
 usbd_get_page(struct usb_page_cache *pc, usb_frlength_t offset,
     struct usb_page_search *res)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_get_page, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_get_page, entry);
 #if USB_HAVE_BUSDMA
 	struct usb_page *page;
 
@@ -125,8 +121,6 @@ usbd_get_page(struct usb_page_cache *pc, usb_frlength_t offset,
 
 			res->buffer = USB_ADD_BYTES(page->buffer, offset);
 		}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_get_page, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_get_page, return);
 		return;
 	}
 #endif
@@ -137,8 +131,6 @@ usbd_get_page(struct usb_page_cache *pc, usb_frlength_t offset,
 #if USB_HAVE_BUSDMA
 	res->physaddr = 0;
 #endif
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_get_page, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_get_page, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -151,8 +143,6 @@ uint8_t
 usb_pc_buffer_is_aligned(struct usb_page_cache *pc, usb_frlength_t offset,
     usb_frlength_t len, usb_frlength_t mask)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_buffer_is_aligned, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_buffer_is_aligned, entry);
 	struct usb_page_search buf_res;
 
 	while (len != 0) {
@@ -160,33 +150,15 @@ usb_pc_buffer_is_aligned(struct usb_page_cache *pc, usb_frlength_t offset,
 		usbd_get_page(pc, offset, &buf_res);
 
 		if (buf_res.length > len)
-{
-{
 			buf_res.length = len;
-}
-}
 		if (USB_P2U(buf_res.buffer) & mask)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_buffer_is_aligned, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_buffer_is_aligned, return);
 			return (0);
-}
 		if (buf_res.length & mask)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_buffer_is_aligned, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_buffer_is_aligned, return);
 			return (0);
-}
 
 		offset += buf_res.length;
 		len -= buf_res.length;
 	}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_buffer_is_aligned, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_buffer_is_aligned, return);
 	return (1);
 }
 
@@ -197,8 +169,6 @@ void
 usbd_copy_in(struct usb_page_cache *cache, usb_frlength_t offset,
     const void *ptr, usb_frlength_t len)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_in, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_in, entry);
 	struct usb_page_search buf_res;
 
 	while (len != 0) {
@@ -214,8 +184,6 @@ usbd_copy_in(struct usb_page_cache *cache, usb_frlength_t offset,
 		len -= buf_res.length;
 		ptr = USB_ADD_BYTES(ptr, buf_res.length);
 	}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_in, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_in, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -230,8 +198,6 @@ int
 usbd_copy_in_user(struct usb_page_cache *cache, usb_frlength_t offset,
     const void *ptr, usb_frlength_t len)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_in_user, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_in_user, entry);
 	struct usb_page_search buf_res;
 	int error;
 
@@ -244,20 +210,12 @@ usbd_copy_in_user(struct usb_page_cache *cache, usb_frlength_t offset,
 		}
 		error = copyin(ptr, buf_res.buffer, buf_res.length);
 		if (error)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_in_user, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_in_user, return);
 			return (error);
-}
 
 		offset += buf_res.length;
 		len -= buf_res.length;
 		ptr = USB_ADD_BYTES(ptr, buf_res.length);
 	}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_in_user, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_in_user, return);
 	return (0);			/* success */
 }
 #endif
@@ -274,14 +232,10 @@ struct usb_m_copy_in_arg {
 static int
 usbd_m_copy_in_cb(void *arg, void *src, uint32_t count)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_m_copy_in_cb, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_m_copy_in_cb, entry);
 	register struct usb_m_copy_in_arg *ua = arg;
 
 	usbd_copy_in(ua->cache, ua->dst_offset, src, count);
 	ua->dst_offset += count;
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_m_copy_in_cb, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_m_copy_in_cb, return);
 	return (0);
 }
 
@@ -289,12 +243,8 @@ void
 usbd_m_copy_in(struct usb_page_cache *cache, usb_frlength_t dst_offset,
     struct mbuf *m, usb_size_t src_offset, usb_frlength_t src_len)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_m_copy_in, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_m_copy_in, entry);
 	struct usb_m_copy_in_arg arg = {cache, dst_offset};
 	(void) m_apply(m, src_offset, src_len, &usbd_m_copy_in_cb, &arg);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_m_copy_in, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_m_copy_in, return);
 }
 #endif
 
@@ -306,8 +256,6 @@ int
 usb_uiomove(struct usb_page_cache *pc, struct uio *uio,
     usb_frlength_t pc_offset, usb_frlength_t len)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_uiomove, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_uiomove, entry);
 	struct usb_page_search res;
 	int error = 0;
 
@@ -330,8 +278,6 @@ usb_uiomove(struct usb_page_cache *pc, struct uio *uio,
 		pc_offset += res.length;
 		len -= res.length;
 	}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_uiomove, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_uiomove, return);
 	return (error);
 }
 #endif
@@ -343,8 +289,6 @@ void
 usbd_copy_out(struct usb_page_cache *cache, usb_frlength_t offset,
     void *ptr, usb_frlength_t len)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_out, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_out, entry);
 	struct usb_page_search res;
 
 	while (len != 0) {
@@ -360,8 +304,6 @@ usbd_copy_out(struct usb_page_cache *cache, usb_frlength_t offset,
 		len -= res.length;
 		ptr = USB_ADD_BYTES(ptr, res.length);
 	}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_out, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_out, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -376,8 +318,6 @@ int
 usbd_copy_out_user(struct usb_page_cache *cache, usb_frlength_t offset,
     void *ptr, usb_frlength_t len)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_out_user, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_out_user, entry);
 	struct usb_page_search res;
 	int error;
 
@@ -390,20 +330,12 @@ usbd_copy_out_user(struct usb_page_cache *cache, usb_frlength_t offset,
 		}
 		error = copyout(res.buffer, ptr, res.length);
 		if (error)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_out_user, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_out_user, return);
 			return (error);
-}
 
 		offset += res.length;
 		len -= res.length;
 		ptr = USB_ADD_BYTES(ptr, res.length);
 	}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_out_user, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_copy_out_user, return);
 	return (0);			/* success */
 }
 #endif
@@ -415,8 +347,6 @@ void
 usbd_frame_zero(struct usb_page_cache *cache, usb_frlength_t offset,
     usb_frlength_t len)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_frame_zero, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_frame_zero, entry);
 	struct usb_page_search res;
 
 	while (len != 0) {
@@ -431,8 +361,6 @@ usbd_frame_zero(struct usb_page_cache *cache, usb_frlength_t offset,
 		offset += res.length;
 		len -= res.length;
 	}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_frame_zero, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usbd_frame_zero, return);
 }
 
 #if USB_HAVE_BUSDMA
@@ -443,11 +371,7 @@ usbd_frame_zero(struct usb_page_cache *cache, usb_frlength_t offset,
 static void
 usb_dma_lock_cb(void *arg, bus_dma_lock_op_t op)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_lock_cb, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_lock_cb, entry);
 	/* we use "mtx_owned()" instead of this function */
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_lock_cb, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_lock_cb, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -460,8 +384,6 @@ static void
 usb_dma_tag_create(struct usb_dma_tag *udt,
     usb_size_t size, usb_size_t align)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_create, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_create, entry);
 	bus_dma_tag_t tag;
 
 	if (bus_dma_tag_create
@@ -484,8 +406,6 @@ usb_dma_tag_create(struct usb_dma_tag *udt,
 		tag = NULL;
 	}
 	udt->tag = tag;
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_create, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_create, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -494,11 +414,7 @@ usb_dma_tag_create(struct usb_dma_tag *udt,
 static void
 usb_dma_tag_destroy(struct usb_dma_tag *udt)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_destroy, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_destroy, entry);
 	bus_dma_tag_destroy(udt->tag);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_destroy, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_destroy, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -508,11 +424,7 @@ static void
 usb_pc_alloc_mem_cb(void *arg, bus_dma_segment_t *segs,
     int nseg, int error)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_alloc_mem_cb, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_alloc_mem_cb, entry);
 	usb_pc_common_mem_cb(arg, segs, nseg, error, 0);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_alloc_mem_cb, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_alloc_mem_cb, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -522,11 +434,7 @@ static void
 usb_pc_load_mem_cb(void *arg, bus_dma_segment_t *segs,
     int nseg, int error)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_load_mem_cb, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_load_mem_cb, entry);
 	usb_pc_common_mem_cb(arg, segs, nseg, error, 1);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_load_mem_cb, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_load_mem_cb, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -536,8 +444,6 @@ static void
 usb_pc_common_mem_cb(void *arg, bus_dma_segment_t *segs,
     int nseg, int error, uint8_t isload)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_common_mem_cb, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_common_mem_cb, entry);
 	struct usb_dma_parent_tag *uptag;
 	struct usb_page_cache *pc;
 	struct usb_page *pg;
@@ -593,11 +499,7 @@ usb_pc_common_mem_cb(void *arg, bus_dma_segment_t *segs,
 			off = 0;
 			rem = 0;
 			if (nseg == 0)
-{
-{
 				break;
-}
-}
 		}
 		pg++;
 		pg->physaddr = rounddown2(segs->ds_addr + off, USB_PAGE_SIZE);
@@ -606,11 +508,7 @@ usb_pc_common_mem_cb(void *arg, bus_dma_segment_t *segs,
 done:
 	owned = mtx_owned(uptag->mtx);
 	if (!owned)
-{
-{
 		mtx_lock(uptag->mtx);
-}
-}
 
 	uptag->dma_error = (error ? 1 : 0);
 	if (isload) {
@@ -619,13 +517,7 @@ done:
 		cv_broadcast(uptag->cv);
 	}
 	if (!owned)
-{
-{
 		mtx_unlock(uptag->mtx);
-}
-}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_common_mem_cb, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_common_mem_cb, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -639,8 +531,6 @@ uint8_t
 usb_pc_alloc_mem(struct usb_page_cache *pc, struct usb_page *pg,
     usb_size_t size, usb_size_t align)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_alloc_mem, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_alloc_mem, entry);
 	struct usb_dma_parent_tag *uptag;
 	struct usb_dma_tag *utag;
 	bus_dmamap_t map;
@@ -723,8 +613,6 @@ usb_pc_alloc_mem(struct usb_page_cache *pc, struct usb_page *pg,
 
 	usb_pc_cpu_flush(pc);
 
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_alloc_mem, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_alloc_mem, return);
 	return (0);
 
 error:
@@ -735,8 +623,6 @@ error:
 	pc->page_offset_end = 0;
 	pc->map = NULL;
 	pc->tag = NULL;
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_alloc_mem, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_alloc_mem, return);
 	return (1);
 }
 
@@ -748,8 +634,6 @@ error:
 void
 usb_pc_free_mem(struct usb_page_cache *pc)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_free_mem, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_free_mem, entry);
 	if (pc && pc->buffer) {
 
 		bus_dmamap_unload(pc->tag, pc->map);
@@ -758,8 +642,6 @@ usb_pc_free_mem(struct usb_page_cache *pc)
 
 		pc->buffer = NULL;
 	}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_free_mem, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_free_mem, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -772,8 +654,6 @@ usb_pc_free_mem(struct usb_page_cache *pc)
 uint8_t
 usb_pc_load_mem(struct usb_page_cache *pc, usb_size_t size, uint8_t sync)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_load_mem, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_load_mem, entry);
 	/* setup page cache */
 	pc->page_offset_buf = 0;
 	pc->page_offset_end = size;
@@ -805,8 +685,6 @@ usb_pc_load_mem(struct usb_page_cache *pc, usb_size_t size, uint8_t sync)
 				err = 0;
 			}
 			if (err || uptag->dma_error) {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_load_mem, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_load_mem, return);
 				return (1);
 			}
 		} else {
@@ -836,8 +714,6 @@ usb_pc_load_mem(struct usb_page_cache *pc, usb_size_t size, uint8_t sync)
 			(pc->tag_parent->func) (pc->tag_parent);
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_load_mem, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_load_mem, return);
 	return (0);
 }
 
@@ -847,12 +723,8 @@ usb_pc_load_mem(struct usb_page_cache *pc, usb_size_t size, uint8_t sync)
 void
 usb_pc_cpu_invalidate(struct usb_page_cache *pc)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_cpu_invalidate, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_cpu_invalidate, entry);
 	if (pc->page_offset_end == pc->page_offset_buf) {
 		/* nothing has been loaded into this page cache! */
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_cpu_invalidate, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_cpu_invalidate, return);
 		return;
 	}
 
@@ -863,8 +735,6 @@ usb_pc_cpu_invalidate(struct usb_page_cache *pc)
 	 */
 	bus_dmamap_sync(pc->tag, pc->map, BUS_DMASYNC_POSTREAD);
 	bus_dmamap_sync(pc->tag, pc->map, BUS_DMASYNC_PREREAD);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_cpu_invalidate, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_cpu_invalidate, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -873,17 +743,11 @@ usb_pc_cpu_invalidate(struct usb_page_cache *pc)
 void
 usb_pc_cpu_flush(struct usb_page_cache *pc)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_cpu_flush, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_cpu_flush, entry);
 	if (pc->page_offset_end == pc->page_offset_buf) {
 		/* nothing has been loaded into this page cache! */
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_cpu_flush, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_cpu_flush, return);
 		return;
 	}
 	bus_dmamap_sync(pc->tag, pc->map, BUS_DMASYNC_PREWRITE);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_cpu_flush, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_cpu_flush, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -896,8 +760,6 @@ usb_pc_cpu_flush(struct usb_page_cache *pc)
 uint8_t
 usb_pc_dmamap_create(struct usb_page_cache *pc, usb_size_t size)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_dmamap_create, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_dmamap_create, entry);
 	struct usb_xfer_root *info;
 	struct usb_dma_tag *utag;
 
@@ -917,15 +779,11 @@ usb_pc_dmamap_create(struct usb_page_cache *pc, usb_size_t size)
 		goto error;
 	}
 	pc->tag = utag->tag;
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_dmamap_create, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_dmamap_create, return);
 	return 0;			/* success */
 
 error:
 	pc->map = NULL;
 	pc->tag = NULL;
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_dmamap_create, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_dmamap_create, return);
 	return 1;			/* failure */
 }
 
@@ -937,15 +795,11 @@ error:
 void
 usb_pc_dmamap_destroy(struct usb_page_cache *pc)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_dmamap_destroy, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_dmamap_destroy, entry);
 	if (pc && pc->tag) {
 		bus_dmamap_destroy(pc->tag, pc->map);
 		pc->tag = NULL;
 		pc->map = NULL;
 	}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_dmamap_destroy, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_pc_dmamap_destroy, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -955,8 +809,6 @@ struct usb_dma_tag *
 usb_dma_tag_find(struct usb_dma_parent_tag *udpt,
     usb_size_t size, usb_size_t align)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_find, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_find, entry);
 	struct usb_dma_tag *udt;
 	uint8_t nudt;
 
@@ -971,25 +823,17 @@ usb_dma_tag_find(struct usb_dma_parent_tag *udpt,
 		if (udt->align == 0) {
 			usb_dma_tag_create(udt, size, align);
 			if (udt->tag == NULL) {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_find, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_find, return);
 				return (NULL);
 			}
 			udt->align = align;
 			udt->size = size;
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_find, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_find, return);
 			return (udt);
 		}
 		if ((udt->align == align) && (udt->size == size)) {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_find, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_find, return);
 			return (udt);
 		}
 		udt++;
 	}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_find, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_find, return);
 	return (NULL);
 }
 
@@ -1002,8 +846,6 @@ usb_dma_tag_setup(struct usb_dma_parent_tag *udpt,
     struct mtx *mtx, usb_dma_callback_t *func,
     uint8_t ndmabits, uint8_t nudt)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_setup, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_setup, entry);
 	memset(udpt, 0, sizeof(*udpt));
 
 	/* sanity checking */
@@ -1011,8 +853,6 @@ usb_dma_tag_setup(struct usb_dma_parent_tag *udpt,
 	    (ndmabits == 0) ||
 	    (mtx == NULL)) {
 		/* something is corrupt */
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_setup, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_setup, return);
 		return;
 	}
 	/* initialise condition variable */
@@ -1031,8 +871,6 @@ usb_dma_tag_setup(struct usb_dma_parent_tag *udpt,
 		udt->tag_parent = udpt;
 		udt++;
 	}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_setup, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_setup, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -1041,8 +879,6 @@ usb_dma_tag_setup(struct usb_dma_parent_tag *udpt,
 void
 usb_dma_tag_unsetup(struct usb_dma_parent_tag *udpt)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_unsetup, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_unsetup, entry);
 	struct usb_dma_tag *udt;
 	uint8_t nudt;
 
@@ -1063,8 +899,6 @@ usb_dma_tag_unsetup(struct usb_dma_parent_tag *udpt)
 		/* destroy the condition variable */
 		cv_destroy(udpt->cv);
 	}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_unsetup, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_dma_tag_unsetup, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -1076,8 +910,6 @@ usb_dma_tag_unsetup(struct usb_dma_parent_tag *udpt)
 void
 usb_bdma_work_loop(struct usb_xfer_queue *pq)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_work_loop, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_work_loop, entry);
 	struct usb_xfer_root *info;
 	struct usb_xfer *xfer;
 	usb_frcount_t nframes;
@@ -1092,8 +924,6 @@ usb_bdma_work_loop(struct usb_xfer_queue *pq)
 		USB_BUS_LOCK(info->bus);
 		usbd_transfer_done(xfer, 0);
 		USB_BUS_UNLOCK(info->bus);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_work_loop, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_work_loop, return);
 		return;
 	}
 	if (!xfer->flags_int.bdma_setup) {
@@ -1168,8 +998,6 @@ usb_bdma_work_loop(struct usb_xfer_queue *pq)
 		USB_BUS_LOCK(info->bus);
 		usbd_transfer_done(xfer, USB_ERR_DMA_LOAD_FAILED);
 		USB_BUS_UNLOCK(info->bus);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_work_loop, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_work_loop, return);
 		return;
 	}
 	if (info->dma_currframe != info->dma_nframes) {
@@ -1188,8 +1016,6 @@ usb_bdma_work_loop(struct usb_xfer_queue *pq)
 		/* advance frame index */
 		info->dma_currframe++;
 
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_work_loop, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_work_loop, return);
 		return;
 	}
 	/* go ahead */
@@ -1200,8 +1026,6 @@ usb_bdma_work_loop(struct usb_xfer_queue *pq)
 
 	/* finally start the hardware */
 	usbd_pipe_enter(xfer);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_work_loop, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_work_loop, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -1213,8 +1037,6 @@ usb_bdma_work_loop(struct usb_xfer_queue *pq)
 void
 usb_bdma_done_event(struct usb_dma_parent_tag *udpt)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_done_event, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_done_event, entry);
 	struct usb_xfer_root *info;
 
 	info = USB_DMATAG_TO_XROOT(udpt);
@@ -1227,8 +1049,6 @@ usb_bdma_done_event(struct usb_dma_parent_tag *udpt)
 	/* enter workloop again */
 	usb_command_wrapper(&info->dma_q,
 	    info->dma_q.curr);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_done_event, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_done_event, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -1240,8 +1060,6 @@ usb_bdma_done_event(struct usb_dma_parent_tag *udpt)
 void
 usb_bdma_pre_sync(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_pre_sync, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_pre_sync, entry);
 	struct usb_page_cache *pc;
 	usb_frcount_t nframes;
 
@@ -1264,8 +1082,6 @@ usb_bdma_pre_sync(struct usb_xfer *xfer)
 		}
 		pc++;
 	}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_pre_sync, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_pre_sync, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -1277,8 +1093,6 @@ usb_bdma_pre_sync(struct usb_xfer *xfer)
 void
 usb_bdma_post_sync(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_post_sync, entry);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_post_sync, entry);
 	struct usb_page_cache *pc;
 	usb_frcount_t nframes;
 
@@ -1298,8 +1112,6 @@ usb_bdma_post_sync(struct usb_xfer *xfer)
 		}
 		pc++;
 	}
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_post_sync, return);
-	SDT_PROBE0(tpw, kernel, usb_busdma_usb_bdma_post_sync, return);
 }
 
 #endif

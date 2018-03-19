@@ -54,8 +54,6 @@
 
 #include <dev/usb/usb_core.h>
 #include <dev/usb/usb_debug.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 /*------------------------------------------------------------------------*
@@ -74,8 +72,6 @@ struct usb_descriptor *
 usb_desc_foreach(struct usb_config_descriptor *cd, 
     struct usb_descriptor *_desc)
 {
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_desc_foreach, entry);
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_desc_foreach, entry);
 	uint8_t *desc_next;
 	uint8_t *start;
 	uint8_t *end;
@@ -83,13 +79,7 @@ usb_desc_foreach(struct usb_config_descriptor *cd,
 
 	/* be NULL safe */
 	if (cd == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_desc_foreach, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_desc_foreach, return);
 		return (NULL);
-}
 
 	/* We assume that the "wTotalLength" has been checked. */
 	start = (uint8_t *)cd;
@@ -98,48 +88,24 @@ usb_desc_foreach(struct usb_config_descriptor *cd,
 
 	/* Get start of next USB descriptor. */
 	if (desc == NULL)
-{
-{
 		desc = start;
-}
-}
 	else
 		desc = desc + desc[0];
 
 	/* Check that the next USB descriptor is within the range. */
 	if ((desc < start) || (desc >= end))
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_desc_foreach, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_desc_foreach, return);
 		return (NULL);		/* out of range, or EOD */
-}
 
 	/* Check that the second next USB descriptor is within range. */
 	desc_next = desc + desc[0];
 	if ((desc_next < start) || (desc_next > end))
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_desc_foreach, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_desc_foreach, return);
 		return (NULL);		/* out of range */
-}
 
 	/* Check minimum descriptor length. */
 	if (desc[0] < 3)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_desc_foreach, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_desc_foreach, return);
 		return (NULL);		/* too short descriptor */
-}
 
 	/* Return start of next descriptor. */
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_desc_foreach, return);
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_desc_foreach, return);
 	return ((struct usb_descriptor *)desc);
 }
 
@@ -158,8 +124,6 @@ struct usb_interface_descriptor *
 usb_idesc_foreach(struct usb_config_descriptor *cd,
     struct usb_idesc_parse_state *ps)
 {
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_idesc_foreach, entry);
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_idesc_foreach, entry);
 	struct usb_interface_descriptor *id;
 	uint8_t new_iface;
 
@@ -172,19 +136,11 @@ usb_idesc_foreach(struct usb_config_descriptor *cd,
 		id = (struct usb_interface_descriptor *)
 		    usb_desc_foreach(cd, (struct usb_descriptor *)id);
 		if (id == NULL)
-{
-{
 			break;
-}
-}
 		if ((id->bDescriptorType == UDESC_INTERFACE) &&
 		    (id->bLength >= sizeof(*id))) {
 			if (ps->iface_no_last == id->bInterfaceNumber)
-{
-{
 				new_iface = 0;
-}
-}
 			ps->iface_no_last = id->bInterfaceNumber;
 			break;
 		}
@@ -211,8 +167,6 @@ usb_idesc_foreach(struct usb_config_descriptor *cd,
 
 	/* store and return current descriptor */
 	ps->desc = (struct usb_descriptor *)id;
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_idesc_foreach, return);
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_idesc_foreach, return);
 	return (id);
 }
 
@@ -231,8 +185,6 @@ struct usb_endpoint_descriptor *
 usb_edesc_foreach(struct usb_config_descriptor *cd,
     struct usb_endpoint_descriptor *ped)
 {
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_edesc_foreach, entry);
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_edesc_foreach, entry);
 	struct usb_descriptor *desc;
 
 	desc = ((struct usb_descriptor *)ped);
@@ -246,13 +198,9 @@ usb_edesc_foreach(struct usb_config_descriptor *cd,
 				/* endpoint descriptor is invalid */
 				break;
 			}
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_edesc_foreach, return);
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_edesc_foreach, return);
 			return ((struct usb_endpoint_descriptor *)desc);
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_edesc_foreach, return);
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_edesc_foreach, return);
 	return (NULL);
 }
 
@@ -272,37 +220,23 @@ struct usb_endpoint_ss_comp_descriptor *
 usb_ed_comp_foreach(struct usb_config_descriptor *cd,
     struct usb_endpoint_ss_comp_descriptor *ped)
 {
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_ed_comp_foreach, entry);
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_ed_comp_foreach, entry);
 	struct usb_descriptor *desc;
 
 	desc = ((struct usb_descriptor *)ped);
 
 	while ((desc = usb_desc_foreach(cd, desc))) {
 		if (desc->bDescriptorType == UDESC_INTERFACE)
-{
-{
 			break;
-}
-}
 		if (desc->bDescriptorType == UDESC_ENDPOINT)
-{
-{
 			break;
-}
-}
 		if (desc->bDescriptorType == UDESC_ENDPOINT_SS_COMP) {
 			if (desc->bLength < sizeof(*ped)) {
 				/* endpoint companion descriptor is invalid */
 				break;
 			}
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_ed_comp_foreach, return);
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_ed_comp_foreach, return);
 			return ((struct usb_endpoint_ss_comp_descriptor *)desc);
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_ed_comp_foreach, return);
-	SDT_PROBE0(tpw, kernel, usb_parse_usb_ed_comp_foreach, return);
 	return (NULL);
 }
 
@@ -315,8 +249,6 @@ usb_ed_comp_foreach(struct usb_config_descriptor *cd,
 uint8_t
 usbd_get_no_descriptors(struct usb_config_descriptor *cd, uint8_t type)
 {
-	SDT_PROBE0(tpw, kernel, usb_parse_usbd_get_no_descriptors, entry);
-	SDT_PROBE0(tpw, kernel, usb_parse_usbd_get_no_descriptors, entry);
 	struct usb_descriptor *desc = NULL;
 	uint8_t count = 0;
 
@@ -324,15 +256,9 @@ usbd_get_no_descriptors(struct usb_config_descriptor *cd, uint8_t type)
 		if (desc->bDescriptorType == type) {
 			count++;
 			if (count == 0xFF)
-{
-{
 				break;			/* crazy */
-}
-}
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_parse_usbd_get_no_descriptors, return);
-	SDT_PROBE0(tpw, kernel, usb_parse_usbd_get_no_descriptors, return);
 	return (count);
 }
 
@@ -348,8 +274,6 @@ uint8_t
 usbd_get_no_alts(struct usb_config_descriptor *cd,
     struct usb_interface_descriptor *id)
 {
-	SDT_PROBE0(tpw, kernel, usb_parse_usbd_get_no_alts, entry);
-	SDT_PROBE0(tpw, kernel, usb_parse_usbd_get_no_alts, entry);
 	struct usb_descriptor *desc;
 	uint8_t n;
 	uint8_t ifaceno;
@@ -372,15 +296,9 @@ usbd_get_no_alts(struct usb_config_descriptor *cd,
 			if (id->bInterfaceNumber == ifaceno) {
 				n++;
 				if (n == 0xFF)
-{
-{
 					break;		/* crazy */
-}
-}
 			}
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_parse_usbd_get_no_alts, return);
-	SDT_PROBE0(tpw, kernel, usb_parse_usbd_get_no_alts, return);
 	return (n);
 }

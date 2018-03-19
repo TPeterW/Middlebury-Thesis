@@ -64,8 +64,6 @@
 
 #include <dev/usb/usb_controller.h>
 #include <dev/usb/usb_bus.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 /* function prototypes */
@@ -89,8 +87,6 @@ static usb_error_t	 usb_handle_iface_request(struct usb_xfer *, void **,
 void
 usb_handle_request_callback(struct usb_xfer *xfer, usb_error_t error)
 {
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_request_callback, entry);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_request_callback, entry);
 	usb_error_t err;
 
 	/* check the current transfer state */
@@ -126,8 +122,6 @@ usb_handle_request_callback(struct usb_xfer *xfer, usb_error_t error)
 		}
 		break;
 	}
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_request_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_request_callback, return);
 	return;
 
 tr_restart:
@@ -141,8 +135,6 @@ tr_restart:
 	xfer->flags.force_short_xfer = 0;
 	usbd_xfer_set_stall(xfer);	/* cancel previous transfer, if any */
 	usbd_transfer_submit(xfer);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_request_callback, return);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_request_callback, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -155,8 +147,6 @@ tr_restart:
 static usb_error_t
 usb_handle_set_config(struct usb_xfer *xfer, uint8_t conf_no)
 {
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_set_config, entry);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_set_config, entry);
 	struct usb_device *udev = xfer->xroot->udev;
 	usb_error_t err = 0;
 	uint8_t do_unlock;
@@ -192,14 +182,8 @@ usb_handle_set_config(struct usb_xfer *xfer, uint8_t conf_no)
 	}
 done:
 	if (do_unlock)
-{
-{
 		usbd_enum_unlock(udev);
-}
-}
 	USB_XFER_LOCK(xfer);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_set_config, return);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_set_config, return);
 	return (err);
 }
 
@@ -207,8 +191,6 @@ static usb_error_t
 usb_check_alt_setting(struct usb_device *udev, 
      struct usb_interface *iface, uint8_t alt_index)
 {
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_check_alt_setting, entry);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_check_alt_setting, entry);
 	uint8_t do_unlock;
 	usb_error_t err = 0;
 
@@ -216,21 +198,11 @@ usb_check_alt_setting(struct usb_device *udev,
 	do_unlock = usbd_enum_lock(udev);
 
 	if (alt_index >= usbd_get_no_alts(udev->cdesc, iface->idesc))
-{
-{
 		err = USB_ERR_INVAL;
-}
-}
 
 	if (do_unlock)
-{
-{
 		usbd_enum_unlock(udev);
-}
-}
 
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_check_alt_setting, return);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_check_alt_setting, return);
 	return (err);
 }
 
@@ -246,8 +218,6 @@ usb_handle_iface_request(struct usb_xfer *xfer,
     void **ppdata, uint16_t *plen,
     struct usb_device_request req, uint16_t off, uint8_t state)
 {
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_iface_request, entry);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_iface_request, entry);
 	struct usb_interface *iface;
 	struct usb_interface *iface_parent;	/* parent interface */
 	struct usb_device *udev = xfer->xroot->udev;
@@ -386,38 +356,20 @@ tr_repeat:
 	}
 tr_valid:
 	if (do_unlock)
-{
-{
 		usbd_enum_unlock(udev);
-}
-}
 	USB_XFER_LOCK(xfer);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_iface_request, return);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_iface_request, return);
 	return (0);
 
 tr_short:
 	if (do_unlock)
-{
-{
 		usbd_enum_unlock(udev);
-}
-}
 	USB_XFER_LOCK(xfer);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_iface_request, return);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_iface_request, return);
 	return (USB_ERR_SHORT_XFER);
 
 tr_stalled:
 	if (do_unlock)
-{
-{
 		usbd_enum_unlock(udev);
-}
-}
 	USB_XFER_LOCK(xfer);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_iface_request, return);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_iface_request, return);
 	return (USB_ERR_STALLED);
 }
 
@@ -431,8 +383,6 @@ tr_stalled:
 static usb_error_t
 usb_handle_set_stall(struct usb_xfer *xfer, uint8_t ep, uint8_t do_stall)
 {
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_set_stall, entry);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_set_stall, entry);
 	struct usb_device *udev = xfer->xroot->udev;
 	usb_error_t err;
 
@@ -440,8 +390,6 @@ usb_handle_set_stall(struct usb_xfer *xfer, uint8_t ep, uint8_t do_stall)
 	err = usbd_set_endpoint_stall(udev,
 	    usbd_get_ep_by_addr(udev, ep), do_stall);
 	USB_XFER_LOCK(xfer);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_set_stall, return);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_set_stall, return);
 	return (err);
 }
 
@@ -455,24 +403,18 @@ usb_handle_set_stall(struct usb_xfer *xfer, uint8_t ep, uint8_t do_stall)
 static uint8_t
 usb_handle_get_stall(struct usb_device *udev, uint8_t ea_val)
 {
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_get_stall, entry);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_get_stall, entry);
 	struct usb_endpoint *ep;
 	uint8_t halted;
 
 	ep = usbd_get_ep_by_addr(udev, ea_val);
 	if (ep == NULL) {
 		/* nothing to do */
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_get_stall, return);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_get_stall, return);
 		return (0);
 	}
 	USB_BUS_LOCK(udev->bus);
 	halted = ep->is_stalled;
 	USB_BUS_UNLOCK(udev->bus);
 
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_get_stall, return);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_get_stall, return);
 	return (halted);
 }
 
@@ -486,8 +428,6 @@ usb_handle_get_stall(struct usb_device *udev, uint8_t ea_val)
 static usb_error_t
 usb_handle_remote_wakeup(struct usb_xfer *xfer, uint8_t is_on)
 {
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_remote_wakeup, entry);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_remote_wakeup, entry);
 	struct usb_device *udev;
 	struct usb_bus *bus;
 
@@ -508,8 +448,6 @@ usb_handle_remote_wakeup(struct usb_xfer *xfer, uint8_t is_on)
 	/* In case we are out of sync, update the power state. */
 	usb_bus_power_update(udev->bus);
 #endif
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_remote_wakeup, return);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_remote_wakeup, return);
 	return (0);			/* success */
 }
 
@@ -527,8 +465,6 @@ usb_handle_remote_wakeup(struct usb_xfer *xfer, uint8_t is_on)
 static usb_error_t
 usb_handle_request(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_request, entry);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_request, entry);
 	struct usb_device_request req;
 	struct usb_device *udev;
 	const void *src_zcopy;		/* zero-copy source pointer */
@@ -714,17 +650,9 @@ usb_handle_request(struct usb_xfer *xfer)
 tr_handle_get_descriptor:
 	err = (usb_temp_get_desc_p) (udev, &req, &src_zcopy, &max_len);
 	if (err)
-{
-{
 		goto tr_stalled;
-}
-}
 	if (src_zcopy == NULL)
-{
-{
 		goto tr_stalled;
-}
-}
 	goto tr_valid;
 
 tr_handle_get_config:
@@ -870,20 +798,14 @@ tr_valid:
 		usbd_xfer_set_frame_len(xfer, 1, 0);
 	}
 	DPRINTF("success\n");
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_request, return);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_request, return);
 	return (0);			/* success */
 
 tr_stalled:
 	DPRINTF("%s\n", (state != USB_HR_NOT_COMPLETE) ?
 	    "complete" : "stalled");
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_request, return);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_request, return);
 	return (USB_ERR_STALLED);
 
 tr_bad_context:
 	DPRINTF("bad context\n");
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_request, return);
-	SDT_PROBE0(tpw, kernel, usb_handle_request_usb_handle_request, return);
 	return (USB_ERR_BAD_CONTEXT);
 }

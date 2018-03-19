@@ -59,8 +59,6 @@
 
 #include <dev/usb/usb_controller.h>
 #include <dev/usb/usb_bus.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 /*------------------------------------------------------------------------*
@@ -72,8 +70,6 @@
 void
 device_set_usb_desc(device_t dev)
 {
-	SDT_PROBE0(tpw, kernel, usb_util_device_set_usb_desc, entry);
-	SDT_PROBE0(tpw, kernel, usb_util_device_set_usb_desc, entry);
 	struct usb_attach_arg *uaa;
 	struct usb_device *udev;
 	struct usb_interface *iface;
@@ -83,15 +79,11 @@ device_set_usb_desc(device_t dev)
 
 	if (dev == NULL) {
 		/* should not happen */
-	SDT_PROBE0(tpw, kernel, usb_util_device_set_usb_desc, return);
-	SDT_PROBE0(tpw, kernel, usb_util_device_set_usb_desc, return);
 		return;
 	}
 	uaa = device_get_ivars(dev);
 	if (uaa == NULL) {
 		/* can happen if called at the wrong time */
-	SDT_PROBE0(tpw, kernel, usb_util_device_set_usb_desc, return);
-	SDT_PROBE0(tpw, kernel, usb_util_device_set_usb_desc, return);
 		return;
 	}
 	udev = uaa->device;
@@ -123,17 +115,11 @@ device_set_usb_desc(device_t dev)
 	}
 
 	if (do_unlock)
-{
-{
 		usbd_ctrl_unlock(udev);
-}
-}
 
 	device_set_desc_copy(dev, temp_p);
 	device_printf(dev, "<%s> on %s\n", temp_p,
 	    device_get_nameunit(udev->bus->bdev));
-	SDT_PROBE0(tpw, kernel, usb_util_device_set_usb_desc, return);
-	SDT_PROBE0(tpw, kernel, usb_util_device_set_usb_desc, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -146,14 +132,8 @@ device_set_usb_desc(device_t dev)
 void
 usb_pause_mtx(struct mtx *mtx, int timo)
 {
-	SDT_PROBE0(tpw, kernel, usb_util_usb_pause_mtx, entry);
-	SDT_PROBE0(tpw, kernel, usb_util_usb_pause_mtx, entry);
 	if (mtx != NULL)
-{
-{
 		mtx_unlock(mtx);
-}
-}
 
 	/*
 	 * Add one tick to the timeout so that we don't return too
@@ -163,13 +143,7 @@ usb_pause_mtx(struct mtx *mtx, int timo)
 	pause("USBWAIT", timo + 1);
 
 	if (mtx != NULL)
-{
-{
 		mtx_lock(mtx);
-}
-}
-	SDT_PROBE0(tpw, kernel, usb_util_usb_pause_mtx, return);
-	SDT_PROBE0(tpw, kernel, usb_util_usb_pause_mtx, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -182,13 +156,9 @@ usb_pause_mtx(struct mtx *mtx, int timo)
 void
 usb_printbcd(char *p, uint16_t p_len, uint16_t bcd)
 {
-	SDT_PROBE0(tpw, kernel, usb_util_usb_printbcd, entry);
-	SDT_PROBE0(tpw, kernel, usb_util_usb_printbcd, entry);
 	if (snprintf(p, p_len, "%x.%02x", bcd >> 8, bcd & 0xff)) {
 		/* ignore any errors */
 	}
-	SDT_PROBE0(tpw, kernel, usb_util_usb_printbcd, return);
-	SDT_PROBE0(tpw, kernel, usb_util_usb_printbcd, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -200,19 +170,11 @@ usb_printbcd(char *p, uint16_t p_len, uint16_t bcd)
 void
 usb_trim_spaces(char *p)
 {
-	SDT_PROBE0(tpw, kernel, usb_util_usb_trim_spaces, entry);
-	SDT_PROBE0(tpw, kernel, usb_util_usb_trim_spaces, entry);
 	char *q;
 	char *e;
 
 	if (p == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_util_usb_trim_spaces, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_util_usb_trim_spaces, return);
 		return;
-}
 	q = e = p;
 	while (*q == ' ')		/* skip leading spaces */
 		q++;
@@ -220,8 +182,6 @@ usb_trim_spaces(char *p)
 		if (*p++ != ' ')	/* remember last non-space */
 			e = p;
 	*e = 0;				/* kill trailing spaces */
-	SDT_PROBE0(tpw, kernel, usb_util_usb_trim_spaces, return);
-	SDT_PROBE0(tpw, kernel, usb_util_usb_trim_spaces, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -230,16 +190,12 @@ usb_trim_spaces(char *p)
 uint8_t
 usb_make_str_desc(void *ptr, uint16_t max_len, const char *s)
 {
-	SDT_PROBE0(tpw, kernel, usb_util_usb_make_str_desc, entry);
-	SDT_PROBE0(tpw, kernel, usb_util_usb_make_str_desc, entry);
 	struct usb_string_descriptor *p = ptr;
 	uint8_t totlen;
 	int j;
 
 	if (max_len < 2) {
 		/* invalid length */
-	SDT_PROBE0(tpw, kernel, usb_util_usb_make_str_desc, return);
-	SDT_PROBE0(tpw, kernel, usb_util_usb_make_str_desc, return);
 		return (0);
 	}
 	max_len = ((max_len / 2) - 1);
@@ -263,7 +219,5 @@ usb_make_str_desc(void *ptr, uint16_t max_len, const char *s)
 	while (max_len--) {
 		USETW2(p->bString[max_len], 0, s[max_len]);
 	}
-	SDT_PROBE0(tpw, kernel, usb_util_usb_make_str_desc, return);
-	SDT_PROBE0(tpw, kernel, usb_util_usb_make_str_desc, return);
 	return (totlen);
 }

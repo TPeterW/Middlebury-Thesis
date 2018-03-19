@@ -62,8 +62,6 @@
 #include <dev/usb/usb_bus.h>
 #include <dev/usb/usb_pf.h>
 #include <dev/usb/usb_transfer.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 static void usbpf_init(void *);
@@ -87,20 +85,14 @@ SYSUNINIT(usbpf_uninit, SI_SUB_PSEUDO, SI_ORDER_MIDDLE, usbpf_uninit, NULL);
 static void
 usbpf_init(void *arg)
 {
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_init, entry);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_init, entry);
 
 	usbpf_cloner = if_clone_advanced(usbusname, 0, usbpf_clone_match,
 	    usbpf_clone_create, usbpf_clone_destroy);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_init, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_init, return);
 }
 
 static void
 usbpf_uninit(void *arg)
 {
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_uninit, entry);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_uninit, entry);
 	int devlcnt;
 	device_t *devlp;
 	devclass_t dc;
@@ -112,134 +104,66 @@ usbpf_uninit(void *arg)
 
 	dc = devclass_find(usbusname);
 	if (dc == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_uninit, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_uninit, return);
 		return;
-}
 	error = devclass_get_devices(dc, &devlp, &devlcnt);
 	if (error)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_uninit, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_uninit, return);
 		return;
-}
 	for (i = 0; i < devlcnt; i++) {
 		ubus = device_get_softc(devlp[i]);
 		if (ubus != NULL && ubus->ifp != NULL)
-{
-{
 			usbpf_clone_destroy(usbpf_cloner, ubus->ifp);
-}
-}
 	}
 	free(devlp, M_TEMP);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_uninit, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_uninit, return);
 }
 
 static int
 usbpf_ioctl(struct ifnet *ifp, u_long cmd, caddr_t data)
 {
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_ioctl, entry);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_ioctl, entry);
 	
 	/* No configuration allowed. */
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_ioctl, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_ioctl, return);
 	return (EINVAL);
 }
 
 static struct usb_bus *
 usbpf_ifname2ubus(const char *ifname)
 {
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_ifname2ubus, entry);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_ifname2ubus, entry);
 	device_t dev;
 	devclass_t dc;
 	int unit;
 	int error;
 
 	if (strncmp(ifname, usbusname, sizeof(usbusname) - 1) != 0)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_ifname2ubus, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_ifname2ubus, return);
 		return (NULL);
-}
 	error = ifc_name2unit(ifname, &unit);
 	if (error || unit < 0)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_ifname2ubus, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_ifname2ubus, return);
 		return (NULL);
-}
 	dc = devclass_find(usbusname);
 	if (dc == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_ifname2ubus, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_ifname2ubus, return);
 		return (NULL);
-}
 	dev = devclass_get_device(dc, unit);
 	if (dev == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_ifname2ubus, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_ifname2ubus, return);
 		return (NULL);
-}
 
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_ifname2ubus, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_ifname2ubus, return);
 	return (device_get_softc(dev));
 }
 
 static int
 usbpf_clone_match(struct if_clone *ifc, const char *name)
 {
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_match, entry);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_match, entry);
 	struct usb_bus *ubus;
 
 	ubus = usbpf_ifname2ubus(name);
 	if (ubus == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_match, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_match, return);
 		return (0);
-}
 	if (ubus->ifp != NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_match, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_match, return);
 		return (0);
-}
 
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_match, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_match, return);
 	return (1);
 }
 
 static int
 usbpf_clone_create(struct if_clone *ifc, char *name, size_t len, caddr_t params)
 {
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_create, entry);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_create, entry);
 	int error;
 	int unit;
 	struct ifnet *ifp;
@@ -247,46 +171,20 @@ usbpf_clone_create(struct if_clone *ifc, char *name, size_t len, caddr_t params)
 
 	error = ifc_name2unit(name, &unit);
 	if (error)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_create, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_create, return);
 		return (error);
-}
  	if (unit < 0)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_create, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_create, return);
 		return (EINVAL);
-}
 
 	ubus = usbpf_ifname2ubus(name);
 	if (ubus == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_create, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_create, return);
 		return (1);
-}
 	if (ubus->ifp != NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_create, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_create, return);
 		return (1);
-}
 
 	error = ifc_alloc_unit(ifc, &unit);
 	if (error) {
 		device_printf(ubus->parent, "usbpf: Could not allocate "
 		    "instance\n");
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_create, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_create, return);
 		return (error);
 	}
 	ifp = ubus->ifp = if_alloc(IFT_USB);
@@ -294,8 +192,6 @@ usbpf_clone_create(struct if_clone *ifc, char *name, size_t len, caddr_t params)
 		ifc_free_unit(ifc, unit);
 		device_printf(ubus->parent, "usbpf: Could not allocate "
 		    "instance\n");
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_create, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_create, return);
 		return (ENOSPC);
 	}
 	strlcpy(ifp->if_xname, name, sizeof(ifp->if_xname));
@@ -313,16 +209,12 @@ usbpf_clone_create(struct if_clone *ifc, char *name, size_t len, caddr_t params)
 	 */
 	bpfattach(ifp, DLT_USB, USBPF_HDR_LEN);
 
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_create, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_create, return);
 	return (0);
 }
 
 static int
 usbpf_clone_destroy(struct if_clone *ifc, struct ifnet *ifp)
 {
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_destroy, entry);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_destroy, entry);
 	struct usb_bus *ubus;
 	int unit;
 
@@ -341,255 +233,107 @@ usbpf_clone_destroy(struct if_clone *ifc, struct ifnet *ifp)
 	if_free(ifp);
 	ifc_free_unit(ifc, unit);
 	
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_destroy, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_clone_destroy, return);
 	return (0);
 }
 
 void
 usbpf_attach(struct usb_bus *ubus)
 {
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_attach, entry);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_attach, entry);
 
 	if (bootverbose)
-{
-{
 		device_printf(ubus->parent, "usbpf: Attached\n");
-}
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_attach, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_attach, return);
 }
 
 void
 usbpf_detach(struct usb_bus *ubus)
 {
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_detach, entry);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_detach, entry);
 
 	if (ubus->ifp != NULL)
-{
-{
 		usbpf_clone_destroy(usbpf_cloner, ubus->ifp);
-}
-}
 	if (bootverbose)
-{
-{
 		device_printf(ubus->parent, "usbpf: Detached\n");
-}
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_detach, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_detach, return);
 }
 
 static uint32_t
 usbpf_aggregate_xferflags(struct usb_xfer_flags *flags)
 {
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_aggregate_xferflags, entry);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_aggregate_xferflags, entry);
 	uint32_t val = 0;
 
 	if (flags->force_short_xfer == 1)
-{
-{
 		val |= USBPF_FLAG_FORCE_SHORT_XFER;
-}
-}
 	if (flags->short_xfer_ok == 1)
-{
-{
 		val |= USBPF_FLAG_SHORT_XFER_OK;
-}
-}
 	if (flags->short_frames_ok == 1)
-{
-{
 		val |= USBPF_FLAG_SHORT_FRAMES_OK;
-}
-}
 	if (flags->pipe_bof == 1)
-{
-{
 		val |= USBPF_FLAG_PIPE_BOF;
-}
-}
 	if (flags->proxy_buffer == 1)
-{
-{
 		val |= USBPF_FLAG_PROXY_BUFFER;
-}
-}
 	if (flags->ext_buffer == 1)
-{
-{
 		val |= USBPF_FLAG_EXT_BUFFER;
-}
-}
 	if (flags->manual_status == 1)
-{
-{
 		val |= USBPF_FLAG_MANUAL_STATUS;
-}
-}
 	if (flags->no_pipe_ok == 1)
-{
-{
 		val |= USBPF_FLAG_NO_PIPE_OK;
-}
-}
 	if (flags->stall_pipe == 1)
-{
-{
 		val |= USBPF_FLAG_STALL_PIPE;
-}
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_aggregate_xferflags, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_aggregate_xferflags, return);
 	return (val);
 }
 
 static uint32_t
 usbpf_aggregate_status(struct usb_xfer_flags_int *flags)
 {
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_aggregate_status, entry);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_aggregate_status, entry);
 	uint32_t val = 0;
 
 	if (flags->open == 1)
-{
-{
 		val |= USBPF_STATUS_OPEN;
-}
-}
 	if (flags->transferring == 1)
-{
-{
 		val |= USBPF_STATUS_TRANSFERRING;
-}
-}
 	if (flags->did_dma_delay == 1)
-{
-{
 		val |= USBPF_STATUS_DID_DMA_DELAY;
-}
-}
 	if (flags->did_close == 1)
-{
-{
 		val |= USBPF_STATUS_DID_CLOSE;
-}
-}
 	if (flags->draining == 1)
-{
-{
 		val |= USBPF_STATUS_DRAINING;
-}
-}
 	if (flags->started == 1)
-{
-{
 		val |= USBPF_STATUS_STARTED;
-}
-}
 	if (flags->bandwidth_reclaimed == 1)
-{
-{
 		val |= USBPF_STATUS_BW_RECLAIMED;
-}
-}
 	if (flags->control_xfr == 1)
-{
-{
 		val |= USBPF_STATUS_CONTROL_XFR;
-}
-}
 	if (flags->control_hdr == 1)
-{
-{
 		val |= USBPF_STATUS_CONTROL_HDR;
-}
-}
 	if (flags->control_act == 1)
-{
-{
 		val |= USBPF_STATUS_CONTROL_ACT;
-}
-}
 	if (flags->control_stall == 1)
-{
-{
 		val |= USBPF_STATUS_CONTROL_STALL;
-}
-}
 	if (flags->short_frames_ok == 1)
-{
-{
 		val |= USBPF_STATUS_SHORT_FRAMES_OK;
-}
-}
 	if (flags->short_xfer_ok == 1)
-{
-{
 		val |= USBPF_STATUS_SHORT_XFER_OK;
-}
-}
 #if USB_HAVE_BUSDMA
 	if (flags->bdma_enable == 1)
-{
-{
 		val |= USBPF_STATUS_BDMA_ENABLE;
-}
-}
 	if (flags->bdma_no_post_sync == 1)
-{
-{
 		val |= USBPF_STATUS_BDMA_NO_POST_SYNC;
-}
-}
 	if (flags->bdma_setup == 1)
-{
-{
 		val |= USBPF_STATUS_BDMA_SETUP;
-}
-}
 #endif
 	if (flags->isochronous_xfr == 1)
-{
-{
 		val |= USBPF_STATUS_ISOCHRONOUS_XFR;
-}
-}
 	if (flags->curr_dma_set == 1)
-{
-{
 		val |= USBPF_STATUS_CURR_DMA_SET;
-}
-}
 	if (flags->can_cancel_immed == 1)
-{
-{
 		val |= USBPF_STATUS_CAN_CANCEL_IMMED;
-}
-}
 	if (flags->doing_callback == 1)
-{
-{
 		val |= USBPF_STATUS_DOING_CALLBACK;
-}
-}
 
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_aggregate_status, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_aggregate_status, return);
 	return (val);
 }
 
 static int
 usbpf_xfer_frame_is_read(struct usb_xfer *xfer, uint32_t frame)
 {
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfer_frame_is_read, entry);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfer_frame_is_read, entry);
 	int isread;
 
 	if ((frame == 0) && (xfer->flags_int.control_xfr != 0) &&
@@ -605,26 +349,18 @@ usbpf_xfer_frame_is_read(struct usb_xfer *xfer, uint32_t frame)
 	} else {
 		isread = USB_GET_DATA_ISREAD(xfer);
 	}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfer_frame_is_read, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfer_frame_is_read, return);
 	return (isread);
 }
 
 static uint32_t
 usbpf_xfer_precompute_size(struct usb_xfer *xfer, int type)
 {
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfer_precompute_size, entry);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfer_precompute_size, entry);
 	uint32_t totlen;
 	uint32_t x;
 	uint32_t nframes;
 
 	if (type == USBPF_XFERTAP_SUBMIT)
-{
-{
 		nframes = xfer->nframes;
-}
-}
 	else
 		nframes = xfer->aframes;
 
@@ -644,16 +380,12 @@ usbpf_xfer_precompute_size(struct usb_xfer *xfer, int type)
 			}
 		}
 	}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfer_precompute_size, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfer_precompute_size, return);
 	return (totlen);
 }
 
 void
 usbpf_xfertap(struct usb_xfer *xfer, int type)
 {
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfertap, entry);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfertap, entry);
 	struct usb_bus *bus;
 	struct usbpf_pkthdr *up;
 	struct usbpf_framehdr *uf;
@@ -670,30 +402,14 @@ usbpf_xfertap(struct usb_xfer *xfer, int type)
 
 	/* sanity checks */
 	if (bus->ifp == NULL || bus->ifp->if_bpf == NULL)
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfertap, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfertap, return);
 		return;
-}
 	if (!bpf_peers_present(bus->ifp->if_bpf))
-{
-{
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfertap, return);
-}
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfertap, return);
 		return;
-}
 
 	totlen = usbpf_xfer_precompute_size(xfer, type);
 
 	if (type == USBPF_XFERTAP_SUBMIT)
-{
-{
 		nframes = xfer->nframes;
-}
-}
 	else
 		nframes = xfer->aframes;
 
@@ -706,8 +422,6 @@ usbpf_xfertap(struct usb_xfer *xfer, int type)
 	buf = ptr = malloc(totlen, M_TEMP, M_NOWAIT);
 	if (buf == NULL) {
 		device_printf(bus->parent, "usbpf: Out of memory\n");
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfertap, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfertap, return);
 		return;
 	}
 
@@ -720,11 +434,7 @@ usbpf_xfertap(struct usb_xfer *xfer, int type)
 	up->up_busunit = htole32(temp);
 	up->up_address = xfer->xroot->udev->device_index;
 	if (xfer->flags_int.usb_mode == USB_MODE_DEVICE)
-{
-{
 		up->up_mode = USBPF_MODE_DEVICE;
-}
-}
 	else
 		up->up_mode = USBPF_MODE_HOST;
 	up->up_type = type;
@@ -775,22 +485,14 @@ usbpf_xfertap(struct usb_xfer *xfer, int type)
 		/* check if we need to copy any data */
 		if (isread) {
 			if (type == USBPF_XFERTAP_SUBMIT)
-{
-{
 				length = 0;
-}
-}
 			else {
 				uf->flags |= htole32(
 				    USBPF_FRAMEFLAG_DATA_FOLLOWS);
 			}
 		} else {
 			if (type != USBPF_XFERTAP_SUBMIT)
-{
-{
 				length = 0;
-}
-}
 			else {
 				uf->flags |= htole32(
 				    USBPF_FRAMEFLAG_DATA_FOLLOWS);
@@ -799,11 +501,7 @@ usbpf_xfertap(struct usb_xfer *xfer, int type)
 
 		/* check if data is read direction */
 		if (isread)
-{
-{
 			uf->flags |= htole32(USBPF_FRAMEFLAG_READ);
-}
-}
 
 		/* copy USB data, if any */
 		if (length != 0) {
@@ -816,11 +514,7 @@ usbpf_xfertap(struct usb_xfer *xfer, int type)
 
 			/* zero pad */
 			if (temp != length)
-{
-{
 				memset(ptr + length, 0, temp - length);
-}
-}
 
 			ptr += temp;
 		}
@@ -835,6 +529,4 @@ usbpf_xfertap(struct usb_xfer *xfer, int type)
 	bpf_tap(bus->ifp->if_bpf, buf, totlen);
 
 	free(buf, M_TEMP);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfertap, return);
-	SDT_PROBE0(tpw, kernel, usb_pf_usbpf_xfertap, return);
 }

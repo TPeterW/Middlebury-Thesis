@@ -54,8 +54,6 @@
 #include <dev/usb/usb_device.h>
 #include <dev/usb/usb_dynamic.h>
 #include <dev/usb/usb_request.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
 #endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 /* function prototypes */
@@ -82,72 +80,46 @@ devclass_t usb_devclass_ptr;
 static usb_error_t
 usb_temp_setup_by_index_w(struct usb_device *udev, uint16_t index)
 {
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_temp_setup_by_index_w, entry);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_temp_setup_by_index_w, entry);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_temp_setup_by_index_w, return);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_temp_setup_by_index_w, return);
 	return (USB_ERR_INVAL);
 }
 
 static uint8_t
 usb_test_quirk_w(const struct usbd_lookup_info *info, uint16_t quirk)
 {
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_test_quirk_w, entry);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_test_quirk_w, entry);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_test_quirk_w, return);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_test_quirk_w, return);
 	return (0);			/* no match */
 }
 
 static int
 usb_quirk_ioctl_w(unsigned long cmd, caddr_t data, int fflag, struct thread *td)
 {
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_quirk_ioctl_w, entry);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_quirk_ioctl_w, entry);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_quirk_ioctl_w, return);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_quirk_ioctl_w, return);
 	return (ENOIOCTL);
 }
 
 static usb_error_t
 usb_temp_get_desc_w(struct usb_device *udev, struct usb_device_request *req, const void **pPtr, uint16_t *pLength)
 {
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_temp_get_desc_w, entry);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_temp_get_desc_w, entry);
 	/* stall */
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_temp_get_desc_w, return);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_temp_get_desc_w, return);
 	return (USB_ERR_STALLED);
 }
 
 static void
 usb_temp_unsetup_w(struct usb_device *udev)
 {
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_temp_unsetup_w, entry);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_temp_unsetup_w, entry);
 	usbd_free_config_desc(udev, udev->usb_template_ptr);
 	udev->usb_template_ptr = NULL;
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_temp_unsetup_w, return);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_temp_unsetup_w, return);
 }
 
 #if USB_HAVE_COMPAT_LINUX
 static void
 usb_linux_free_device_w(struct usb_device *udev)
 {
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_linux_free_device_w, entry);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_linux_free_device_w, entry);
 	/* NOP */
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_linux_free_device_w, return);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_linux_free_device_w, return);
 }
 #endif
 
 void
 usb_quirk_unload(void *arg)
 {
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_quirk_unload, entry);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_quirk_unload, entry);
 	/* reset function pointers */
 
 	usb_test_quirk_p = &usb_test_quirk_w;
@@ -158,15 +130,11 @@ usb_quirk_unload(void *arg)
 	/* XXX this is a tradeoff */
 
 	pause("WAIT", hz);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_quirk_unload, return);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_quirk_unload, return);
 }
 
 void
 usb_temp_unload(void *arg)
 {
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_temp_unload, entry);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_temp_unload, entry);
 	/* reset function pointers */
 
 	usb_temp_get_desc_p = &usb_temp_get_desc_w;
@@ -178,15 +146,11 @@ usb_temp_unload(void *arg)
 	/* XXX this is a tradeoff */
 
 	pause("WAIT", hz);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_temp_unload, return);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_temp_unload, return);
 }
 
 void
 usb_bus_unload(void *arg)
 {
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_bus_unload, entry);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_bus_unload, entry);
 	/* reset function pointers */
 
 	usb_devclass_ptr = NULL;
@@ -196,16 +160,12 @@ usb_bus_unload(void *arg)
 	/* XXX this is a tradeoff */
 
 	pause("WAIT", hz);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_bus_unload, return);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_bus_unload, return);
 }
 
 #if USB_HAVE_COMPAT_LINUX
 void
 usb_linux_unload(void *arg)
 {
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_linux_unload, entry);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_linux_unload, entry);
 	/* reset function pointers */
 
 	usb_linux_free_device_p = &usb_linux_free_device_w;
@@ -215,7 +175,5 @@ usb_linux_unload(void *arg)
 	/* XXX this is a tradeoff */
 
 	pause("WAIT", hz);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_linux_unload, return);
-	SDT_PROBE0(tpw, kernel, usb_dynamic_usb_linux_unload, return);
 }
 #endif
