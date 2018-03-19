@@ -2647,15 +2647,17 @@ usb_dma_delay_done_cb(struct usb_xfer *xfer)
 void
 usbd_transfer_dequeue(struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_dequeue, entry);
 	struct usb_xfer_queue *pq;
 
 	pq = xfer->wait_queue;
+	
+	SDT_PROBE2(tpw, kernel, usb_transfer_usbd_transfer_dequeue, entry, pq, xfer);
+	
 	if (pq) {
 		TAILQ_REMOVE(&pq->head, xfer, wait_entry);
 		xfer->wait_queue = NULL;
 	}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_dequeue, return);
+	SDT_PROBE2(tpw, kernel, usb_transfer_usbd_transfer_dequeue, return, pq, xfer);
 }
 
 /*------------------------------------------------------------------------*
@@ -2669,7 +2671,7 @@ usbd_transfer_dequeue(struct usb_xfer *xfer)
 void
 usbd_transfer_enqueue(struct usb_xfer_queue *pq, struct usb_xfer *xfer)
 {
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_enqueue, entry);
+	SDT_PROBE2(tpw, kernel, usb_transfer_usbd_transfer_enqueue, entry, pq, xfer);
 	/*
 	 * Insert the USB transfer into the queue, if it is not
 	 * already on a USB transfer queue:
@@ -2678,7 +2680,7 @@ usbd_transfer_enqueue(struct usb_xfer_queue *pq, struct usb_xfer *xfer)
 		xfer->wait_queue = pq;
 		TAILQ_INSERT_TAIL(&pq->head, xfer, wait_entry);
 	}
-	SDT_PROBE0(tpw, kernel, usb_transfer_usbd_transfer_enqueue, return);
+	SDT_PROBE2(tpw, kernel, usb_transfer_usbd_transfer_enqueue, return, pq, xfer);
 }
 
 /*------------------------------------------------------------------------*
