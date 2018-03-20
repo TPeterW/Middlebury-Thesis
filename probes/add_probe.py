@@ -40,7 +40,7 @@ def main():
 		with open(os.path.join(path, source_file), 'r') as cfile:
 			inter_cfile = []
 			for row in cfile:
-				if '/*' in row and row.endswith('*/'):
+				if '/*' in row and row.strip().endswith('*/'):
 					row = row[:row.index('/*')] + '\n'
 
 				inter_cfile.append(row)
