@@ -42,7 +42,9 @@ def main():
 			for row in cfile:
 				inter_cfile.append(row)
 				if wait_one_line:
-					if row.strip().endswith(')'):
+					if row.strip().endswith('{'):
+						wait_one_line = False
+					elif row.strip().endswith(')'):
 						inter_cfile.append('{\n')
 					elif ';' in row.strip():
 						inter_cfile.append('}\n')
