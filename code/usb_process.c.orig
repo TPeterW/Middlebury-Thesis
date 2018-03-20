@@ -1,4 +1,4 @@
-
+/* $FreeBSD: releng/11.1/sys/dev/usb/usb_process.c 311798 2017-01-09 17:12:15Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -58,8 +58,7 @@
 #include <sys/proc.h>
 #include <sys/kthread.h>
 #include <sys/sched.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
-#endif			
+#endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 #if (__FreeBSD_version < 700000)
 #define	thread_lock(td) mtx_lock_spin(&sched_lock)
@@ -103,15 +102,14 @@ SYSCTL_INT(_hw_usb_proc, OID_AUTO, debug, CTLFLAG_RWTUN, &usb_proc_debug, 0,
 static void
 usb_process(void *arg)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_process, entry);
 	struct usb_process *up = arg;
 	struct usb_proc_msg *pm;
 	struct thread *td;
 
-	
+	/* in case of attach error, check for suspended */
 	USB_THREAD_SUSPEND_CHECK();
 
-	
+	/* adjust priority */
 	td = curthread;
 	thread_lock(td);
 	sched_prio(td, up->up_prio);
@@ -124,9 +122,7 @@ usb_process(void *arg)
 	while (1) {
 
 		if (up->up_gone)
-{
 			break;
-}
 
 		/*
 		 * NOTE to reimplementors: dequeueing a command from the
@@ -180,7 +176,7 @@ usb_process(void *arg)
 			(pm->pm_callback) (pm);
 
 			if (pm == TAILQ_FIRST(&up->up_qhead)) {
-				
+				/* nothing changed */
 				TAILQ_REMOVE(&up->up_qhead, pm, pm_qentry);
 				pm->pm_qentry.tqe_prev = NULL;
 			}
@@ -188,7 +184,7 @@ usb_process(void *arg)
 
 			continue;
 		}
-		
+		/* end if messages - check if anyone is waiting for sync */
 		if (up->up_dsleep) {
 			up->up_dsleep = 0;
 			cv_broadcast(&up->up_drain);
@@ -201,15 +197,12 @@ usb_process(void *arg)
 	cv_signal(&up->up_cv);
 	mtx_unlock(up->up_mtx);
 #if (__FreeBSD_version >= 800000)
-	
+	/* Clear the proc pointer if this is the last thread. */
 	if (--usb_pcount == 0)
-{
 		usbproc = NULL;
-}
 #endif
 
 	USB_THREAD_EXIT(0);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_process, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -229,7 +222,6 @@ int
 usb_proc_create(struct usb_process *up, struct mtx *p_mtx,
     const char *pmesg, uint8_t prio)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_create, entry);
 	up->up_mtx = p_mtx;
 	up->up_prio = prio;
 
@@ -247,12 +239,10 @@ usb_proc_create(struct usb_process *up, struct mtx *p_mtx,
 #if (__FreeBSD_version >= 800000)
 	usb_pcount++;
 #endif
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_create, return);
 	return (0);
 
 error:
 	usb_proc_free(up);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_create, return);
 	return (ENOMEM);
 }
 
@@ -268,22 +258,17 @@ error:
 void
 usb_proc_free(struct usb_process *up)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_free, entry);
-	
+	/* check if not initialised */
 	if (up->up_mtx == NULL)
-{
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_free, return);
 		return;
-}
 
 	usb_proc_drain(up);
 
 	cv_destroy(&up->up_cv);
 	cv_destroy(&up->up_drain);
 
-	
+	/* make sure that we do not enter here again */
 	up->up_mtx = NULL;
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_free, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -300,19 +285,15 @@ usb_proc_free(struct usb_process *up)
 void   *
 usb_proc_msignal(struct usb_process *up, void *_pm0, void *_pm1)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_msignal, entry);
 	struct usb_proc_msg *pm0 = _pm0;
 	struct usb_proc_msg *pm1 = _pm1;
 	struct usb_proc_msg *pm2;
 	usb_size_t d;
 	uint8_t t;
 
-	
+	/* check if gone, return dummy value */
 	if (up->up_gone)
-{
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_msignal, return);
 		return (_pm0);
-}
 
 	mtx_assert(up->up_mtx, MA_OWNED);
 
@@ -331,13 +312,13 @@ usb_proc_msignal(struct usb_process *up, void *_pm0, void *_pm1)
 		 */
 		pm2 = pm0;
 	} else if (t == 1) {
-		
+		/* Check if we need to increment the message number. */
 		if (pm0->pm_num == up->up_msg_num) {
 			up->up_msg_num++;
 		}
 		pm2 = pm1;
 	} else if (t == 2) {
-		
+		/* Check if we need to increment the message number. */
 		if (pm1->pm_num == up->up_msg_num) {
 			up->up_msg_num++;
 		}
@@ -349,7 +330,7 @@ usb_proc_msignal(struct usb_process *up, void *_pm0, void *_pm1)
 		 */
 		d = (pm1->pm_num - pm0->pm_num);
 
-		
+		/* Check sign after subtraction */
 		if (d & 0x80000000) {
 			pm2 = pm0;
 		} else {
@@ -358,23 +339,22 @@ usb_proc_msignal(struct usb_process *up, void *_pm0, void *_pm1)
 
 		TAILQ_REMOVE(&up->up_qhead, pm2, pm_qentry);
 	} else {
-		pm2 = NULL;		
+		pm2 = NULL;		/* panic - should not happen */
 	}
 
 	DPRINTF(" t=%u, num=%u\n", t, up->up_msg_num);
 
-	
+	/* Put message last on queue */
 
 	pm2->pm_num = up->up_msg_num;
 	TAILQ_INSERT_TAIL(&up->up_qhead, pm2, pm_qentry);
 
-	
+	/* Check if we need to wakeup the USB process. */
 
 	if (up->up_msleep) {
-		up->up_msleep = 0;	
+		up->up_msleep = 0;	/* save "cv_signal()" calls */
 		cv_signal(&up->up_cv);
 	}
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_msignal, return);
 	return (pm2);
 }
 
@@ -388,22 +368,15 @@ usb_proc_msignal(struct usb_process *up, void *_pm0, void *_pm1)
 uint8_t
 usb_proc_is_gone(struct usb_process *up)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_is_gone, entry);
 	if (up->up_gone)
-{
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_is_gone, return);
 		return (1);
-}
 
 	/*
 	 * Allow calls when up_mtx is NULL, before the USB process
 	 * structure is initialised.
 	 */
 	if (up->up_mtx != NULL)
-{
 		mtx_assert(up->up_mtx, MA_OWNED);
-}
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_is_gone, return);
 	return (0);
 }
 
@@ -417,21 +390,17 @@ usb_proc_is_gone(struct usb_process *up)
 void
 usb_proc_mwait(struct usb_process *up, void *_pm0, void *_pm1)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_mwait, entry);
 	struct usb_proc_msg *pm0 = _pm0;
 	struct usb_proc_msg *pm1 = _pm1;
 
-	
+	/* check if gone */
 	if (up->up_gone)
-{
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_mwait, return);
 		return;
-}
 
 	mtx_assert(up->up_mtx, MA_OWNED);
 
 	if (up->up_curtd == curthread) {
-		
+		/* Just remove the messages from the queue. */
 		if (pm0->pm_qentry.tqe_prev) {
 			TAILQ_REMOVE(&up->up_qhead, pm0, pm_qentry);
 			pm0->pm_qentry.tqe_prev = NULL;
@@ -443,15 +412,12 @@ usb_proc_mwait(struct usb_process *up, void *_pm0, void *_pm1)
 	} else
 		while (pm0->pm_qentry.tqe_prev ||
 		    pm1->pm_qentry.tqe_prev) {
-			
+			/* check if config thread is gone */
 			if (up->up_gone)
-{
 				break;
-}
 			up->up_dsleep = 1;
 			cv_wait(&up->up_drain, up->up_mtx);
 		}
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_mwait, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -466,28 +432,22 @@ usb_proc_mwait(struct usb_process *up, void *_pm0, void *_pm1)
 void
 usb_proc_drain(struct usb_process *up)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_drain, entry);
-	
+	/* check if not initialised */
 	if (up->up_mtx == NULL)
-{
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_drain, return);
 		return;
-}
-	
+	/* handle special case with Giant */
 	if (up->up_mtx != &Giant)
-{
 		mtx_assert(up->up_mtx, MA_NOTOWNED);
-}
 
 	mtx_lock(up->up_mtx);
 
-	
+	/* Set the gone flag */
 
 	up->up_gone = 1;
 
 	while (up->up_ptr) {
 
-		
+		/* Check if we need to wakeup the USB process */
 
 		if (up->up_msleep || up->up_csleep) {
 			up->up_msleep = 0;
@@ -495,7 +455,7 @@ usb_proc_drain(struct usb_process *up)
 			cv_signal(&up->up_cv);
 		}
 #ifndef EARLY_AP_STARTUP
-		
+		/* Check if we are still cold booted */
 		if (cold) {
 			USB_THREAD_SUSPEND(up->up_ptr);
 			printf("WARNING: A USB process has "
@@ -505,7 +465,7 @@ usb_proc_drain(struct usb_process *up)
 #endif
 		cv_wait(&up->up_cv, up->up_mtx);
 	}
-	
+	/* Check if someone is waiting - should not happen */
 
 	if (up->up_dsleep) {
 		up->up_dsleep = 0;
@@ -514,7 +474,6 @@ usb_proc_drain(struct usb_process *up)
 		    "for USB process drain!\n");
 	}
 	mtx_unlock(up->up_mtx);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_drain, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -528,27 +487,19 @@ usb_proc_drain(struct usb_process *up)
 void
 usb_proc_rewakeup(struct usb_process *up)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_rewakeup, entry);
-	
+	/* check if not initialised */
 	if (up->up_mtx == NULL)
-{
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_rewakeup, return);
 		return;
-}
-	
+	/* check if gone */
 	if (up->up_gone)
-{
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_rewakeup, return);
 		return;
-}
 
 	mtx_assert(up->up_mtx, MA_OWNED);
 
 	if (up->up_msleep == 0) {
-		
+		/* re-wakeup */
 		cv_signal(&up->up_cv);
 	}
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_rewakeup, return);
 }
 
 /*------------------------------------------------------------------------*
@@ -560,7 +511,5 @@ usb_proc_rewakeup(struct usb_process *up)
 int
 usb_proc_is_called_from(struct usb_process *up)
 {
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_is_called_from, entry);
-	SDT_PROBE0(tpw, kernel, usb_process_usb_proc_is_called_from, return);
 	return (up->up_curtd == curthread);
 }

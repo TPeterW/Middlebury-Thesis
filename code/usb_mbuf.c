@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.1/sys/dev/usb/usb_mbuf.c 246122 2013-01-30 15:26:04Z hselasky $ */
+
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -50,7 +50,8 @@
 #include <dev/usb/usbdi.h>
 #include <dev/usb/usb_dev.h>
 #include <dev/usb/usb_mbuf.h>
-#endif			/* USB_GLOBAL_INCLUDE_FILE */
+#include <dev/usb/usb_tpw_probe_declare.h>
+#endif			
 
 /*------------------------------------------------------------------------*
  *      usb_alloc_mbufs - allocate mbufs to an usbd interface queue
@@ -63,12 +64,13 @@ void   *
 usb_alloc_mbufs(struct malloc_type *type, struct usb_ifqueue *ifq,
     usb_size_t block_size, uint16_t nblocks)
 {
+	SDT_PROBE0(tpw, kernel, usb_mbuf_usb_alloc_mbufs, entry);
 	struct usb_mbuf *m_ptr;
 	uint8_t *data_ptr;
 	void *free_ptr = NULL;
 	usb_size_t alloc_size;
 
-	/* align data */
+	
 	block_size += ((-block_size) & (USB_HOST_ALIGN - 1));
 
 	if (nblocks && block_size) {
@@ -98,5 +100,6 @@ usb_alloc_mbufs(struct malloc_type *type, struct usb_ifqueue *ifq,
 		}
 	}
 done:
+	SDT_PROBE0(tpw, kernel, usb_mbuf_usb_alloc_mbufs, return);
 	return (free_ptr);
 }

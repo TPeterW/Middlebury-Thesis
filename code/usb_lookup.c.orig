@@ -1,4 +1,4 @@
-
+/* $FreeBSD: releng/11.1/sys/dev/usb/usb_lookup.c 292865 2015-12-29 11:53:13Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -50,8 +50,7 @@
 
 #include <dev/usb/usb.h>
 #include <dev/usb/usbdi.h>
-#include <dev/usb/usb_tpw_probe_declare.h>
-#endif			
+#endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 /*------------------------------------------------------------------------*
  *	usbd_lookup_id_by_info
@@ -71,7 +70,6 @@ const struct usb_device_id *
 usbd_lookup_id_by_info(const struct usb_device_id *id, usb_size_t sizeof_id,
     const struct usbd_lookup_info *info)
 {
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_info, entry);
 	const struct usb_device_id *id_end;
 
 	if (id == NULL) {
@@ -125,13 +123,11 @@ usbd_lookup_id_by_info(const struct usb_device_id *id, usb_size_t sizeof_id,
 		    (id->bInterfaceProtocol != info->bInterfaceProtocol)) {
 			continue;
 		}
-		
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_info, return);
+		/* We found a match! */
 		return (id);
 	}
 
 done:
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_info, return);
 	return (NULL);
 }
 
@@ -146,15 +142,12 @@ int
 usbd_lookup_id_by_uaa(const struct usb_device_id *id, usb_size_t sizeof_id,
     struct usb_attach_arg *uaa)
 {
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_uaa, entry);
 	id = usbd_lookup_id_by_info(id, sizeof_id, &uaa->info);
 	if (id) {
-		
+		/* copy driver info */
 		uaa->driver_info = id->driver_info;
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_uaa, return);
 		return (0);
 	}
-	SDT_PROBE0(tpw, kernel, usb_lookup_usbd_lookup_id_by_uaa, return);
 	return (ENXIO);
 }
 
@@ -170,13 +163,13 @@ usbd_lookup_id_by_uaa(const struct usb_device_id *id, usb_size_t sizeof_id,
 #if defined(KLD_MODULE) && (USB_HAVE_ID_SECTION != 0)
 static const char __section("bus_autoconf_format") __used usb_id_format[] = {
 
-	
+	/* Declare that three different sections use the same format */
 
 	"usb_host_id{256,:}"
 	"usb_device_id{256,:}"
 	"usb_dual_id{256,:}"
 
-	
+	/* List size of fields in the usb_device_id structure */
 
 	"mf_vendor{" U16_XOR ",1}"
 	"mf_product{" U16_XOR ",1}"

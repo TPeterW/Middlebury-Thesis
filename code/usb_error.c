@@ -1,4 +1,4 @@
-/* $FreeBSD: releng/11.1/sys/dev/usb/usb_error.c 246122 2013-01-30 15:26:04Z hselasky $ */
+
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -48,7 +48,8 @@
 
 #include <dev/usb/usb.h>
 #include <dev/usb/usbdi.h>
-#endif			/* USB_GLOBAL_INCLUDE_FILE */
+#include <dev/usb/usb_tpw_probe_declare.h>
+#endif			
 
 static const char* usb_errstr_table[USB_ERR_MAX] = {
 	[USB_ERR_NORMAL_COMPLETION]	= "USB_ERR_NORMAL_COMPLETION",
@@ -90,5 +91,7 @@ static const char* usb_errstr_table[USB_ERR_MAX] = {
 const char *
 usbd_errstr(usb_error_t err)
 {
+	SDT_PROBE0(tpw, kernel, usb_error_usbd_errstr, entry);
+	SDT_PROBE0(tpw, kernel, usb_error_usbd_errstr, return);
 	return (err < USB_ERR_MAX ? usb_errstr_table[err] : "USB_ERR_UNKNOWN");
 }

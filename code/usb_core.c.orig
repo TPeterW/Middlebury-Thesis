@@ -1,4 +1,4 @@
-
+/* $FreeBSD: releng/11.1/sys/dev/usb/usb_core.c 280168 2015-03-17 11:07:59Z hselasky $ */
 /*-
  * Copyright (c) 2008 Hans Petter Selasky. All rights reserved.
  *
@@ -54,12 +54,11 @@
 
 #include <dev/usb/usb.h>
 #include <dev/usb/usbdi.h>
-#include <dev/usb/usb_tpw_probe.h>
-#endif			
+#endif			/* USB_GLOBAL_INCLUDE_FILE */
 
 const struct usb_string_lang usb_string_lang_en = {
 	sizeof(usb_string_lang_en), UDESC_STRING,
-	{ 0x09, 0x04 } 
+	{ 0x09, 0x04 } /* American English */
 };
 
 MALLOC_DEFINE(M_USB, "USB", "USB");
