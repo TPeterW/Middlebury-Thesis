@@ -71,7 +71,7 @@ def main():
 				line_num += 1
 				old_cfile.append(row)
 
-				if '#endif' in row and 'USB_GLOBAL_INCLUDE_FILE' in row:
+				if '#endif' in row and '#include' in old_cfile[-2]:
 					new_cfile.append('#include <dev/usb/usb_tpw_probe_declare.h>\n')
 
 				if row.strip().endswith('{'):
