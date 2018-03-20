@@ -40,6 +40,9 @@ def main():
 		with open(os.path.join(path, source_file), 'r') as cfile:
 			inter_cfile = []
 			for row in cfile:
+				if '/*' in row:
+					row = row[:row.index('/*')] + '\n'
+
 				inter_cfile.append(row)
 				if wait_one_line:
 					if row.strip().endswith('{'):
