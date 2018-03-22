@@ -17,43 +17,64 @@ def main():
 	
 	lines = lines[2:-1]
 
-	# current_func_on_threads = {}
-	current_func = []
-	current_process = -1
-	indent_level = 0
-	for entry in lines:
-		splitted = entry.split()
+	with open(filename[:-4] + '.chain', 'w') as outputfile:
+		current_func = []
+		current_process = -1
+		indent_level = 0
 
-		funcname = splitted[5]
-		pid = int(splitted[4])
-		provider = splitted[3]
-		functype = splitted[2].split(':')[1]
+		queue_dict = {}
+		payload_dict = {}
 
-		if functype == 'entry':
-			if current_process != pid:
-				for i in range(indent_level):
-					print('\t', end='')
-				print('====================Switched to process %s====================' % (pid))
-				current_process = pid
-			for i in range(indent_level):
-				print('\t', end='')
-			print('-> %s\t%s' % (funcname, pid))
-			indent_level += 1
-			current_func.append(funcname)
-		else:
-			if len(current_func) <= 0:
-				continue
-			if current_func[-1] == funcname:
+		for entry in lines:
+			splitted = entry.split()
+
+			funcname = splitted[5]
+			pid = int(splitted[4])
+			provider = splitted[3]
+			functype = splitted[2].split(':')[1]
+
+			if functype == 'entry':
 				if current_process != pid:
 					for i in range(indent_level):
-						print('\t', end='')
-					print('====================Switched to process %s====================' % (pid))
+						outputfile.write('\t')
+					outputfile.write('====================Switched to process %s====================\n' % (pid))
 					current_process = pid
-				indent_level -= 1
 				for i in range(indent_level):
-					print('\t', end='')
-				print('<- %s\t%s' % (funcname, pid))
-				current_func = current_func[:-1]
+					outputfile.write('\t')
+
+				if ('enqueue' in funcname or 'dequeue' in funcname) and len(splitted) > 6:
+					payload_id = payload_dict.get(splitted[-2], None)
+					if payload_id == None:
+						payload_id = len(payload_dict)
+						payload_dict[splitted[-2]] = payload_id
+					queue_id = queue_dict.get(splitted[-1], None)
+					if queue_id == None:
+						queue_id = len(queue_dict)
+						queue_dict[splitted[-1]] = queue_id
+					outputfile.write('********************%s Payload %s at Queue %s********************\n' % ('Adding' if 'enqueue' in funcname else 'Popping', payload_id, queue_id))
+					continue
+
+				outputfile.write('-> %s\t%s\n' % (funcname, pid))
+				indent_level += 1
+				current_func.append(funcname)
+			else:
+				if ('enqueue' in funcname or 'dequeue' in funcname) and len(splitted) > 6:
+					continue
+
+				if len(current_func) <= 0:
+					continue
+				if current_func[-1] == funcname:
+					if current_process != pid:
+						for i in range(indent_level):
+							outputfile.write('\t')
+						outputfile.write('====================Switched to process %s====================\n' % (pid))
+						current_process = pid
+					indent_level -= 1
+					for i in range(indent_level):
+						outputfile.write('\t')
+
+					outputfile.write('<- %s\t%s\n' % (funcname, pid))
+					current_func = current_func[:-1]
 
 
 if __name__ == '__main__':
