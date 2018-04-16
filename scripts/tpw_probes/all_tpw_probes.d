@@ -8,7 +8,7 @@ tpw:kernel:usb_transfer_usbd_transfer_dequeue:entry,
 tpw:kernel:usb_transfer_usbd_transfer_enqueue:return,
 tpw:kernel:usb_transfer_usbd_transfer_dequeue:return
 {
-	printf("%s\t%d\t%s\t%p\t%p\t", execname, pid, probefunc, arg0, arg1, arg2);
+	printf("%s\t%d\t%s\t%p\t%p\t%d\t", execname, pid, probefunc, arg0, arg1, arg2);
 }
 
 tpw:kernel::
