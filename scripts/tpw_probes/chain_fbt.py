@@ -42,23 +42,24 @@ def main():
 				for i in range(indent_level):
 					outputfile.write('\t')
 
-				if ('enqueue' in funcname or 'dequeue' in funcname) and len(splitted) > 6:
-					payload_id = payload_dict.get(splitted[-2], None)
+				if ('enqueue' in funcname or 'dequeue' in funcname) and len(splitted) > 7:
+					payload_id = payload_dict.get(splitted[-3], None)
 					if payload_id == None:
 						payload_id = len(payload_dict)
-						payload_dict[splitted[-2]] = payload_id
-					queue_id = queue_dict.get(splitted[-1], None)
+						payload_dict[splitted[-3]] = payload_id
+					queue_id = queue_dict.get(splitted[-2], None)
 					if queue_id == None:
 						queue_id = len(queue_dict)
-						queue_dict[splitted[-1]] = queue_id
-					outputfile.write('********************%s Payload %s at Queue %s********************\n' % ('Adding' if 'enqueue' in funcname else 'Popping', payload_id, queue_id))
+						queue_dict[splitted[-2]] = queue_id
+					device_id = splitted[-1]
+					outputfile.write('********************%s Payload %s from Device %s at Queue %s********************\n' % ('Adding' if 'enqueue' in funcname else 'Popping', payload_id, device_id, queue_id))
 					continue
 
 				outputfile.write('-> %s\t%s\n' % (funcname, pid))
 				indent_level += 1
 				current_func.append(funcname)
 			else:
-				if ('enqueue' in funcname or 'dequeue' in funcname) and len(splitted) > 6:
+				if ('enqueue' in funcname or 'dequeue' in funcname) and len(splitted) > 7:
 					continue
 
 				if len(current_func) <= 0:
