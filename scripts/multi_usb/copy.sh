@@ -1,7 +1,5 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 # Copies a file into both usb at the same time
-
-sudo -s
 
 file=$1
 usb1=$2
