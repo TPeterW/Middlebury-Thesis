@@ -13,5 +13,3 @@ cp $file $usb2 &
 wait %2 %3
 
 kill %1
-
-exit
