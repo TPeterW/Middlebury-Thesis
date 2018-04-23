@@ -7,20 +7,23 @@ def main():
 	if len(sys.argv) < 2:
 		print('Usage: ./chain_fbt.py dtrace_output.txt')
 		exit(1)
-	
+
 	filename = sys.argv[1]
 	lines = []
 	with open(filename, 'r') as dtrace_out:
 		for row in dtrace_out:
 			if len(row.strip()) != 0:
 				lines.append(row.strip())
-	
+
 	lines = lines[2:-1]
 
 	with open(filename[:-4] + '.chain', 'w') as outputfile:
-		current_func = []
 		current_process = -1
-		indent_level = 0
+
+		current_func = []
+
+#         current_funcs = {}
+		indent_levels = {}
 
 		queue_dict = {}
 		payload_dict = {}
@@ -35,11 +38,11 @@ def main():
 
 			if functype == 'entry':
 				if current_process != pid:
-					for i in range(indent_level):
+					for i in range(indent_levels.get(pid, 0)):
 						outputfile.write('\t')
 					outputfile.write('====================Switched to process %s====================\n' % (pid))
 					current_process = pid
-				for i in range(indent_level):
+				for i in range(indent_levels.get(pid, 0)):
 					outputfile.write('\t')
 
 				if ('enqueue' in funcname or 'dequeue' in funcname) and len(splitted) > 7:
@@ -56,25 +59,29 @@ def main():
 					continue
 
 				outputfile.write('-> %s\t%s\n' % (funcname, pid))
-				indent_level += 1
+				indent_levels[pid] = indent_levels.get(pid, 0) + 1
+#                 current_funcs.setdefault(pid, []).append(funcname)
 				current_func.append(funcname)
 			else:
 				if ('enqueue' in funcname or 'dequeue' in funcname) and len(splitted) > 7:
 					continue
 
+#                 if len(current_funcs[pid]) <= 0:
 				if len(current_func) <= 0:
 					continue
+#                 if current_funcs[pid][-1] == funcname:
 				if current_func[-1] == funcname:
 					if current_process != pid:
-						for i in range(indent_level):
+						for i in range(indent_levels.get(pid, 0)):
 							outputfile.write('\t')
 						outputfile.write('====================Switched to process %s====================\n' % (pid))
 						current_process = pid
-					indent_level -= 1
-					for i in range(indent_level):
+					indent_levels[pid] = indent_levels.get(pid) - 1
+					for i in range(indent_levels.get(pid)):
 						outputfile.write('\t')
 
 					outputfile.write('<- %s\t%s\n' % (funcname, pid))
+#                     current_funcs[pid] = current_funcs[pid][:-1]
 					current_func = current_func[:-1]
 
 
