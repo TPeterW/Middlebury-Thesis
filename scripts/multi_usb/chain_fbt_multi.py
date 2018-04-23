@@ -20,9 +20,9 @@ def main():
 	with open(filename[:-4] + '.chain', 'w') as outputfile:
 		current_process = -1
 
-		current_func = []
+		# current_func = []
 
-#         current_funcs = {}
+		current_funcs = {}
 		indent_levels = {}
 
 		queue_dict = {}
@@ -60,17 +60,17 @@ def main():
 
 				outputfile.write('-> %s\t%s\n' % (funcname, pid))
 				indent_levels[pid] = indent_levels.get(pid, 0) + 1
-#                 current_funcs.setdefault(pid, []).append(funcname)
-				current_func.append(funcname)
+				current_funcs.setdefault(pid, []).append(funcname)
+				# current_func.append(funcname)
 			else:
 				if ('enqueue' in funcname or 'dequeue' in funcname) and len(splitted) > 7:
 					continue
 
-#                 if len(current_funcs[pid]) <= 0:
-				if len(current_func) <= 0:
+				if len(current_funcs[pid]) <= 0:
+				# if len(current_func) <= 0:
 					continue
-#                 if current_funcs[pid][-1] == funcname:
-				if current_func[-1] == funcname:
+				if current_funcs[pid][-1] == funcname:
+				# if current_func[-1] == funcname:
 					if current_process != pid:
 						for i in range(indent_levels.get(pid, 0)):
 							outputfile.write('\t')
@@ -81,8 +81,8 @@ def main():
 						outputfile.write('\t')
 
 					outputfile.write('<- %s\t%s\n' % (funcname, pid))
-#                     current_funcs[pid] = current_funcs[pid][:-1]
-					current_func = current_func[:-1]
+					current_funcs[pid] = current_funcs[pid][:-1]
+					# current_func = current_func[:-1]
 
 
 if __name__ == '__main__':
