@@ -19,6 +19,7 @@ def main():
 
 	with open(filename[:-4] + '.chain', 'w') as outputfile:
 		current_process = -1
+		current_device = -1
 
 		# current_func = []
 
@@ -56,9 +57,11 @@ def main():
 						queue_dict[splitted[-2]] = queue_id
 					device_id = int(splitted[-1]) % 128
 					outputfile.write('********************%s Payload %s from Device %s at Queue %s********************\n' % ('Adding' if 'enqueue' in funcname else 'Popping', payload_id, device_id, queue_id))
+					if 'dequeue' in funcname:
+						current_device = device_id
 					continue
 
-				outputfile.write('-> %s\t%s\n' % (funcname, pid))
+				outputfile.write('-> %s\t%s\t%s\n' % (funcname, pid, current_device))
 				indent_levels[pid] = indent_levels.get(pid, 0) + 1
 				current_funcs.setdefault(pid, []).append(funcname)
 				# current_func.append(funcname)
@@ -80,7 +83,7 @@ def main():
 					for i in range(indent_levels.get(pid)):
 						outputfile.write('\t')
 
-					outputfile.write('<- %s\t%s\n' % (funcname, pid))
+					outputfile.write('<- %s\t%s\t%s\n' % (funcname, pid, current_device))
 					current_funcs[pid] = current_funcs[pid][:-1]
 					# current_func = current_func[:-1]
 
