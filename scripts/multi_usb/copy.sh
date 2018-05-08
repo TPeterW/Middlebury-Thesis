@@ -6,7 +6,7 @@ usb1=$2
 usb2=$3
 script=$4
 
-sudo dtrace -s $script > copy.txt &
+dtrace -s $script > copy.txt &
 
 cp $file $usb1 &
 cp $file $usb2 &
