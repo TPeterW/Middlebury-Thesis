@@ -50,15 +50,16 @@ def main():
 					payload_id = payload_dict.get(splitted[-3], None)
 					if payload_id == None:
 						payload_id = len(payload_dict)
-						payload_dict[splitted[-3]] = payload_id
-					queue_id = queue_dict.get(splitted[-2], None)
+						payload_dict[splitted[-4]] = payload_id
+					queue_id = queue_dict.get(splitted[-3], None)
 					if queue_id == None:
 						queue_id = len(queue_dict)
-						queue_dict[splitted[-2]] = queue_id
-					device_id = int(splitted[-1]) % 128
+						queue_dict[splitted[-3]] = queue_id
+					device_id = int(splitted[-2]) % 128
+					device_addr = int(splitted[-1]) % 128
 					outputfile.write('********************%s Payload %s from Device %s at Queue %s********************\n' % ('Adding' if 'enqueue' in funcname else 'Popping', payload_id, device_id, queue_id))
 					if 'dequeue' in funcname:
-						current_device = device_id
+						current_device = str(device_id) + '-' + str(device_addr)
 					continue
 
 				outputfile.write('-> %s\t%s\t%s\n' % (funcname, pid, current_device))
