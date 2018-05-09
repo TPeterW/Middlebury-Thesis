@@ -295,7 +295,7 @@ SDT_PROVIDER_DEFINE(tpw);
 	SDT_PROBE_DEFINE0(tpw, kernel, usb_busdma_usb_dma_tag_destroy, return);
 	SDT_PROBE_DEFINE0(tpw, kernel, usb_hid_hid_get_data, return);
 	SDT_PROBE_DEFINE0(tpw, kernel, usb_generic_ugen_get_sdesc, entry);
-	SDT_PROBE_DEFINE3(tpw, kernel, usb_transfer_usbd_transfer_enqueue, entry, "int", "int", "int");
+	SDT_PROBE_DEFINE3(tpw, kernel, usb_transfer_usbd_transfer_enqueue, entry, "int", "int", "char *");
 	SDT_PROBE_DEFINE0(tpw, kernel, usb_dev_usb_filter_read, entry);
 	SDT_PROBE_DEFINE0(tpw, kernel, usb_generic_ugen_start_write, entry);
 	SDT_PROBE_DEFINE0(tpw, kernel, usb_request_usbd_req_reset_tt, entry);

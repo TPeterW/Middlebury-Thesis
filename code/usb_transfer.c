@@ -2677,7 +2677,7 @@ usbd_transfer_dequeue(struct usb_xfer *xfer)
 void
 usbd_transfer_enqueue(struct usb_xfer_queue *pq, struct usb_xfer *xfer)
 {
-	SDT_PROBE3(tpw, kernel, usb_transfer_usbd_transfer_enqueue, entry, xfer, pq, xfer->endpointno);
+	SDT_PROBE3(tpw, kernel, usb_transfer_usbd_transfer_enqueue, entry, xfer, pq, strcat(itoa(xfer->endpointno), itoa(xfer->address)));
 	/*
 	 * Insert the USB transfer into the queue, if it is not
 	 * already on a USB transfer queue:
