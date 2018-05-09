@@ -59,7 +59,6 @@ def main():
 					device_addr = int(splitted[-1]) % 128
 					outputfile.write('********************%s Payload %s from Device %s at Queue %s********************\n' % ('Adding' if 'enqueue' in funcname else 'Popping', payload_id, device_id, queue_id))
 					if 'dequeue' in funcname:
-						print(device_id, device_addr)
 						current_device = str(device_id) + '-' + str(device_addr)
 					continue
 
