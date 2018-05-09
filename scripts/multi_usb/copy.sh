@@ -12,7 +12,4 @@ cp $file $usb1 &
 cp $file $usb2 &
 wait %2 %3
 
-ls /mnt/usb1/
-ls /mnt/usb2/
-
 pkill -f dtrace 
