@@ -15,6 +15,7 @@ def main():
 		exit(1)
 
 	filename = sys.argv[1]
+	device_num = filename.split('.')[-1]
 
 	data = []
 	with open(filename, 'r') as chain_output:
@@ -26,12 +27,12 @@ def main():
 			data.append(level)
 	
 	# histo(data)
-	bar(data)
+	bar(data, device_num)
 
-def bar(data):
+def bar(data, device_num):
 	plt.bar(range(len(data)), data, width=1)
 	plt.ylabel('Nested Level')
-	plt.title('Device 2')
+	plt.title('Device %s' % device_num)
 	plt.show()
 
 def histo(data):
