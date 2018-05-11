@@ -1,0 +1,3823 @@
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_hub_usb_bus_power_update	12	2-1
+	-> usb_hub_usb_needs_explore	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+-> usb_hub_uhub_explore_handle_re_enumerate	14	2-1
+	-> usb_device_usbd_enum_lock	14	2-1
+	<- usb_device_usbd_enum_lock	14	2-1
+	-> usb_device_usbd_enum_unlock	14	2-1
+	<- usb_device_usbd_enum_unlock	14	2-1
+<- usb_hub_uhub_explore_handle_re_enumerate	14	2-1
+-> usb_hub_usb_bus_powerd	14	2-1
+	-> usb_hub_usb_peer_should_wakeup	14	2-1
+	<- usb_hub_usb_peer_should_wakeup	14	2-1
+	-> usb_hub_usb_peer_should_wakeup	14	2-1
+	<- usb_hub_usb_peer_should_wakeup	14	2-1
+<- usb_hub_usb_bus_powerd	14	2-1
+-> usb_hub_uhub_explore	14	2-1
+	-> usb_hub_uhub_is_too_deep	14	2-1
+	<- usb_hub_uhub_is_too_deep	14	2-1
+	-> usb_device_usbd_enum_lock	14	2-1
+	<- usb_device_usbd_enum_lock	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+		-> usb_hub_uhub_explore_handle_re_enumerate	14	2-1
+			-> usb_device_usbd_enum_lock	14	2-1
+			<- usb_device_usbd_enum_lock	14	2-1
+			-> usb_device_usbd_enum_unlock	14	2-1
+			<- usb_device_usbd_enum_unlock	14	2-1
+		<- usb_hub_uhub_explore_handle_re_enumerate	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+		-> usb_hub_uhub_explore_handle_re_enumerate	14	2-1
+			-> usb_device_usbd_enum_lock	14	2-1
+			<- usb_device_usbd_enum_lock	14	2-1
+			-> usb_device_usbd_enum_unlock	14	2-1
+			<- usb_device_usbd_enum_unlock	14	2-1
+		<- usb_hub_uhub_explore_handle_re_enumerate	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_device_usbd_enum_unlock	14	2-1
+	<- usb_device_usbd_enum_unlock	14	2-1
+<- usb_hub_uhub_explore	14	2-1
+	<- usb_hub_usb_needs_explore	12	2-1
+<- usb_hub_usb_bus_power_update	12	2-1
+-> usb_transfer_usbd_transfer_start	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	12	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	4	2-1
+		-> usb_transfer_usbd_transfer_enqueue	4	2-1
+		<- usb_transfer_usbd_transfer_enqueue	4	2-1
+		-> usb_process_usb_proc_msignal	4	2-1
+		<- usb_process_usb_proc_msignal	4	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	4	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	4	2-1
+		-> usb_transfer_usbd_transfer_enqueue	4	2-1
+		<- usb_transfer_usbd_transfer_enqueue	4	2-1
+		-> usb_process_usb_proc_msignal	4	2-1
+		<- usb_process_usb_proc_msignal	4	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	4	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_max_len	14	2-1
+			<- usb_transfer_usbd_xfer_max_len	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_transfer_start	14	2-1
+				-> usb_transfer_usbd_callback_ss_done_defer	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+				<- usb_transfer_usbd_callback_ss_done_defer	14	2-1
+			<- usb_transfer_usbd_transfer_start	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_process_usb_proc_msignal	14	2-1
+			<- usb_process_usb_proc_msignal	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_max_len	14	2-1
+			<- usb_transfer_usbd_xfer_max_len	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+							<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	4	2-1
+		-> usb_transfer_usbd_transfer_enqueue	4	2-1
+		<- usb_transfer_usbd_transfer_enqueue	4	2-1
+		-> usb_process_usb_proc_msignal	4	2-1
+		<- usb_process_usb_proc_msignal	4	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	4	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	4	2-1
+		-> usb_transfer_usbd_transfer_enqueue	4	2-1
+		<- usb_transfer_usbd_transfer_enqueue	4	2-1
+		-> usb_process_usb_proc_msignal	4	2-1
+		<- usb_process_usb_proc_msignal	4	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	4	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	2195	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	2195	2-1
+		-> usb_transfer_usbd_transfer_enqueue	2195	2-1
+		<- usb_transfer_usbd_transfer_enqueue	2195	2-1
+		-> usb_process_usb_proc_msignal	2195	2-1
+		<- usb_process_usb_proc_msignal	2195	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	2195	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	2195	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	4	2-1
+		-> usb_transfer_usbd_transfer_enqueue	4	2-1
+		<- usb_transfer_usbd_transfer_enqueue	4	2-1
+		-> usb_process_usb_proc_msignal	4	2-1
+		<- usb_process_usb_proc_msignal	4	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	4	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_max_len	14	2-1
+			<- usb_transfer_usbd_xfer_max_len	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_transfer_start	14	2-1
+				-> usb_transfer_usbd_callback_ss_done_defer	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+				<- usb_transfer_usbd_callback_ss_done_defer	14	2-1
+			<- usb_transfer_usbd_transfer_start	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_process_usb_proc_msignal	14	2-1
+			<- usb_process_usb_proc_msignal	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_max_len	14	2-1
+			<- usb_transfer_usbd_xfer_max_len	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+							<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	4	2-1
+		-> usb_transfer_usbd_transfer_enqueue	4	2-1
+		<- usb_transfer_usbd_transfer_enqueue	4	2-1
+		-> usb_process_usb_proc_msignal	4	2-1
+		<- usb_process_usb_proc_msignal	4	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	4	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	4	2-1
+		-> usb_transfer_usbd_transfer_enqueue	4	2-1
+		<- usb_transfer_usbd_transfer_enqueue	4	2-1
+		-> usb_process_usb_proc_msignal	4	2-1
+		<- usb_process_usb_proc_msignal	4	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	4	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	4	2-1
+		-> usb_transfer_usbd_transfer_enqueue	4	2-1
+		<- usb_transfer_usbd_transfer_enqueue	4	2-1
+		-> usb_process_usb_proc_msignal	4	2-1
+		<- usb_process_usb_proc_msignal	4	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	4	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	4	2-1
+		-> usb_transfer_usbd_transfer_enqueue	4	2-1
+		<- usb_transfer_usbd_transfer_enqueue	4	2-1
+		-> usb_process_usb_proc_msignal	4	2-1
+		<- usb_process_usb_proc_msignal	4	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	4	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	4	2-1
+		-> usb_transfer_usbd_transfer_enqueue	4	2-1
+		<- usb_transfer_usbd_transfer_enqueue	4	2-1
+		-> usb_process_usb_proc_msignal	4	2-1
+		<- usb_process_usb_proc_msignal	4	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	4	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	4	2-1
+		-> usb_transfer_usbd_transfer_enqueue	4	2-1
+		<- usb_transfer_usbd_transfer_enqueue	4	2-1
+		-> usb_process_usb_proc_msignal	4	2-1
+		<- usb_process_usb_proc_msignal	4	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	4	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	4	2-1
+		-> usb_transfer_usbd_transfer_enqueue	4	2-1
+		<- usb_transfer_usbd_transfer_enqueue	4	2-1
+		-> usb_process_usb_proc_msignal	4	2-1
+		<- usb_process_usb_proc_msignal	4	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	4	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	4	2-1
+		-> usb_transfer_usbd_transfer_enqueue	4	2-1
+		<- usb_transfer_usbd_transfer_enqueue	4	2-1
+		-> usb_process_usb_proc_msignal	4	2-1
+		<- usb_process_usb_proc_msignal	4	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	4	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	4	2-1
+		-> usb_transfer_usbd_transfer_enqueue	4	2-1
+		<- usb_transfer_usbd_transfer_enqueue	4	2-1
+		-> usb_process_usb_proc_msignal	4	2-1
+		<- usb_process_usb_proc_msignal	4	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	4	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	4	2-1
+		-> usb_transfer_usbd_transfer_enqueue	4	2-1
+		<- usb_transfer_usbd_transfer_enqueue	4	2-1
+		-> usb_process_usb_proc_msignal	4	2-1
+		<- usb_process_usb_proc_msignal	4	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	4	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	4	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_transfer_usbd_transfer_start	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	12	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_hub_usb_bus_power_update	12	2-1
+	-> usb_hub_usb_needs_explore	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+-> usb_hub_uhub_explore_handle_re_enumerate	14	2-1
+	-> usb_device_usbd_enum_lock	14	2-1
+	<- usb_device_usbd_enum_lock	14	2-1
+	-> usb_device_usbd_enum_unlock	14	2-1
+	<- usb_device_usbd_enum_unlock	14	2-1
+<- usb_hub_uhub_explore_handle_re_enumerate	14	2-1
+-> usb_hub_usb_bus_powerd	14	2-1
+	-> usb_hub_usb_peer_should_wakeup	14	2-1
+	<- usb_hub_usb_peer_should_wakeup	14	2-1
+	-> usb_hub_usb_peer_should_wakeup	14	2-1
+	<- usb_hub_usb_peer_should_wakeup	14	2-1
+<- usb_hub_usb_bus_powerd	14	2-1
+-> usb_hub_uhub_explore	14	2-1
+	-> usb_hub_uhub_is_too_deep	14	2-1
+	<- usb_hub_uhub_is_too_deep	14	2-1
+	-> usb_device_usbd_enum_lock	14	2-1
+	<- usb_device_usbd_enum_lock	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+		-> usb_hub_uhub_explore_handle_re_enumerate	14	2-1
+			-> usb_device_usbd_enum_lock	14	2-1
+			<- usb_device_usbd_enum_lock	14	2-1
+			-> usb_device_usbd_enum_unlock	14	2-1
+			<- usb_device_usbd_enum_unlock	14	2-1
+		<- usb_hub_uhub_explore_handle_re_enumerate	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+		-> usb_hub_uhub_explore_handle_re_enumerate	14	2-1
+			-> usb_device_usbd_enum_lock	14	2-1
+			<- usb_device_usbd_enum_lock	14	2-1
+			-> usb_device_usbd_enum_unlock	14	2-1
+			<- usb_device_usbd_enum_unlock	14	2-1
+		<- usb_hub_uhub_explore_handle_re_enumerate	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_hub_uhub_read_port_status	14	2-1
+		-> usb_request_usbd_req_get_port_status	14	2-1
+		<- usb_request_usbd_req_get_port_status	14	2-1
+		-> usb_request_usbd_do_request_flags	14	2-1
+			-> usb_device_usbd_ctrl_lock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_unlock	14	2-1
+				<- usb_device_usbd_sr_unlock	14	2-1
+			<- usb_device_usbd_ctrl_lock	14	2-1
+			-> usb_request_usbd_get_hr_func	14	2-1
+			<- usb_request_usbd_get_hr_func	14	2-1
+			-> usb_device_usbd_ctrl_unlock	14	2-1
+				-> usb_device_usbd_enum_is_locked	14	2-1
+				<- usb_device_usbd_enum_is_locked	14	2-1
+				-> usb_device_usbd_sr_lock	14	2-1
+				<- usb_device_usbd_sr_lock	14	2-1
+			<- usb_device_usbd_ctrl_unlock	14	2-1
+		<- usb_request_usbd_do_request_flags	14	2-1
+	<- usb_hub_uhub_read_port_status	14	2-1
+	-> usb_hub_uhub_explore_sub	14	2-1
+		-> usb_hub_usb_bus_port_get_device	14	2-1
+		<- usb_hub_usb_bus_port_get_device	14	2-1
+	<- usb_hub_uhub_explore_sub	14	2-1
+	-> usb_device_usbd_enum_unlock	14	2-1
+	<- usb_device_usbd_enum_unlock	14	2-1
+<- usb_hub_uhub_explore	14	2-1
+	<- usb_hub_usb_needs_explore	12	2-1
+<- usb_hub_usb_bus_power_update	12	2-1
+-> usb_transfer_usbd_transfer_start	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+<- usb_transfer_usbd_transfer_start	12	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_in	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_in	14	2-1
+			-> usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			<- usb_transfer_usbd_xfer_set_frame_len	14	2-1
+			-> usb_transfer_usbd_transfer_submit	14	2-1
+				-> usb_hub_usbd_transfer_power_ref	14	2-1
+				<- usb_hub_usbd_transfer_power_ref	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+					-> usb_transfer_usbd_transfer_enqueue	14	2-1
+					<- usb_transfer_usbd_transfer_enqueue	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_pc_load_mem	14	2-1
+							-> usb_busdma_usb_pc_load_mem_cb	14	2-1
+								-> usb_busdma_usb_pc_common_mem_cb	14	2-1
+									-> usb_busdma_usb_bdma_done_event	14	2-1
+										-> usb_transfer_usb_command_wrapper	14	2-1
+										<- usb_transfer_usb_command_wrapper	14	2-1
+									<- usb_busdma_usb_bdma_done_event	14	2-1
+								<- usb_busdma_usb_pc_common_mem_cb	14	2-1
+							<- usb_busdma_usb_pc_load_mem_cb	14	2-1
+						<- usb_busdma_usb_pc_load_mem	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+					-> usb_busdma_usb_bdma_work_loop	14	2-1
+						-> usb_busdma_usb_bdma_pre_sync	14	2-1
+							-> usb_busdma_usb_pc_cpu_flush	14	2-1
+							<- usb_busdma_usb_pc_cpu_flush	14	2-1
+						<- usb_busdma_usb_bdma_pre_sync	14	2-1
+						-> usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usb_command_wrapper	14	2-1
+						-> usb_transfer_usbd_pipe_enter	14	2-1
+							-> usb_transfer_usb_command_wrapper	14	2-1
+								-> usb_transfer_usbd_transfer_enqueue	14	2-1
+								<- usb_transfer_usbd_transfer_enqueue	14	2-1
+								-> usb_transfer_usbd_pipe_start	14	2-1
+									-> usb_pf_usbpf_xfertap	14	2-1
+									<- usb_pf_usbpf_xfertap	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usbd_get_page	14	2-1
+									<- usb_busdma_usbd_get_page	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_flush	14	2-1
+									<- usb_busdma_usb_pc_cpu_flush	14	2-1
+									-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+									-> usb_transfer_usbd_transfer_enqueue	14	2-1
+									<- usb_transfer_usbd_transfer_enqueue	14	2-1
+									-> usb_transfer_usbd_transfer_timeout_ms	14	2-1
+									<- usb_transfer_usbd_transfer_timeout_ms	14	2-1
+								<- usb_transfer_usbd_pipe_start	14	2-1
+							<- usb_transfer_usb_command_wrapper	14	2-1
+						<- usb_transfer_usbd_pipe_enter	14	2-1
+					<- usb_busdma_usb_bdma_work_loop	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_transfer_submit	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_transfer_usbd_xfer_set_frame_len	12	2-1
+<- usb_transfer_usbd_xfer_set_frame_len	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_invalidate	12	2-1
+<- usb_busdma_usb_pc_cpu_invalidate	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_busdma_usb_pc_cpu_flush	12	2-1
+<- usb_busdma_usb_pc_cpu_flush	12	2-1
+-> usb_transfer_usbd_transfer_done	12	2-1
+	-> usb_transfer_usbd_transfer_dequeue	12	2-1
+	<- usb_transfer_usbd_transfer_dequeue	12	2-1
+	-> usb_transfer_usbd_callback_ss_done_defer	12	2-1
+		-> usb_transfer_usbd_transfer_enqueue	12	2-1
+		<- usb_transfer_usbd_transfer_enqueue	12	2-1
+		-> usb_process_usb_proc_msignal	12	2-1
+		<- usb_process_usb_proc_msignal	12	2-1
+	<- usb_transfer_usbd_callback_ss_done_defer	12	2-1
+<- usb_transfer_usbd_transfer_done	12	2-1
+-> usb_transfer_usb_callback_proc	14	2-1
+	-> usb_transfer_usb_command_wrapper	14	2-1
+		-> usb_transfer_usbd_callback_wrapper	14	2-1
+			-> usb_transfer_usbd_callback_wrapper_sub	14	2-1
+				-> usb_transfer_usb_command_wrapper	14	2-1
+				<- usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usbd_callback_wrapper_sub	14	2-1
+			-> usb_hub_usbd_transfer_power_ref	14	2-1
+			<- usb_hub_usbd_transfer_power_ref	14	2-1
+			-> usb_busdma_usb_bdma_post_sync	14	2-1
+				-> usb_busdma_usb_pc_cpu_invalidate	14	2-1
+				<- usb_busdma_usb_pc_cpu_invalidate	14	2-1
+			<- usb_busdma_usb_bdma_post_sync	14	2-1
+			-> usb_pf_usbpf_xfertap	14	2-1
+			<- usb_pf_usbpf_xfertap	14	2-1
+			-> usb_transfer_usbd_xfer_status	14	2-1
+			<- usb_transfer_usbd_xfer_status	14	2-1
+			-> usb_transfer_usbd_xfer_get_frame	14	2-1
+			<- usb_transfer_usbd_xfer_get_frame	14	2-1
+			-> usb_busdma_usbd_copy_out	14	2-1
+				-> usb_busdma_usbd_get_page	14	2-1
+				<- usb_busdma_usbd_get_page	14	2-1
+			<- usb_busdma_usbd_copy_out	14	2-1
+			-> usb_transfer_usb_command_wrapper	14	2-1
+			<- usb_transfer_usb_command_wrapper	14	2-1
+		<- usb_transfer_usbd_callback_wrapper	14	2-1
+	<- usb_transfer_usb_command_wrapper	14	2-1
+<- usb_transfer_usb_callback_proc	14	2-1
