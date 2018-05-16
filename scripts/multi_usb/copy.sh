@@ -21,6 +21,4 @@ kill %1
 
 sleep 1
 
-ps auxww | grep dtrace
-
-# pkill -f dtrace 
+pkill -f dtrace 
