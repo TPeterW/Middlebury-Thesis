@@ -12,7 +12,6 @@ sleep 2
 
 cp $file $usb1 &
 cp $file $usb2 &
-# wait %2 %3
 sync
 
 sleep 5
